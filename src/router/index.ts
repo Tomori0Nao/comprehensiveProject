@@ -28,15 +28,25 @@ const router = createRouter({
       component: () => import('../views/VIPView.vue')
     },
     {
-      path: '/Cart',
+      path: '/cart',
       name: 'Cart',
       component: () => import('../views/CartView.vue')
     },
     {
-      path: '/MyInfo',
+      path: '/myInfo',
       name: 'MyInfo',
-      component: () => import('../views/MyinfoView.vue')
-    }
+      component: () => import('../views/MyInfoView.vue')
+    },
+    {
+      path:'/login',
+      name:'login',
+      component:()=>import('../views/Login.vue')
+    },
+    {
+      path:'/register',
+      name:'register',
+      component:()=>import('../views/Register.vue')
+    },
   ]
 })
 
