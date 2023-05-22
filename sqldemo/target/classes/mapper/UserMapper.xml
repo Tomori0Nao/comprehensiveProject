@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--这是执行SQL语句的层次-->
+<mapper namespace="com.example.sqldemo.dao.UserMapper">
+<!--    在application中已经配置com.example.sqldemo.model-->
+<!--    所以这里的返回类型User直接写就行-->
+    <resultMap id="userMap" type="User">
+<!--        <id property="id" column="id"/>-->
+        <result property="username" column="username"/>
+
+        <result property="age" column="age"/>
+    </resultMap>
+    <select id="findAll" resultMap="userMap">
+        select * from userinfo
+    </select>
+    <select id="getPassword" resultType="String">
+        select user_password from user_info where user_account = #{user_account}
+    </select>
+    <insert id="register">
+        insert into user_info(user_account,user_password,user_tel)
+        values (#{user_account},#{user_password},#{user_tel})
+    </insert>
+</mapper>
