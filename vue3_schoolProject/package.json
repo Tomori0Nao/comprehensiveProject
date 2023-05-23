@@ -13,6 +13,8 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@types/axios": "^0.14.0",
+    "axios": "^1.4.0",
     "element-plus": "^2.3.4",
     "pinia": "^2.0.36",
     "vue": "^3.3.2",
