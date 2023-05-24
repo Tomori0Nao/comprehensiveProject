@@ -1,18 +1,138 @@
 import type { RouterLink } from 'vue-router';
 
 <template>
-    <div class="container">
-        <MallHeader></MallHeader>
-    </div>
+  <div class="container">
+    <MallHeader></MallHeader>
+    <el-tabs tab-position="left" style="height: 200px" class="demo-tabs">
+      <el-tab-pane label="我的订单"
+        >我的订单
+        <el-table
+          ref="multipleTableRef"
+          :data="orderInfoTableData"
+          style="width: 100%"
+          @selection-change="handleSelectionChange"
+        >
+          <el-table-column type="selection" width="55" />
+          <el-table-column label="商品" width="120">
+            <template #default="scope">
+              <el-avatar :src="scope.row.goodsPicture" :size="100" :fit="fit" shape="square" />
+            </template>
+          </el-table-column>
+          <el-table-column property="goodsName" label="商品名" width="120" />
+          <el-table-column
+            property="orderAddr"
+            label="收货地址"
+            show-overflow-tooltip
+            width="200"
+          />
+          <el-table-column property="storeName" label="店铺名" show-overflow-tooltip />
+          <el-table-column property="goodsPrice" label="价格" show-overflow-tooltip />
+          <el-table-column property="orderNo" label="订单编号" show-overflow-tooltip />
+          <el-table-column label="数量">
+            <template #default="scope">
+              <span>{{ scope.row.goodsNum }}</span>
+            </template>
+          </el-table-column>
+          <el-table-column label="操作" show-overflow-tooltip>
+            <template #default="scope">
+              <el-button type="danger" @click.prevent="deleteGoods(scope.$index, scope.row)" plain
+                >删除</el-button
+              >
+            </template>
+          </el-table-column>
+        </el-table>
+      </el-tab-pane>
+      <el-tab-pane label="账号管理"
+        >账号管理
+        <el-tabs type="border-card">
+          <el-tab-pane label="基本信息">基本信息</el-tab-pane>
+          <el-tab-pane label="账号昵称">账号昵称</el-tab-pane>
+          <el-tab-pane label="账号头像">账号头像</el-tab-pane>
+          <el-tab-pane label="登录历史">登录历史</el-tab-pane>
+        </el-tabs>
+      </el-tab-pane>
+      <el-tab-pane label="地址管理">地址管理</el-tab-pane>
+    </el-tabs>
+  </div>
 </template>
-  
+
 <script setup lang="ts">
-import MallHeader from '../components/MallHeader.vue';
+import MallHeader from '../components/MallHeader.vue'
+import { ref } from 'vue'
+import type { Ref } from 'vue'
+import { ElTable } from 'element-plus'
+import { Minus, Plus } from '@element-plus/icons-vue'
+
+interface OrderInfo {
+  userAccount: string
+  orderNo: string
+  orderDate: string
+  orderAddr: string
+  goodsPrice: number
+  goodsName: string
+  goodsNum: number
+  goodsPicture: string
+  storeName: string
+}
+interface UserAccountInfo {
+  userAccount: string
+  userTel: string
+  registerDate: string
+  lastLoginTime: string
+  userTotalConsumption: number
+  userMoney: number
+}
+const multipleTableRef = ref<InstanceType<typeof ElTable>>()
+const multipleSelection = ref<OrderInfo[]>([])
+const fit: string = 'fill'
+
+const handleSelectionChange = (val: OrderInfo[]) => {
+  multipleSelection.value = val
+}
+
+const deleteGoods = (index: number, row: OrderInfo) => {
+  console.log(index, row)
+  orderInfoTableData.value.splice(index, 1)
+  console.log(orderInfoTableData.value)
+}
+
+const orderInfoTableData: Ref<OrderInfo[]> = ref([
+  {
+    userAccount: '1389478935',
+    orderNo: '147567814',
+    orderDate: '2023-5-24',
+    orderAddr: '重庆市巴南区红光大道',
+    goodsPrice: 6999,
+    goodsName: '三星s23',
+    goodsNum: 2,
+    goodsPicture: '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png',
+    storeName: 'git商城'
+  }
+])
+const userAccountInfo: Ref<UserAccountInfo[]> = ref([
+  {
+    userAccount: '1389478935',
+    userTel: '100860086000',
+    registerDate: '2023-5-24',
+    lastLoginTime: '2023-5-24',
+    userTotalConsumption: 6999,
+    userMoney: 8888,
+    
+  }
+])
 </script>
 
 <style>
 .container {
-    padding-left: 10%;
-    padding-right: 10%;
-  }
+  padding-left: 10%;
+  padding-right: 10%;
+}
+.numberInput {
+  display: inline-block;
+  width: 50px;
+}
+.sum {
+  /* width: 480px; */
+  display: inline-block;
+}
 </style>

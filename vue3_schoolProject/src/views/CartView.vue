@@ -114,7 +114,6 @@ const handleMinus = (index: number, row: GoodsInfo) => {
       console.log('money is ', iterator.totalCost)
       cartSum.value += iterator.totalCost
     }
-    // cartSum.value -= row.price
   }
 }
 const handlePlus = (index: number, row: GoodsInfo) => {

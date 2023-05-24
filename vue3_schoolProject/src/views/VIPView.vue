@@ -13,17 +13,17 @@ import type { RouterLink } from 'vue-router';
                 />
                 <div class="VIPInfo">
                 <p class="userId">
-                    <span> id jhsjgkhjskaf</span>
+                    <span> id {{ vipInfo.vip_user_account }}</span>
                     <i class="icon">年卡会员</i>
 
                 </p>
-                <p> 2023.6.6 日过期<el-button type="warning" round>立即续费</el-button></p>
+                <p> {{ vipInfo.expiration_time }} 日过期<el-button type="warning" round>立即续费</el-button></p>
                 
-                <span class="score"> 会员积分:111</span>
+                <span class="score"> 会员积分: {{ vipInfo.intergral }}</span>
                 </div>
              </div>
              <div>
-                <p>plus 会员已为您节省 {{ money }} 元</p>
+                <p>plus 会员已为您节省 {{ vipInfo.saving }} 元</p>
              </div>
         </el-card>
     </div>
@@ -31,11 +31,26 @@ import type { RouterLink } from 'vue-router';
 </template>
   
 <script setup lang="ts">
+import { ref } from 'vue';
 import MallHeader from '../components/MallHeader.vue';
+import type { Ref } from 'vue'
 const fit : string = 'fill'
 const picture : string = "/src/assets/github3.svg"
 const userId : string = 'tsetstest'
 const money : Number  = 999
+
+interface VIPInfo {
+    vip_user_account: string
+    expiration_time: string
+    intergral: number
+    saving: number
+}
+const vipInfo :Ref<VIPInfo> = ref({
+    vip_user_account: 'jhsjgkhjskaf',
+    expiration_time: '2023.6.6',
+    intergral: 111,
+    saving: 999
+})
 </script>
 
 <style scoped>
