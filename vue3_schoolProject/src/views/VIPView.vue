@@ -45,6 +45,8 @@ interface VIPInfo {
     intergral: number
     saving: number
 }
+
+// 请求数据
 const vipInfo :Ref<VIPInfo> = ref({
     vip_user_account: 'jhsjgkhjskaf',
     expiration_time: '2023.6.6',
