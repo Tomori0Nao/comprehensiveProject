@@ -1,0 +1,4 @@
+1.外键建表的时候一定要加上
+foreign key (user_account) reference user_info(user_account)
+这跟我们之前sqlserver直接写表名不一样！！！！跟上列名。
+2.img渲染不上问题，异步请求，接收的数据写到ref中

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--这是执行SQL语句的层次-->
+<mapper namespace="com.project.campustaobao.mapper.UserMapper">
+
+<!--    在application中已经配置com.project.campustaobao.entity-->
+<!--    所以这里的返回类型User直接写就行-->
+    <resultMap id="userMap" type="User">
+<!--        <id property="id" column="id"/>-->
+        <result property="account" column="user_account"/>
+<!--        <result property="password" column="user_password"/>-->
+    </resultMap>
+    <select id="findAll" resultMap="userMap">
+        select * from user_info
+    </select>
+    <select id="getPassword" resultType="String">
+        select user_password from user_info where user_account = #{user_account}
+    </select>
+
+<!--    查询账号是否被注册-->
+    <select id="queryAccountByAccount" resultType="String">
+        select * from user_info where user_account = #{account}
+    </select>
+<!--    登录验证用户账号密码是否正确-->
+    <select id="login" resultType="map">
+        select user_account,user_password from user_info
+        where user_account = #{account} and user_password = #{password}
+    </select>
+
+    <insert id="register">
+        insert into user_info(user_account,user_password,user_tel,register_date)
+        values (#{account},#{password},#{tel},#{registerDate})
+    </insert>
+
+<!--    查询VIP用户的信息-->
+    <select id="queryVIPUserByAccount" resultMap="vipMap">
+        select * from vip_user where vip_user_account = #{vipAccount}
+    </select>
+    <resultMap id="vipMap" type="VIPUser">
+        <result property="vipAccount" column="vip_user_account"/>
+        <result property="expirationTime" column="expiration_time"/>
+        <result property="integral" column="integral"/>
+        <result property="saving" column="saving"/>
+    </resultMap>
+</mapper>

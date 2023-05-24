@@ -29,7 +29,7 @@ axios({
     imageArr[i] = imagesURLPrefix + imageArr[i] + '.png';
     goodsPictureList1.value.push(imageArr[i]);
   }
-  //console.log(goodsPictureList1);
+  console.log(goodsPictureList1);
 }).catch((error) => {
   console.log("error 11= " + error);
 
