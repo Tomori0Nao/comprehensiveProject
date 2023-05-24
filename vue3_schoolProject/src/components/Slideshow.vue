@@ -1,6 +1,6 @@
 <script setup lang="ts">
 </script>
-
+<!-- 轮播图 -->
 <template>
   <div >
     <el-carousel :interval="4000" type="card" height="470px">
