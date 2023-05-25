@@ -42,11 +42,65 @@ import type { RouterLink } from 'vue-router';
           </el-table-column>
         </el-table>
       </el-tab-pane>
+
       <el-tab-pane label="账号管理"
         >账号管理
         <el-tabs type="border-card">
-          <el-tab-pane label="基本信息">基本信息</el-tab-pane>
-          <el-tab-pane label="账号昵称">账号昵称</el-tab-pane>
+          <el-tab-pane label="基本信息"
+            >
+            <!-- <el-descriptions class="margin-top" title="用户基本信息" :column="3" border>
+              <el-descriptions-item>
+                <template #label>
+                  <div class="cell-item">用户账号</div>
+                </template>
+                {{ userAccountInfo.userAccount }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template #label>
+                  <div class="cell-item">用户昵称</div>
+                </template>
+                {{ userAccountInfo.userAccount }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template #label>
+                  <div class="cell-item">用户电话</div>
+                </template>
+                {{ userAccountInfo.userTel }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template #label>
+                  <div class="cell-item">用户总消费额</div>
+                </template>
+                {{ userAccountInfo.userTotalConsumption }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template #label>
+                  <div class="cell-item">用户余额</div>
+                </template>
+                {{ userAccountInfo.userMoney }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template #label>
+                  <div class="cell-item">上次登录时间</div>
+                </template>
+                {{ userAccountInfo.lastLoginTime }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template #label>
+                  <div class="cell-item">注册日期</div>
+                </template>
+                {{ userAccountInfo.registerDate }}
+              </el-descriptions-item>
+              <el-descriptions-item>
+                <template #label>
+                  <div class="cell-item">商品产地</div>
+                </template>
+                {{ userAccountInfo.lastLoginTime }}
+              </el-descriptions-item>
+            </el-descriptions> -->
+            <UserInfo></UserInfo>
+          </el-tab-pane>
+          <!-- <el-tab-pane label="账号昵称">账号昵称</el-tab-pane> -->
           <el-tab-pane label="账号头像">账号头像</el-tab-pane>
           <el-tab-pane label="登录历史">登录历史</el-tab-pane>
         </el-tabs>
@@ -58,10 +112,10 @@ import type { RouterLink } from 'vue-router';
 
 <script setup lang="ts">
 import MallHeader from '../components/MallHeader.vue'
+import UserInfo from '@/components/UserInfo.vue'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { ElTable } from 'element-plus'
-import { Minus, Plus } from '@element-plus/icons-vue'
 
 interface OrderInfo {
   userAccount: string
@@ -109,20 +163,17 @@ const orderInfoTableData: Ref<OrderInfo[]> = ref([
     storeName: 'git商城'
   }
 ])
-const userAccountInfo: Ref<UserAccountInfo[]> = ref([
-  {
-    userAccount: '1389478935',
-    userTel: '100860086000',
-    registerDate: '2023-5-24',
-    lastLoginTime: '2023-5-24',
-    userTotalConsumption: 6999,
-    userMoney: 8888,
-    
-  }
-])
+const userAccountInfo: Ref<UserAccountInfo> = ref({
+  userAccount: '1389478935',
+  userTel: '100860086000',
+  registerDate: '2023-5-24',
+  lastLoginTime: '2023-5-24',
+  userTotalConsumption: 6999,
+  userMoney: 8888
+})
 </script>
 
-<style>
+<style scoped>
 .container {
   padding-left: 10%;
   padding-right: 10%;
@@ -132,7 +183,16 @@ const userAccountInfo: Ref<UserAccountInfo[]> = ref([
   width: 50px;
 }
 .sum {
-  /* width: 480px; */
   display: inline-block;
+}
+.el-descriptions {
+  margin-top: 20px;
+}
+.cell-item {
+  display: flex;
+  align-items: center;
+}
+.margin-top {
+  margin-top: 20px;
 }
 </style>

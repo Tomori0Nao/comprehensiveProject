@@ -98,7 +98,7 @@ export default {
             if (response.data == true) {
               console.log('登陆成功')
               window.sessionStorage.setItem('notLogin', JSON.stringify(response.data))
-              this['router'].push('/test')
+              this.$router.push('/test')
             } else {
               alert('请检查账号密码')
             }

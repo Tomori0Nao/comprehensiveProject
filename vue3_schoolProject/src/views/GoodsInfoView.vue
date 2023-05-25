@@ -35,9 +35,6 @@ import type { RouterLink } from 'vue-router';
     </el-card>
 
     <el-descriptions class="margin-top" title="商品介绍" :column="3" border>
-      <!-- <template #extra>
-      <el-button type="primary">Operation</el-button>
-    </template> -->
       <el-descriptions-item>
         <template #label>
           <div class="cell-item">商品名称</div>
