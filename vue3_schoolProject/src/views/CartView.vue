@@ -4,12 +4,7 @@ import type { RouterLink } from 'vue-router';
   <div class="container">
     <MallHeader></MallHeader>
     <el-divider content-position="left">共有{{ tableData.length }}件商品</el-divider>
-    <el-table
-      ref="multipleTableRef"
-      :data="tableData"
-      style="width: 100%"
-      @selection-change="handleSelectionChange"
-    >
+    <el-table ref="multipleTableRef" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" />
       <el-table-column label="Date" width="120">
         <template #default="scope">
@@ -24,29 +19,22 @@ import type { RouterLink } from 'vue-router';
       <el-table-column label="数量">
         <template #default="scope">
           <el-button size="small" @click.prevent="handleMinus(scope.$index, scope.row)" circle>
-            <el-icon><Minus /></el-icon>
+            <el-icon>
+              <Minus />
+            </el-icon>
           </el-button>
-          <el-input
-            v-model="scope.row.purchaseNumber"
-            placeholder="1"
-            class="numberInput"
-            @input="inputChanges(scope.row)"
-          />
-          <el-button
-            size="small"
-            type="danger"
-            @click.prevent="handlePlus(scope.$index, scope.row)"
-            circle
-          >
-            <el-icon><Plus /></el-icon>
+          <el-input v-model="scope.row.purchaseNumber" placeholder="1" class="numberInput"
+            @input="inputChanges(scope.row)" />
+          <el-button size="small" type="danger" @click.prevent="handlePlus(scope.$index, scope.row)" circle>
+            <el-icon>
+              <Plus />
+            </el-icon>
           </el-button>
         </template>
       </el-table-column>
       <el-table-column label="操作" show-overflow-tooltip>
         <template #default="scope">
-          <el-button type="danger" @click.prevent="deleteGoods(scope.$index, scope.row)" plain
-            >删除</el-button
-          >
+          <el-button type="danger" @click.prevent="deleteGoods(scope.$index, scope.row)" plain>删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -132,10 +120,10 @@ const handlePlus = (index: number, row: GoodsInfo) => {
 }
 const inputChanges = (row: GoodsInfo) => {
   // console.log(orderNumber.value)
-  console.log(row,'row is ')
+  console.log(row, 'row is ')
   if (row.purchaseNumber > row.number) {
     row.purchaseNumber = row.number
-  }else if (row.purchaseNumber < 1) {
+  } else if (row.purchaseNumber < 1) {
     row.purchaseNumber = 1
   } {
     // row.purchaseNumber
@@ -193,14 +181,17 @@ const tableData: Ref<GoodsInfo[]> = ref([
   padding-left: 10%;
   padding-right: 10%;
 }
+
 .numberInput {
   display: inline-block;
   width: 50px;
 }
+
 .sum {
   /* width: 480px; */
   display: inline-block;
 }
+
 /* .store {
   width: 600px;
 } */
