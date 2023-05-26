@@ -4,6 +4,17 @@
     <select id="queryHomeGoods" resultType="String">
         select goods_image_name from goods_info;
     </select>
-
+    <select id="queryShoppingCartGoodsByGoodsNo" resultMap="shoppingCartGoodsMap">
+        select * from goods_info where goods_no = #{goodsNo};
+    </select>
+<!--    购物车用到-->
+    <resultMap id="shoppingCartGoodsMap" type="Goods">
+        <result property="goodsName" column="goods_name"/>
+        <result property="goodsImageName" column="goods_image_name"/>
+        <result property="storeName" column="store_name"/>
+        <result property="goodsPrice" column="goods_price"/>
+        <result property="vipDerate" column="vip_derate"/>
+        <result property="maxNumOfSinglePurchase" column="max_num_single_purchase"/>
+    </resultMap>
 
 </mapper>

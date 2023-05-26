@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.campustaobao.mapper.ShoppingCartMapper">
+<!--    查询购物车中的商品信息-->
+    <select id="queryAllShoppingCartGoods" resultType="map">
+        select * from shopping_cart where user_account = #{account};
+    </select>
+
+
+
+</mapper>

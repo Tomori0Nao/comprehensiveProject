@@ -1,11 +1,9 @@
 package com.project.campustaobao.controler;
-
 import com.project.campustaobao.server.UserServer;
 import com.project.campustaobao.utils.RegisterUser;
 import com.project.campustaobao.vo.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 

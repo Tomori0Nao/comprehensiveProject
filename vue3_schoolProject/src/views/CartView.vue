@@ -4,12 +4,7 @@ import type { RouterLink } from 'vue-router';
   <div class="container">
     <MallHeader></MallHeader>
     <el-divider content-position="left">共有{{ tableData.length }}件商品</el-divider>
-    <el-table
-      ref="multipleTableRef"
-      :data="tableData"
-      style="width: 100%"
-      @selection-change="handleSelectionChange"
-    >
+    <el-table ref="multipleTableRef" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" />
       <el-table-column label="商品" width="120">
         <template #default="scope">
@@ -30,18 +25,9 @@ import type { RouterLink } from 'vue-router';
               <Minus />
             </el-icon>
           </el-button>
-          <el-input
-            v-model="scope.row.purchaseNumber"
-            placeholder="1"
-            class="numberInput"
-            @input="inputChanges(scope.row)"
-          />
-          <el-button
-            size="small"
-            type="danger"
-            @click.prevent="handlePlus(scope.$index, scope.row)"
-            circle
-          >
+          <el-input v-model="scope.row.purchaseNumber" placeholder="1" class="numberInput"
+            @input="inputChanges(scope.row)" />
+          <el-button size="small" type="danger" @click.prevent="handlePlus(scope.$index, scope.row)" circle>
             <el-icon>
               <Plus />
             </el-icon>
@@ -50,9 +36,7 @@ import type { RouterLink } from 'vue-router';
       </el-table-column>
       <el-table-column label="操作" show-overflow-tooltip>
         <template #default="scope">
-          <el-button type="danger" @click.prevent="deleteGoods(scope.$index, scope.row)" plain
-            >删除</el-button
-          >
+          <el-button type="danger" @click.prevent="deleteGoods(scope.$index, scope.row)" plain>删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -73,6 +57,8 @@ import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { ElTable } from 'element-plus'
 import { Minus, Plus } from '@element-plus/icons-vue'
+import axios from 'axios'
+import GoodsInfoView from './GoodsInfoView.vue'
 const fit: string = 'fill'
 // ---- 商品信息
 // 商品名
@@ -199,6 +185,36 @@ const tableData: Ref<GoodsInfo[]> = ref([
     vipPrice: 15
   }
 ])
+
+////////////////////////////////////////////////
+const path = 'http://localhost:8080'
+
+axios({
+  method: 'get',
+  url: path + '/shoppingCart',
+  params: {
+    account: 'sk23232'
+  }
+}).then((response) => {
+  const respData = response.data;
+  var cartGoodsList = respData.data;
+  ///////////////////////////////////////////////////////////////////////////////
+  ///    收到的数据
+  ///    cartGoodsName	"金玉兰白酒"
+  //     cartGoodsImageName	"homeGoods-1"
+  //     cartGoodsStoreName	"store001"
+  //     cartGoodsPrice	"169.89"  商品标价
+  //     totalCost	"56.36"   总共花费
+  //     cartGoodsNumber	100  该商品购买的数目
+  //     maxNumOfSinglePurchase	100   该商品单次购买的最大数目
+  //     vipDerate	"10.36"   vip减免
+  ////////////////////////////////////////////////////////////////////////////
+  console.log(cartGoodsList);
+}).catch((error) => {
+  console.log("error = " + error);
+
+})
+
 </script>
 
 <style scoped>

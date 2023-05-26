@@ -48,7 +48,7 @@ axios({
         // 临时变量 接受后端数据后，push到goodCardInfoList中
         goodsPictureAddr: goodsPictureAddr,
         goodsName: '三星 s23',
-        goodsPrice: 69
+        goodsPrice: 6933
       }
       tem.goodsPictureAddr = imageArr[i]
       // console.log(imageArr[i])
@@ -58,7 +58,7 @@ axios({
     }
   })
   .catch((error) => {
-    console.log('error 11= ' + error)
+    console.log('error = ' + error)
   })
 </script>
 
@@ -70,8 +70,6 @@ axios({
           <el-card :body-style="{ padding: '5px' }" style="width: 210px">
             <img :key="index" :src="item.goodsPictureAddr" class="image" />
             <div class="bottom">
-              <span>{{ item }}</span>
-              <span> {{ goodCardInfoList }}</span>
               <el-button text class="button">{{ item.goodsPrice }}</el-button>
             </div>
           </el-card>

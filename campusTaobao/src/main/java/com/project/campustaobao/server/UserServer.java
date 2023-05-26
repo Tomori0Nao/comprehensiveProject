@@ -1,5 +1,6 @@
 package com.project.campustaobao.server;
 
+import com.project.campustaobao.pojo.ShoppingCartGoods;
 import com.project.campustaobao.pojo.User;
 import com.project.campustaobao.pojo.VIPUser;
 
@@ -12,4 +13,5 @@ public interface UserServer {
 
      boolean register(String password,String tel);
      VIPUser queryVIPUserByAccount(String vipAccount);
+     List<ShoppingCartGoods> queryAllShoppingCartGoods(String account);
 }
