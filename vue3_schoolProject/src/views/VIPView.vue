@@ -15,7 +15,7 @@ import type { RouterLink } from 'vue-router';
                     </p>
                     <p> {{ vipInfo.expiration_time }} 过期<el-button type="warning" round>立即续费</el-button></p>
 
-                    <span class="score"> 会员积分: {{ vipInfo.integral }}</span>
+                    <span class="score"> 会员积分: {{ vipInfo.intergral }}</span>
                 </div>
             </div>
             <div>
@@ -30,16 +30,20 @@ import { ref } from 'vue';
 import MallHeader from '../components/MallHeader.vue';
 import type { Ref } from 'vue'
 import axios from 'axios';
-import { vi } from 'element-plus/es/locale/index.js';
 const fit: string = 'fill'
 const picture: string = "/src/assets/github3.svg"
 const userId: string = 'tsetstest'
 const money: Number = 999
 
+// ----vip信息
+// 用户账号
+// 过期时间
+// 积分
+// 节省金额
 interface VIPInfo {
     vip_user_account: string
     expiration_time: string
-    integral: number
+    intergral: number
     saving: number
 }
 
@@ -47,7 +51,7 @@ interface VIPInfo {
 const vipInfo: Ref<VIPInfo> = ref({
     vip_user_account: 'jhsjgkhjskaf',
     expiration_time: '2023.6.6',
-    integral: 111,
+    intergral: 111,
     saving: 999
 })
 ///////////////////////////////////////////////////////////////////////////
@@ -67,7 +71,7 @@ axios({
     let respData = response.data.data;
     vipInfo.value.vip_user_account = respData.vipAccount;
     vipInfo.value.expiration_time = respData.expirationTime;
-    vipInfo.value.integral = parseInt(respData.integral);
+    vipInfo.value.intergral = parseInt(respData.intergral);
     vipInfo.value.saving = parseFloat(respData.saving);
 }).catch((error) => {
     console.log('出错...' + error);

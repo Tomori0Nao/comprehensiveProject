@@ -48,59 +48,8 @@ import type { RouterLink } from 'vue-router';
         <el-tabs type="border-card">
           <el-tab-pane label="基本信息"
             >
-            <!-- <el-descriptions class="margin-top" title="用户基本信息" :column="3" border>
-              <el-descriptions-item>
-                <template #label>
-                  <div class="cell-item">用户账号</div>
-                </template>
-                {{ userAccountInfo.userAccount }}
-              </el-descriptions-item>
-              <el-descriptions-item>
-                <template #label>
-                  <div class="cell-item">用户昵称</div>
-                </template>
-                {{ userAccountInfo.userAccount }}
-              </el-descriptions-item>
-              <el-descriptions-item>
-                <template #label>
-                  <div class="cell-item">用户电话</div>
-                </template>
-                {{ userAccountInfo.userTel }}
-              </el-descriptions-item>
-              <el-descriptions-item>
-                <template #label>
-                  <div class="cell-item">用户总消费额</div>
-                </template>
-                {{ userAccountInfo.userTotalConsumption }}
-              </el-descriptions-item>
-              <el-descriptions-item>
-                <template #label>
-                  <div class="cell-item">用户余额</div>
-                </template>
-                {{ userAccountInfo.userMoney }}
-              </el-descriptions-item>
-              <el-descriptions-item>
-                <template #label>
-                  <div class="cell-item">上次登录时间</div>
-                </template>
-                {{ userAccountInfo.lastLoginTime }}
-              </el-descriptions-item>
-              <el-descriptions-item>
-                <template #label>
-                  <div class="cell-item">注册日期</div>
-                </template>
-                {{ userAccountInfo.registerDate }}
-              </el-descriptions-item>
-              <el-descriptions-item>
-                <template #label>
-                  <div class="cell-item">商品产地</div>
-                </template>
-                {{ userAccountInfo.lastLoginTime }}
-              </el-descriptions-item>
-            </el-descriptions> -->
             <UserInfo></UserInfo>
           </el-tab-pane>
-          <!-- <el-tab-pane label="账号昵称">账号昵称</el-tab-pane> -->
           <el-tab-pane label="账号头像">账号头像</el-tab-pane>
           <el-tab-pane label="登录历史">登录历史</el-tab-pane>
         </el-tabs>
@@ -117,6 +66,14 @@ import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { ElTable } from 'element-plus'
 
+// ----订单信息
+// 用户账号
+// 订单编号
+// 收货地址
+// 商品价格
+// 商品名称
+// 商品图片
+// 店铺名称
 interface OrderInfo {
   userAccount: string
   orderNo: string
@@ -128,6 +85,14 @@ interface OrderInfo {
   goodsPicture: string
   storeName: string
 }
+// ----用户信息
+// 用户账号
+// 用户电话
+// 注册日期
+// 上次登录时间
+// 用户总消费额
+// 用户余额
+// 用户头像
 interface UserAccountInfo {
   userAccount: string
   userTel: string
@@ -135,7 +100,9 @@ interface UserAccountInfo {
   lastLoginTime: string
   userTotalConsumption: number
   userMoney: number
+  userAvatar:  string
 }
+
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<OrderInfo[]>([])
 const fit: string = 'fill'
@@ -169,7 +136,8 @@ const userAccountInfo: Ref<UserAccountInfo> = ref({
   registerDate: '2023-5-24',
   lastLoginTime: '2023-5-24',
   userTotalConsumption: 6999,
-  userMoney: 8888
+  userMoney: 8888,
+  userAvatar: '/src/assets/github3.svg'
 })
 </script>
 

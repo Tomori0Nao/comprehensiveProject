@@ -91,6 +91,16 @@ import { Minus, Plus } from '@element-plus/icons-vue'
 const fit: string = 'fill'
 const picture: string =
   '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png'
+  
+// ----商品信息
+// 商品名称
+// 商品价格
+// 店铺名称
+// 商品数量
+// 品牌
+// 商品编号
+// 商品重量
+// 商品产地
 interface GoodsInfo {
   goodsName: string
   goodsPrice: number

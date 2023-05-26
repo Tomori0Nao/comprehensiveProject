@@ -3,6 +3,13 @@ import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { useUserInfoStore } from '@/stores/userInfo'
 const store = useUserInfoStore()
+// ----用户信息
+// 用户账号
+// 用户电话
+// 注册日期
+// 上次登录时间
+// 用户总消费额
+// 用户余额
 interface UserAccountInfo {
   userAccount: string
   userTel: string
@@ -10,6 +17,7 @@ interface UserAccountInfo {
   lastLoginTime: string
   userTotalConsumption: number
   userMoney: number
+  userAvatar:  string
 }
 const userAccountInfo: Ref<UserAccountInfo> = ref({
   userAccount: '1389478935',
@@ -17,7 +25,8 @@ const userAccountInfo: Ref<UserAccountInfo> = ref({
   registerDate: '2023-5-24',
   lastLoginTime: '2023-5-24',
   userTotalConsumption: 6999,
-  userMoney: 8888
+  userMoney: 8888,
+  userAvatar: '/src/assets/github3.svg'
 })
 const isChangeNakeName = ref(false)
 const changeNakeName = () => {
@@ -73,9 +82,11 @@ const input = ref('1111')
           <div class="cell-item">注册日期</div>
         </template>
         {{ store.registerDate }}
+      <h3>helllll</h3>
+
       </el-descriptions-item>
     </el-descriptions>
-    <h3>helllll</h3>
+    
 
   </div>
   
