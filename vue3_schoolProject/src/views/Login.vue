@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { ElMessage } from 'element-plus'
-import '@types/axios'
 import axios from 'axios'
 // import { defineComponent } from 'vue'
 
@@ -26,13 +25,7 @@ import axios from 'axios'
       </el-form-item>
       <el-form-item label="验证码" prop="captcha">
         <el-col :span="10">
-          <el-input
-            type="text"
-            placeholder="请输入验证码"
-            v-model="form.captcha"
-            size="medium"
-            maxlength="4"
-          />
+          <el-input type="text" placeholder="请输入验证码" v-model="form.captcha" size="medium" maxlength="4" />
         </el-col>
       </el-form-item>
       <el-form-item>
@@ -98,7 +91,7 @@ export default {
             if (response.data == true) {
               console.log('登陆成功')
               window.sessionStorage.setItem('notLogin', JSON.stringify(response.data))
-              this['router'].push('/test')
+              this.$router.push('/test')
             } else {
               alert('请检查账号密码')
             }
@@ -109,7 +102,7 @@ export default {
       }
     },
     toRegister: function () {
-      // this.$router.push('/register')
+      this.$router.push('/register')
     }
   }
 }

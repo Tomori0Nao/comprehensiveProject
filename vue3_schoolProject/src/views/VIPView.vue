@@ -30,7 +30,7 @@ import { ref } from 'vue';
 import MallHeader from '../components/MallHeader.vue';
 import type { Ref } from 'vue'
 import axios from 'axios';
-import { vi } from 'element-plus/es/locale/index.js';
+
 const fit: string = 'fill'
 const picture: string = "/src/assets/github3.svg"
 const userId: string = 'tsetstest'
@@ -45,10 +45,10 @@ interface VIPInfo {
 
 // 请求数据
 const vipInfo: Ref<VIPInfo> = ref({
-    vip_user_account: 'jhsjgkhjskaf',
-    expiration_time: '2023.6.6',
-    integral: 111,
-    saving: 999
+    vip_user_account: '',
+    expiration_time: '',
+    integral: NaN,
+    saving: NaN
 })
 ///////////////////////////////////////////////////////////////////////////
 ////                          我新添加的                                //
@@ -61,7 +61,7 @@ axios({
     method: 'get',
     url: path + '/vipInfo',
     params: {
-        vipAccount: "895698vip",
+        vipAccount: "66666vip",
     }
 }).then((response) => {
     let respData = response.data.data;
