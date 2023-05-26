@@ -42,11 +42,14 @@ import type { RouterLink } from 'vue-router';
           </el-table-column>
         </el-table>
       </el-tab-pane>
+
       <el-tab-pane label="账号管理"
         >账号管理
         <el-tabs type="border-card">
-          <el-tab-pane label="基本信息">基本信息</el-tab-pane>
-          <el-tab-pane label="账号昵称">账号昵称</el-tab-pane>
+          <el-tab-pane label="基本信息"
+            >
+            <UserInfo></UserInfo>
+          </el-tab-pane>
           <el-tab-pane label="账号头像">账号头像</el-tab-pane>
           <el-tab-pane label="登录历史">登录历史</el-tab-pane>
         </el-tabs>
@@ -58,11 +61,19 @@ import type { RouterLink } from 'vue-router';
 
 <script setup lang="ts">
 import MallHeader from '../components/MallHeader.vue'
+import UserInfo from '@/components/UserInfo.vue'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { ElTable } from 'element-plus'
-import { Minus, Plus } from '@element-plus/icons-vue'
 
+// ----订单信息
+// 用户账号
+// 订单编号
+// 收货地址
+// 商品价格
+// 商品名称
+// 商品图片
+// 店铺名称
 interface OrderInfo {
   userAccount: string
   orderNo: string
@@ -74,6 +85,14 @@ interface OrderInfo {
   goodsPicture: string
   storeName: string
 }
+// ----用户信息
+// 用户账号
+// 用户电话
+// 注册日期
+// 上次登录时间
+// 用户总消费额
+// 用户余额
+// 用户头像
 interface UserAccountInfo {
   userAccount: string
   userTel: string
@@ -81,7 +100,9 @@ interface UserAccountInfo {
   lastLoginTime: string
   userTotalConsumption: number
   userMoney: number
+  userAvatar:  string
 }
+
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<OrderInfo[]>([])
 const fit: string = 'fill'
@@ -109,20 +130,18 @@ const orderInfoTableData: Ref<OrderInfo[]> = ref([
     storeName: 'git商城'
   }
 ])
-const userAccountInfo: Ref<UserAccountInfo[]> = ref([
-  {
-    userAccount: '1389478935',
-    userTel: '100860086000',
-    registerDate: '2023-5-24',
-    lastLoginTime: '2023-5-24',
-    userTotalConsumption: 6999,
-    userMoney: 8888,
-    
-  }
-])
+const userAccountInfo: Ref<UserAccountInfo> = ref({
+  userAccount: '1389478935',
+  userTel: '100860086000',
+  registerDate: '2023-5-24',
+  lastLoginTime: '2023-5-24',
+  userTotalConsumption: 6999,
+  userMoney: 8888,
+  userAvatar: '/src/assets/github3.svg'
+})
 </script>
 
-<style>
+<style scoped>
 .container {
   padding-left: 10%;
   padding-right: 10%;
@@ -132,7 +151,16 @@ const userAccountInfo: Ref<UserAccountInfo[]> = ref([
   width: 50px;
 }
 .sum {
-  /* width: 480px; */
   display: inline-block;
+}
+.el-descriptions {
+  margin-top: 20px;
+}
+.cell-item {
+  display: flex;
+  align-items: center;
+}
+.margin-top {
+  margin-top: 20px;
 }
 </style>
