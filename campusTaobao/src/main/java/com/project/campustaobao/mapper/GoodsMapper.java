@@ -6,11 +6,12 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
 public interface GoodsMapper {
-    String queryGoodsImage(String prefix);
-    List<String> queryHomeGoods(String prefix);
+    Map<String,String> queryGoodsInfoByGoodsNo(@Param("goodsNo") String goodsNo);
+    List<Map<String,String>> queryHomeGoods(String prefix);
     Goods queryShoppingCartGoodsByGoodsNo(@Param("goodsNo") String goodsNo);
 }

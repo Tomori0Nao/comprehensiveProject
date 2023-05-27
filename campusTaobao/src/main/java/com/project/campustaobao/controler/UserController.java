@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletContext;
 import java.util.List;
+import java.util.Map;
 
 @CrossOrigin
 @RestController
@@ -31,7 +32,7 @@ public class UserController {
     }
     @GetMapping("/vipInfo")
     @ResponseBody
-    public ResultMessage<VIPUser> getUserInfo(String vipAccount){
+    public ResultMessage<VIPUser> getVIPUserInfo(String vipAccount){
         ResultMessage<VIPUser> resultMessage = new ResultMessage<>(
                 ResultMessage.SUCCESS_CODE,"vip信息请求成功",
                 userServer.queryVIPUserByAccount(vipAccount)
@@ -46,6 +47,18 @@ public class UserController {
                 userServer.queryAllShoppingCartGoods(account)
         );
         return resultMessage;
+    }
+    @GetMapping("/userInfo")
+    @ResponseBody
+    public ResultMessage<Map<String,String>> getUserInfo(String account){
+        System.out.println(account);
+        Map<String,String> useInfoMap = userServer.queryUserInfoByAccount(account);
+        if(useInfoMap != null){
+            ResultMessage<Map<String,String>> resultMessage = new ResultMessage<>(
+                    ResultMessage.SUCCESS_CODE,"查找到用户基本信息",useInfoMap);
+            return resultMessage;
+        }
+        return null;
     }
 
 

@@ -1,7 +1,6 @@
 package com.project.campustaobao.server.impl;
 
 
-import com.project.campustaobao.mapper.ShoppingCartMapper;
 import com.project.campustaobao.pojo.ShoppingCartGoods;
 import com.project.campustaobao.pojo.User;
 import com.project.campustaobao.mapper.UserMapper;
@@ -69,5 +68,10 @@ public class UserServerImpl implements UserServer {
     @Override
     public List<ShoppingCartGoods> queryAllShoppingCartGoods(String account) {
         return shoppingCartServer.queryAllShoppingCartGoods(account);
+    }
+
+    @Override
+    public Map<String,String> queryUserInfoByAccount(String account) {
+        return userMapper.queryUserInfoByAccount(account);
     }
 }

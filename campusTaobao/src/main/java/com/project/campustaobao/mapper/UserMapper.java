@@ -17,5 +17,6 @@ public interface UserMapper {
     String queryAccountByAccount(@Param("account") String account);
 
     VIPUser queryVIPUserByAccount(@Param("vipAccount") String vipAccount);
+    Map<String,String> queryUserInfoByAccount(@Param("account") String account);
 }
 

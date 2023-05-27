@@ -1,4 +1,5 @@
 package com.project.campustaobao.server.impl;
+
 import com.project.campustaobao.mapper.GoodsMapper;
 import com.project.campustaobao.mapper.ShoppingCartMapper;
 import com.project.campustaobao.pojo.Goods;
@@ -28,7 +29,6 @@ public class ShoppingCartImpl implements ShoppingCartServer {
             //为什么没用多对一处理?
             // 因为shoppingCart中没有Goods类型的属性
             Goods goods = goodsMapper.queryShoppingCartGoodsByGoodsNo(goodsNo);
-            System.out.println(goods);
             String totalCost = (String)cartGoods.get("total_cost");
             int goodsNumber =
                     Integer.parseInt((String)cartGoods.get("goods_num"));
