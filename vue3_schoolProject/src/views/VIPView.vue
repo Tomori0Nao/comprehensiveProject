@@ -15,7 +15,7 @@ import type { RouterLink } from 'vue-router';
                     </p>
                     <p> {{ vipInfo.expiration_time }} 过期<el-button type="warning" round>立即续费</el-button></p>
 
-                    <span class="score"> 会员积分: {{ vipInfo.intergral }}</span>
+                    <span class="score"> 会员积分: {{ vipInfo.integral }}</span>
                 </div>
             </div>
             <div>
@@ -43,7 +43,7 @@ const money: Number = 999
 interface VIPInfo {
     vip_user_account: string
     expiration_time: string
-    intergral: number
+    integral: number
     saving: number
 }
 
@@ -51,8 +51,8 @@ interface VIPInfo {
 const vipInfo: Ref<VIPInfo> = ref({
     vip_user_account: '',
     expiration_time: '',
-    intergral: NaN,
-    saving: NaN
+    integral: 0,
+    saving: 0
 })
 ///////////////////////////////////////////////////////////////////////////
 ////                          我新添加的                                //
@@ -65,13 +65,15 @@ axios({
     method: 'get',
     url: path + '/vipInfo',
     params: {
-        vipAccount: "66666vip",
+        vipAccount: "666666vip",
     }
 }).then((response) => {
     let respData = response.data.data;
+    console.log(respData);
+
     vipInfo.value.vip_user_account = respData.vipAccount;
     vipInfo.value.expiration_time = respData.expirationTime;
-    vipInfo.value.intergral = parseInt(respData.intergral);
+    vipInfo.value.integral = parseInt(respData.integral);
     vipInfo.value.saving = parseFloat(respData.saving);
 }).catch((error) => {
     console.log('出错...' + error);

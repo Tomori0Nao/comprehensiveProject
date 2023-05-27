@@ -18,11 +18,11 @@ interface GoodsCardInfo {
   goodsPrice: number
 }
 const goodCardInfoList: Ref<GoodsCardInfo[]> = ref([
-  {
-    goodsPictureAddr: goodsPictureAddr,
-    goodsName: '三星 s23',
-    goodsPrice: 6999
-  }
+  // {
+  //   goodsPictureAddr: goodsPictureAddr,
+  //   goodsName: '三星 s23',
+  //   goodsPrice: 6999
+  // }
 ])
 
 // 后端发送过来的图片，进行一下接收
@@ -36,7 +36,7 @@ const path = 'http://localhost:8080'
 
 axios({
   method: 'get',
-  url: path + '/images',
+  url: path + '/homeImages',
   params: { img: 'img1' }
 })
   .then((response) => {
@@ -56,6 +56,8 @@ axios({
       goodCardInfoList.value.push(tem)
       // console.log(goodCardInfoList, 'list')
     }
+    console.log(goodCardInfoList);
+
   })
   .catch((error) => {
     console.log('error = ' + error)
@@ -67,8 +69,8 @@ axios({
     <el-row :gutter="200">
       <el-col :span="4" v-for="(item, index) in goodCardInfoList">
         <RouterLink to="/goodsInfo">
-          <el-card :body-style="{ padding: '5px' }" style="width: 210px">
-            <img :key="index" :src="item.goodsPictureAddr" class="image" />
+          <el-card :body-style="{ padding: '5px' }" style="width: 200px">
+            <img :key="index" :src="item.goodsPictureAddr" class="image" style="width: 200px; height: 220px;" />
             <div class="bottom">
               <el-button text class="button">{{ item.goodsPrice }}</el-button>
             </div>
