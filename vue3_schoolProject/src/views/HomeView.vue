@@ -7,7 +7,7 @@ import type { RouterLink } from 'vue-router';
     <SlideShow></SlideShow>
     <el-divider content-position="left">精选好物</el-divider>
     <GoodsCol></GoodsCol>
-    <!-- <GoodsCol></GoodsCol> -->
+
   </div>
 </template>
   
@@ -56,5 +56,6 @@ a {
   opacity: 0.75;
   margin: 0;
   text-align: center;
-}</style>
+}
+</style>
   

@@ -193,7 +193,7 @@ axios({
   method: 'get',
   url: path + '/shoppingCart',
   params: {
-    account: 'sk23232'
+    account: '111'
   }
 }).then((response) => {
   const respData = response.data;

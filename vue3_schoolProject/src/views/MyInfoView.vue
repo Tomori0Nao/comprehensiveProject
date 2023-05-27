@@ -5,8 +5,13 @@ import type { RouterLink } from 'vue-router';
     <MallHeader></MallHeader>
     <el-tabs tab-position="left" style="height: 200px" class="demo-tabs">
       <el-tab-pane label="我的订单">我的订单
-        <el-table ref="multipleTableRef" :data="orderInfoTableData" style="width: 100%"
-          @selection-change="handleSelectionChange">
+      <OrderList></OrderList>
+      <!-- <el-table
+          ref="multipleTableRef"
+          :data="orderInfoTableData"
+          style="width: 100%"
+          @selection-change="handleSelectionChange"
+        >
           <el-table-column type="selection" width="55" />
           <el-table-column label="商品" width="120">
             <template #default="scope">
@@ -27,8 +32,8 @@ import type { RouterLink } from 'vue-router';
             <template #default="scope">
               <el-button type="danger" @click.prevent="deleteGoods(scope.$index, scope.row)" plain>删除</el-button>
             </template>
-          </el-table-column>
-        </el-table>
+            </el-table-column>
+          </el-table> -->
       </el-tab-pane>
 
       <el-tab-pane label="账号管理">账号管理
@@ -52,6 +57,7 @@ import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { ElTable } from 'element-plus'
 import axios from 'axios'
+import OrderList from '@/components/OrderList.vue'
 
 // ----订单信息
 // 用户账号

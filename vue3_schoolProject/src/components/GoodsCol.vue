@@ -33,35 +33,39 @@ const imagesURLPrefix = 'http://localhost:8080/static/images/'
 //   goodsPictureList.push(goodsPictureAddr);
 // }
 const path = 'http://localhost:8080'
+if (goodCardInfoList.value.length <= 0) {
+  axios({
+    method: 'get',
+    url: path + '/homeImages',
+    params: { img: 'img1' }
+  })
+    .then((response) => {
+      console.log(response.data)
+      var goodsInfo = response.data.data
+      console.log(goodsInfo);
 
-axios({
-  method: 'get',
-  url: path + '/homeImages',
-  params: { img: 'img1' }
-})
-  .then((response) => {
-    console.log(response.data)
-    var imageArr = response.data.data
-    for (var i = 0; i < imageArr.length; ++i) {
-      imageArr[i] = imagesURLPrefix + imageArr[i] + '.png'
-      let tem: GoodsCardInfo = {
-        // 临时变量 接受后端数据后，push到goodCardInfoList中
-        goodsPictureAddr: goodsPictureAddr,
-        goodsName: '三星 s23',
-        goodsPrice: 6933
+      for (var i = 0; i < goodsInfo.length; ++i) {
+        var image = imagesURLPrefix + goodsInfo[i].goods_image_name + '.png'
+        let tem: GoodsCardInfo = {
+          // 临时变量 接受后端数据后，push到goodCardInfoList中
+          goodsPictureAddr: goodsPictureAddr,
+          goodsName: '三星 s23',
+          goodsPrice: 6933
+        }
+        tem.goodsPictureAddr = image
+        tem.goodsName = goodsInfo[i].goods_image_name
+        tem.goodsPrice = parseFloat(goodsInfo[i].goods_price)
+        // console.log(imageArr[i])
+        // console.log(tem)
+        goodCardInfoList.value.push(tem)
+        // console.log(goodCardInfoList, 'list')
       }
-      tem.goodsPictureAddr = imageArr[i]
-      // console.log(imageArr[i])
-      // console.log(tem)
-      goodCardInfoList.value.push(tem)
-      // console.log(goodCardInfoList, 'list')
-    }
-    console.log(goodCardInfoList);
+    })
+    .catch((error) => {
+      console.log('error = ' + error)
+    })
+}
 
-  })
-  .catch((error) => {
-    console.log('error = ' + error)
-  })
 </script>
 
 <template>
