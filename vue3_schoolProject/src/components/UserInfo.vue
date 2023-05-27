@@ -33,7 +33,6 @@ const changeNakeName = () => {
   isChangeNakeName.value = true
   console.log(isChangeNakeName.value)
 }
-const input = ref('1111')
 </script>
 
 <template>

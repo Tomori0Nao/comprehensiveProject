@@ -6,7 +6,8 @@ import type { RouterLink } from 'vue-router';
     <el-tabs tab-position="left" style="height: 200px" class="demo-tabs">
       <el-tab-pane label="我的订单"
         >我的订单
-        <el-table
+        <OrderList></OrderList>
+        <!-- <el-table
           ref="multipleTableRef"
           :data="orderInfoTableData"
           style="width: 100%"
@@ -40,14 +41,13 @@ import type { RouterLink } from 'vue-router';
               >
             </template>
           </el-table-column>
-        </el-table>
+        </el-table> -->
       </el-tab-pane>
 
       <el-tab-pane label="账号管理"
         >账号管理
         <el-tabs type="border-card">
-          <el-tab-pane label="基本信息"
-            >
+          <el-tab-pane label="基本信息">
             <UserInfo></UserInfo>
           </el-tab-pane>
           <el-tab-pane label="账号头像">账号头像</el-tab-pane>
@@ -65,6 +65,7 @@ import UserInfo from '@/components/UserInfo.vue'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { ElTable } from 'element-plus'
+import OrderList from '@/components/OrderList.vue'
 
 // ----订单信息
 // 用户账号
@@ -100,7 +101,7 @@ interface UserAccountInfo {
   lastLoginTime: string
   userTotalConsumption: number
   userMoney: number
-  userAvatar:  string
+  userAvatar: string
 }
 
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
