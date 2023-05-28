@@ -70,6 +70,7 @@ axios({
           <el-card :body-style="{ padding: '5px' }" style="width: 210px">
             <img :key="index" :src="item.goodsPictureAddr" class="image" />
             <div class="bottom">
+              {{ item.goodsName }}
               <el-button text class="button">{{ item.goodsPrice }}</el-button>
             </div>
           </el-card>
