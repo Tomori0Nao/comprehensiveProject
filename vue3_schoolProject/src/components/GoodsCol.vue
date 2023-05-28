@@ -18,11 +18,11 @@ interface GoodsCardInfo {
   goodsPrice: number
 }
 const goodCardInfoList: Ref<GoodsCardInfo[]> = ref([
-  {
-    goodsPictureAddr: goodsPictureAddr,
-    goodsName: '三星 s23',
-    goodsPrice: 6999
-  }
+  // {
+  //   goodsPictureAddr: goodsPictureAddr,
+  //   goodsName: '三星 s23',
+  //   goodsPrice: 6999
+  // }
 ])
 
 // 后端发送过来的图片，进行一下接收
@@ -33,33 +33,39 @@ const imagesURLPrefix = 'http://localhost:8080/static/images/'
 //   goodsPictureList.push(goodsPictureAddr);
 // }
 const path = 'http://localhost:8080'
+if (goodCardInfoList.value.length <= 0) {
+  axios({
+    method: 'get',
+    url: path + '/homeImages',
+    params: { img: 'img1' }
+  })
+    .then((response) => {
+      console.log(response.data)
+      var goodsInfo = response.data.data
+      console.log(goodsInfo);
 
-axios({
-  method: 'get',
-  url: path + '/images',
-  params: { img: 'img1' }
-})
-  .then((response) => {
-    console.log(response.data)
-    var imageArr = response.data.data
-    for (var i = 0; i < imageArr.length; ++i) {
-      imageArr[i] = imagesURLPrefix + imageArr[i] + '.png'
-      let tem: GoodsCardInfo = {
-        // 临时变量 接受后端数据后，push到goodCardInfoList中
-        goodsPictureAddr: goodsPictureAddr,
-        goodsName: '三星 s23',
-        goodsPrice: 6933
+      for (var i = 0; i < goodsInfo.length; ++i) {
+        var image = imagesURLPrefix + goodsInfo[i].goods_image_name + '.png'
+        let tem: GoodsCardInfo = {
+          // 临时变量 接受后端数据后，push到goodCardInfoList中
+          goodsPictureAddr: goodsPictureAddr,
+          goodsName: '三星 s23',
+          goodsPrice: 6933
+        }
+        tem.goodsPictureAddr = image
+        tem.goodsName = goodsInfo[i].goods_image_name
+        tem.goodsPrice = parseFloat(goodsInfo[i].goods_price)
+        // console.log(imageArr[i])
+        // console.log(tem)
+        goodCardInfoList.value.push(tem)
+        // console.log(goodCardInfoList, 'list')
       }
-      tem.goodsPictureAddr = imageArr[i]
-      // console.log(imageArr[i])
-      // console.log(tem)
-      goodCardInfoList.value.push(tem)
-      // console.log(goodCardInfoList, 'list')
-    }
-  })
-  .catch((error) => {
-    console.log('error = ' + error)
-  })
+    })
+    .catch((error) => {
+      console.log('error = ' + error)
+    })
+}
+
 </script>
 
 <template>
@@ -67,8 +73,8 @@ axios({
     <el-row :gutter="200">
       <el-col :span="4" v-for="(item, index) in goodCardInfoList">
         <RouterLink to="/goodsInfo">
-          <el-card :body-style="{ padding: '5px' }" style="width: 210px">
-            <img :key="index" :src="item.goodsPictureAddr" class="image" />
+          <el-card :body-style="{ padding: '5px' }" style="width: 200px">
+            <img :key="index" :src="item.goodsPictureAddr" class="image" style="width: 200px; height: 220px;" />
             <div class="bottom">
               {{ item.goodsName }}
               <el-button text class="button">{{ item.goodsPrice }}</el-button>

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.project.campustaobao.mapper.GoodsMapper">
-    <select id="queryHomeGoods" resultType="String">
-        select goods_image_name from goods_info;
+<!--    首页商品图片检索暂时前面10张-->
+    <select id="queryHomeGoods" resultType="map">
+        select goods_name,goods_price,goods_image_name from goods_info where 1 = 1 limit 10 ;
     </select>
+    <!--    查询购物车中的商品信息-->
     <select id="queryShoppingCartGoodsByGoodsNo" resultMap="shoppingCartGoodsMap">
         select * from goods_info where goods_no = #{goodsNo};
     </select>
@@ -15,6 +17,24 @@
         <result property="goodsPrice" column="goods_price"/>
         <result property="vipDerate" column="vip_derate"/>
         <result property="maxNumOfSinglePurchase" column="max_num_single_purchase"/>
+    </resultMap>
+
+    <select id="queryGoodsInfoByGoodsNo" resultMap="goodsInfoMap">
+        select goods_no, goods_name, goods_price,
+               goods_brand,goods_weight,goods_origin,
+               goods_num,store_name
+               from goods_info where goods_no = #{goodsNo}
+    </select>
+    <resultMap id="goodsInfoMap" type="java.util.Map">
+        <id property="goodsNO" column="goods_no" />
+        <result property="goodsName" column="goods_name" />
+        <result property="goodsPrice" column="goods_price" />
+        <result property="goodsBrand" column="goods_brand" />
+        <result property="goodsWeight" column="goods_weight" />
+        <result property="goodsOrigin" column="goods_origin" />
+        <result property="goodsNum" column="goods_Num" />
+        <result property="storeName" column="store_name" />
+
     </resultMap>
 
 </mapper>

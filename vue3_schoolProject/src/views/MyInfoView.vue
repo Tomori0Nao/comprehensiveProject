@@ -4,10 +4,9 @@ import type { RouterLink } from 'vue-router';
   <div class="container">
     <MallHeader></MallHeader>
     <el-tabs tab-position="left" style="height: 200px" class="demo-tabs">
-      <el-tab-pane label="我的订单"
-        >我的订单
-        <OrderList></OrderList>
-        <!-- <el-table
+      <el-tab-pane label="我的订单">我的订单
+      <OrderList></OrderList>
+      <!-- <el-table
           ref="multipleTableRef"
           :data="orderInfoTableData"
           style="width: 100%"
@@ -20,12 +19,7 @@ import type { RouterLink } from 'vue-router';
             </template>
           </el-table-column>
           <el-table-column property="goodsName" label="商品名" width="120" />
-          <el-table-column
-            property="orderAddr"
-            label="收货地址"
-            show-overflow-tooltip
-            width="200"
-          />
+          <el-table-column property="orderAddr" label="收货地址" show-overflow-tooltip width="200" />
           <el-table-column property="storeName" label="店铺名" show-overflow-tooltip />
           <el-table-column property="goodsPrice" label="价格" show-overflow-tooltip />
           <el-table-column property="orderNo" label="订单编号" show-overflow-tooltip />
@@ -36,16 +30,13 @@ import type { RouterLink } from 'vue-router';
           </el-table-column>
           <el-table-column label="操作" show-overflow-tooltip>
             <template #default="scope">
-              <el-button type="danger" @click.prevent="deleteGoods(scope.$index, scope.row)" plain
-                >删除</el-button
-              >
+              <el-button type="danger" @click.prevent="deleteGoods(scope.$index, scope.row)" plain>删除</el-button>
             </template>
-          </el-table-column>
-        </el-table> -->
+            </el-table-column>
+          </el-table> -->
       </el-tab-pane>
 
-      <el-tab-pane label="账号管理"
-        >账号管理
+      <el-tab-pane label="账号管理">账号管理
         <el-tabs type="border-card">
           <el-tab-pane label="基本信息">
             <UserInfo></UserInfo>
@@ -65,6 +56,7 @@ import UserInfo from '@/components/UserInfo.vue'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { ElTable } from 'element-plus'
+import axios from 'axios'
 import OrderList from '@/components/OrderList.vue'
 
 // ----订单信息
@@ -104,6 +96,7 @@ interface UserAccountInfo {
   userAvatar: string
 }
 
+
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<OrderInfo[]>([])
 const fit: string = 'fill'
@@ -140,6 +133,22 @@ const userAccountInfo: Ref<UserAccountInfo> = ref({
   userMoney: 8888,
   userAvatar: '/src/assets/github3.svg'
 })
+/**
+ * 请求订单数据
+ */
+const path = 'http://localhost:8080/'
+axios({
+  method: 'get',
+
+
+
+}).then((response) => {
+
+}).catch((error) => {
+  console.log("error = " + error);
+
+})
+
 </script>
 
 <style scoped>
@@ -147,20 +156,25 @@ const userAccountInfo: Ref<UserAccountInfo> = ref({
   padding-left: 10%;
   padding-right: 10%;
 }
+
 .numberInput {
   display: inline-block;
   width: 50px;
 }
+
 .sum {
   display: inline-block;
 }
+
 .el-descriptions {
   margin-top: 20px;
 }
+
 .cell-item {
   display: flex;
   align-items: center;
 }
+
 .margin-top {
   margin-top: 20px;
 }

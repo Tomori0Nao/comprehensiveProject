@@ -9,7 +9,7 @@ public class User {
     private String registerDate;  //注册时间
     private String lastLoginTime;   //用户上次登录时间
     private String totalConsumption;  //总的消费额
-    private String cartNo;    //购物车编号
+    private String avatar;    //头像昵称
     private boolean VIP;
     public User(){}
 
@@ -52,5 +52,61 @@ public class User {
 
     public void setVIP(boolean VIP) {
         this.VIP = VIP;
+    }
+
+    public String getTel() {
+        return tel;
+    }
+
+    public void setTel(String tel) {
+        this.tel = tel;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getBalance() {
+        return balance;
+    }
+
+    public void setBalance(String balance) {
+        this.balance = balance;
+    }
+
+    public String getRegisterDate() {
+        return registerDate;
+    }
+
+    public void setRegisterDate(String registerDate) {
+        this.registerDate = registerDate;
+    }
+
+    public String getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(String lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public String getTotalConsumption() {
+        return totalConsumption;
+    }
+
+    public void setTotalConsumption(String totalConsumption) {
+        this.totalConsumption = totalConsumption;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 }

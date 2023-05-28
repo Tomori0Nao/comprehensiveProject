@@ -42,4 +42,20 @@
         <result property="integral" column="integral"/>
         <result property="saving" column="saving"/>
     </resultMap>
+    <select id="queryUserInfoByAccount" resultMap="userInfo">
+        select user_account,user_name,user_tel,
+               total_consumption,user_balance,
+               last_login_time,user_avatar
+               from user_info where user_account = #{account}
+    </select>
+    <resultMap id="userInfo" type="map">
+        <id property="account" column="user_account"/>
+        <result property="name" column="user_name" />
+        <result property="tel" column="user_tel" />
+        <result property="totalConsumption" column="total_consumption" />
+        <result property="balance" column="user_balance" />
+        <result property="registerDate" column="register_date" />
+        <result property="lastLoginTime" column="last_login_time" />
+        <result property="avatar" column="user_avatar" />
+    </resultMap>
 </mapper>

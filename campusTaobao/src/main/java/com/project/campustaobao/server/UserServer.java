@@ -5,6 +5,7 @@ import com.project.campustaobao.pojo.User;
 import com.project.campustaobao.pojo.VIPUser;
 
 import java.util.List;
+import java.util.Map;
 
 //服务层接口 对接的是 controller
 public interface UserServer {
@@ -14,4 +15,6 @@ public interface UserServer {
      boolean register(String password,String tel);
      VIPUser queryVIPUserByAccount(String vipAccount);
      List<ShoppingCartGoods> queryAllShoppingCartGoods(String account);
+
+     Map<String,String> queryUserInfoByAccount(String account);
 }

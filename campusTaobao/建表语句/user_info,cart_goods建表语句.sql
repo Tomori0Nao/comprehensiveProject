@@ -21,12 +21,13 @@ create table goods_info
    goods_price          varchar(15),
    vip_derate           varchar(15),
    goods_purchase_price varchar(15),
+   max_num_single_purchase int,
    goods_brand          varchar(20),
    goods_image_name     varchar(100),
    goods_weight         varchar(20),
    goods_origin         varchar(50),
    goods_special_info   varchar(50),
-   goods_num            varchar(20),
+   goods_num            int,
    goods_month_sales    varchar(10),
    goods_purchase_date  date,
    store_no             varchar(15),
@@ -35,22 +36,11 @@ create table goods_info
 drop table if exists goods_info;
 insert into goods_info  
 values
-('sh001','金玉兰白酒','酒','169.89','10.36','89.99','金玉兰','homeGoods-1','500g','重庆市','待客送礼，不错选择','100','50','2023/5/16','store001'),
-('sh002','吾爱手机','数码产品','1699.79','99.99','89.99','吾爱','homeGoods-2','100g','北京市','便利生活，拍照必选','100','50','2023/5/16','store002'),
-('sh003','金玉兰白酒','酒','169.89','20.00','89.99','金玉兰','homeGoods-1','500g','重庆市','待客送礼，不错选择','100','50','2023/5/16','store001')
+('sh001','金玉兰白酒','酒','169.89','10.36','89.99',10,'金玉兰','homeGoods-1','500g','重庆市','待客送礼，不错选择',99,'50','2023/5/16','store001'),
+('sh002','吾爱手机','数码产品','1699.79','99.99','89.99',20,'吾爱','homeGoods-2','100g','北京市','便利生活，拍照必选',54,'50','2023/5/16','store002'),
+('sh003','金玉兰白酒','酒','169.89','20.00','89.99',30,'金玉兰','homeGoods-1','500g','重庆市','待客送礼，不错选择',86,'50','2023/5/16','store001')
 ;
-/*==============================================================*/
-/* Table: shopping_cart                                         */
-/*==============================================================*/
-create table shopping_cart
-(
-   user_account         varchar(15) not null,
-   goods_no             varchar(20),
-   cart_goods_num       varchar(10),
-   primary key (user_account),
-   foreign key (user_account) references user_info (user_account),
-   foreign key (goods_no) references goods_info (goods_no)
-);
+
 /*==============================================================*/
 /* Table: user_info                                             */
 /*==============================================================*/
@@ -64,7 +54,7 @@ create table user_info
    register_date        date,
    last_login_time      datetime,
    total_consumption    varchar(50),
-   cart_no              varchar(10),
+   user_avatar          varchar(50),
    primary key (user_account)
 )
 ;

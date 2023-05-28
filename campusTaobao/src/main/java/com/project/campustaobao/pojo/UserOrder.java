@@ -9,7 +9,7 @@ package com.project.campustaobao.pojo;
 public class UserOrder {
     private String orderId;
     private String orderTime;
-    private String deliveryAddressNumber;
+    private String deliveryAddress;
     private String goodsPrice;
     private String actualPayment;
     private String goodsName;
@@ -19,7 +19,7 @@ public class UserOrder {
     public UserOrder(String orderId, String orderTime, String deliveryAddressNumber, String goodsPrice, String actualPayment, String goodsName, String goodsNumber) {
         this.orderId = orderId;
         this.orderTime = orderTime;
-        this.deliveryAddressNumber = deliveryAddressNumber;
+        this.deliveryAddress = deliveryAddressNumber;
         this.goodsPrice = goodsPrice;
         this.actualPayment = actualPayment;
         this.goodsName = goodsName;
@@ -42,12 +42,12 @@ public class UserOrder {
         this.orderTime = orderTime;
     }
 
-    public String getDeliveryAddressNumber() {
-        return deliveryAddressNumber;
+    public String getDeliveryAddress() {
+        return deliveryAddress;
     }
 
-    public void setDeliveryAddressNumber(String deliveryAddressNumber) {
-        this.deliveryAddressNumber = deliveryAddressNumber;
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
     }
 
     public String getGoodsPrice() {
