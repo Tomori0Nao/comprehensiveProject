@@ -25,6 +25,8 @@ const handleEdit = (index: number, row: Address) => {
   console.log(index, row, 'edit')
 }
 const handleDelete = (index: number, row: Address) => {
+  // 先发送请求，收到后端发来的响应后，再删除数组中订单
+  
   console.log(index, row, 'delete')
   addressList.value.splice(index, 1)
 }
