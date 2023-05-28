@@ -11,16 +11,21 @@ public class UserOrder {
     private String orderTime;
     private String deliveryAddress;
     private String goodsPrice;
+    private String vipDerate;
     private String actualPayment;
     private String goodsName;
     private String goodsNumber;
     public UserOrder(){}
 
-    public UserOrder(String orderId, String orderTime, String deliveryAddressNumber, String goodsPrice, String actualPayment, String goodsName, String goodsNumber) {
+    public UserOrder(String orderId, String orderTime,
+                     String deliveryAddress, String goodsPrice,
+                     String vipDerate, String actualPayment,
+                     String goodsName, String goodsNumber) {
         this.orderId = orderId;
         this.orderTime = orderTime;
-        this.deliveryAddress = deliveryAddressNumber;
+        this.deliveryAddress = deliveryAddress;
         this.goodsPrice = goodsPrice;
+        this.vipDerate = vipDerate;
         this.actualPayment = actualPayment;
         this.goodsName = goodsName;
         this.goodsNumber = goodsNumber;
@@ -72,6 +77,14 @@ public class UserOrder {
 
     public void setGoodsName(String goodsName) {
         this.goodsName = goodsName;
+    }
+
+    public String getVipDerate() {
+        return vipDerate;
+    }
+
+    public void setVipDerate(String vipDerate) {
+        this.vipDerate = vipDerate;
     }
 
     public String getGoodsNumber() {

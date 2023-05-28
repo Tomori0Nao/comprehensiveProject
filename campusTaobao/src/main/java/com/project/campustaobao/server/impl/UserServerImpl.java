@@ -1,8 +1,8 @@
 package com.project.campustaobao.server.impl;
 
 
+import com.project.campustaobao.mapper.VIPUserMapper;
 import com.project.campustaobao.pojo.ShoppingCartGoods;
-import com.project.campustaobao.pojo.User;
 import com.project.campustaobao.mapper.UserMapper;
 import com.project.campustaobao.pojo.VIPUser;
 import com.project.campustaobao.server.ShoppingCartServer;
@@ -20,6 +20,8 @@ import java.util.Map;
 public class UserServerImpl implements UserServer {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private VIPUserMapper vipUserMapper;
     @Autowired
     private ShoppingCartServer shoppingCartServer;
     /**
@@ -41,8 +43,17 @@ public class UserServerImpl implements UserServer {
      */
     @Override
     public boolean login(String account, String password) {
-        Map<String,String> map = userMapper.login(account,password);
-        return map != null;
+        return userMapper.login(account,password) != null;
+    }
+
+    /**
+     * 判断是否是VIP用户
+     * @param account 账号
+     * @return 是VIP用户返回true,否则返回false
+     */
+    @Override
+    public boolean isVIPUser(String account) {
+        return vipUserMapper.queryVIPAccountByAccount(account);
     }
 
     @Override

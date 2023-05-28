@@ -1,5 +1,4 @@
 package com.project.campustaobao.mapper;
-import com.project.campustaobao.pojo.User;
 import com.project.campustaobao.pojo.VIPUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!--这是执行SQL语句的层次-->
+<mapper namespace="com.project.campustaobao.mapper.VIPUserMapper">
+
+<!--    在application中已经配置com.project.campustaobao.entity-->
+<!--    所以这里的返回类型User直接写就行-->
+
+
+
+<!--    查询VIP用户是否存在-->
+    <select id="queryVIPUserByAccount" resultType="String">
+        select vip_user_account from vip_user where vip_user_account = #{account}
+    </select>
+</mapper>
