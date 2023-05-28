@@ -13,6 +13,7 @@ const goodsPictureAddr =
 // 商品名称
 // 商品价格
 interface GoodsCardInfo {
+  goodsNo: string
   goodsPictureAddr: string
   goodsName: string
   goodsNo: string
@@ -38,7 +39,7 @@ if (goodCardInfoList.value.length <= 0) {
   axios({
     method: 'get',
     url: path + '/homeImages',
-    params: { img: 'img1' }
+    params: { para1: 'img1' }
   })
     .then((response) => {
       console.log(response.data)

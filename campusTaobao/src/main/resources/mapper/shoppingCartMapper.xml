@@ -6,6 +6,20 @@
         select * from shopping_cart where user_account = #{account};
     </select>
 
+    <!--    购物车用到  查找购物车中某个商品-->
+    <!--    查询购物车中某编号对应的的商品信息-->
+    <select id="queryShoppingCartGoodsByGoodsNo" resultMap="shoppingCartGoodsMap">
+        select * from goods_info where goods_no = #{goodsNo};
+    </select>
+    <resultMap id="shoppingCartGoodsMap" type="Goods">
+        <result property="goodsName" column="goods_name"/>
+        <result property="goodsImageName" column="goods_image_name"/>
+        <result property="storeName" column="store_name"/>
+        <result property="goodsPrice" column="goods_price"/>
+        <result property="vipDerate" column="vip_derate"/>
+        <result property="maxNumOfSinglePurchase" column="max_num_single_purchase"/>
+    </resultMap>
+
 
 
 </mapper>

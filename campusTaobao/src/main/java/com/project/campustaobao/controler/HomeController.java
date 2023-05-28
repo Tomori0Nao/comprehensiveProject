@@ -16,12 +16,18 @@ import java.util.Map;
 public class HomeController {
     @Autowired
     private GoodsServer goodsServer;
-    @GetMapping("/homeImages")
-    public ResultMessage<List<Map<String, String>>> getImages(){
+    private int begin = 0;
+    private static final int count = 5;
+    @GetMapping("/homeGoods")
+    public ResultMessage<List<Map<String, String>>> getHomeGoods(){
         ResultMessage<List<Map<String,String>>> resultMsg = new ResultMessage<>(ResultMessage.SUCCESS_CODE,"ok",
-                goodsServer.queryGoodsImages("homeGoods-"));
+                goodsServer.queryHomeGoods(begin,count));
         //System.out.println("img");
-        System.out.println();
+        System.out.println("主页请求图片");
+        begin += count;
+        if(resultMsg.getData().size() == 0){
+            begin = 0;
+        }
         return resultMsg;
     }
 }

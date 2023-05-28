@@ -15,9 +15,13 @@ import java.util.Map;
 @Service
 public class ShoppingCartImpl implements ShoppingCartServer {
     @Autowired
-    private GoodsMapper goodsMapper;
-    @Autowired
     private ShoppingCartMapper cartMapper;
+
+    /**
+     * 返回用户购物车中所有商品
+     * @param account 用户账号
+     * @return 用户购物车中的商品集合
+     */
     @Override
     public List<ShoppingCartGoods> queryAllShoppingCartGoods(String account) {
         List<Map<String,Object>> cartGoodsList = cartMapper.queryAllShoppingCartGoods(account);
@@ -28,7 +32,7 @@ public class ShoppingCartImpl implements ShoppingCartServer {
             //拿着取出来的编号查找goods_info中的实际信息，这样是为了获得商品的具体信息
             //为什么没用多对一处理?
             // 因为shoppingCart中没有Goods类型的属性
-            Goods goods = goodsMapper.queryShoppingCartGoodsByGoodsNo(goodsNo);
+            Goods goods = queryShoppingCartGoodsByGoodsNo(goodsNo);
             String totalCost = (String)cartGoods.get("total_cost");
             int goodsNumber =
                     Integer.parseInt((String)cartGoods.get("goods_num"));
@@ -37,5 +41,15 @@ public class ShoppingCartImpl implements ShoppingCartServer {
             goodsList.add(shoppingCartGoods);
         }
         return goodsList;
+    }
+
+    /**
+     * 返回购物车中某商品的信息
+     * @param goodsNo 商品编号
+     * @return 购物车中该商品的信息
+     */
+    @Override
+    public Goods queryShoppingCartGoodsByGoodsNo(String goodsNo) {
+        return cartMapper.queryShoppingCartGoodsByGoodsNo(goodsNo);
     }
 }

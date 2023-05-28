@@ -11,10 +11,11 @@ import java.util.Map;
 public interface UserServer {
      boolean isRegistered(String account);
      boolean login(String account,String password);
-
+     boolean isVIPUser(String account);
      boolean register(String password,String tel);
      VIPUser queryVIPUserByAccount(String vipAccount);
      List<ShoppingCartGoods> queryAllShoppingCartGoods(String account);
 
      Map<String,String> queryUserInfoByAccount(String account);
+
 }
