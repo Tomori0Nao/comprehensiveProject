@@ -15,6 +15,7 @@ const goodsPictureAddr =
 interface GoodsCardInfo {
   goodsPictureAddr: string
   goodsName: string
+  goodsNo: string
   goodsPrice: number
 }
 const goodCardInfoList: Ref<GoodsCardInfo[]> = ref([
@@ -42,12 +43,13 @@ if (goodCardInfoList.value.length <= 0) {
     .then((response) => {
       console.log(response.data)
       var goodsInfo = response.data.data
-      console.log(goodsInfo);
+      console.log(goodsInfo)
 
       for (var i = 0; i < goodsInfo.length; ++i) {
         var image = imagesURLPrefix + goodsInfo[i].goods_image_name + '.png'
         let tem: GoodsCardInfo = {
           // 临时变量 接受后端数据后，push到goodCardInfoList中
+          goodsNo: '14543',
           goodsPictureAddr: goodsPictureAddr,
           goodsName: '三星 s23',
           goodsPrice: 6933
@@ -65,7 +67,6 @@ if (goodCardInfoList.value.length <= 0) {
       console.log('error = ' + error)
     })
 }
-
 </script>
 
 <template>
@@ -74,7 +75,12 @@ if (goodCardInfoList.value.length <= 0) {
       <el-col :span="4" v-for="(item, index) in goodCardInfoList">
         <RouterLink to="/goodsInfo">
           <el-card :body-style="{ padding: '5px' }" style="width: 200px">
-            <img :key="index" :src="item.goodsPictureAddr" class="image" style="width: 200px; height: 220px;" />
+            <img
+              :key="index"
+              :src="item.goodsPictureAddr"
+              class="image"
+              style="width: 200px; height: 220px"
+            />
             <div class="bottom">
               {{ item.goodsName }}
               <el-button text class="button">{{ item.goodsPrice }}</el-button>

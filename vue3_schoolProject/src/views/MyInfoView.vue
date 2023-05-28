@@ -3,49 +3,22 @@ import type { RouterLink } from 'vue-router';
 <template>
   <div class="container">
     <MallHeader></MallHeader>
-    <el-tabs tab-position="left" style="height: 200px" class="demo-tabs">
-      <el-tab-pane label="我的订单">我的订单
-      <OrderList></OrderList>
-      <!-- <el-table
-          ref="multipleTableRef"
-          :data="orderInfoTableData"
-          style="width: 100%"
-          @selection-change="handleSelectionChange"
-        >
-          <el-table-column type="selection" width="55" />
-          <el-table-column label="商品" width="120">
-            <template #default="scope">
-              <el-avatar :src="scope.row.goodsPicture" :size="100" :fit="fit" shape="square" />
-            </template>
-          </el-table-column>
-          <el-table-column property="goodsName" label="商品名" width="120" />
-          <el-table-column property="orderAddr" label="收货地址" show-overflow-tooltip width="200" />
-          <el-table-column property="storeName" label="店铺名" show-overflow-tooltip />
-          <el-table-column property="goodsPrice" label="价格" show-overflow-tooltip />
-          <el-table-column property="orderNo" label="订单编号" show-overflow-tooltip />
-          <el-table-column label="数量">
-            <template #default="scope">
-              <span>{{ scope.row.goodsNum }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column label="操作" show-overflow-tooltip>
-            <template #default="scope">
-              <el-button type="danger" @click.prevent="deleteGoods(scope.$index, scope.row)" plain>删除</el-button>
-            </template>
-            </el-table-column>
-          </el-table> -->
+    <el-tabs tab-position="left" class="demo-tabs">
+      <el-tab-pane label="我的订单"
+        >我的订单
+        <OrderList></OrderList>
       </el-tab-pane>
 
-      <el-tab-pane label="账号管理">账号管理
+      <el-tab-pane label="账号管理"
+        >账号管理
         <el-tabs type="border-card">
           <el-tab-pane label="基本信息">
             <UserInfo></UserInfo>
           </el-tab-pane>
-          <el-tab-pane label="账号头像">账号头像</el-tab-pane>
           <el-tab-pane label="登录历史">登录历史</el-tab-pane>
         </el-tabs>
       </el-tab-pane>
-      <el-tab-pane label="地址管理">地址管理</el-tab-pane>
+      <el-tab-pane label="地址管理"><AddressAdmin></AddressAdmin></el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -58,6 +31,7 @@ import type { Ref } from 'vue'
 import { ElTable } from 'element-plus'
 import axios from 'axios'
 import OrderList from '@/components/OrderList.vue'
+import AddressAdmin from '@/components/addressAdmin.vue'
 
 // ----订单信息
 // 用户账号
@@ -95,7 +69,6 @@ interface UserAccountInfo {
   userMoney: number
   userAvatar: string
 }
-
 
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<OrderInfo[]>([])
@@ -138,17 +111,12 @@ const userAccountInfo: Ref<UserAccountInfo> = ref({
  */
 const path = 'http://localhost:8080/'
 axios({
-  method: 'get',
-
-
-
-}).then((response) => {
-
-}).catch((error) => {
-  console.log("error = " + error);
-
+  method: 'get'
 })
-
+  .then((response) => {})
+  .catch((error) => {
+    console.log('error = ' + error)
+  })
 </script>
 
 <style scoped>

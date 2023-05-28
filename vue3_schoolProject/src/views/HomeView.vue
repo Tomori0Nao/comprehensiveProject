@@ -22,15 +22,6 @@ import MallHeader from '../components/MallHeader.vue';
   padding-left: 10%;
   padding-right: 10%;
 }
-
-/* .HomeHeader {
-    background-color: rgb(225, 117, 117);
-  } */
-/* .Title {
-    font-size: large;
-    color: rgb(204, 232, 255);
-    line-height: 2.5;
-  } */
 a {
   text-decoration: none;
 }

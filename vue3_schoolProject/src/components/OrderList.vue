@@ -13,6 +13,8 @@ import { ElTable } from 'element-plus'
 // 商品名称
 // 商品图片
 // 店铺名称
+// 减免
+// 实付款
 interface OrderInfo {
   userAccount: string
   orderNo: string
@@ -23,6 +25,8 @@ interface OrderInfo {
   goodsNum: number
   goodsPicture: string
   storeName: string
+  vipPrice: number
+  totalCost: number
 }
 // ----用户信息
 // 用户账号
@@ -66,7 +70,9 @@ const orderInfoTableData: Ref<OrderInfo[]> = ref([
     goodsName: '三星s23',
     goodsNum: 2,
     goodsPicture: '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png',
-    storeName: 'git商城'
+    storeName: 'git商城',
+    vipPrice: 10,
+    totalCost: 2887
   }
 ])
 const userAccountInfo: Ref<UserAccountInfo> = ref({
@@ -97,8 +103,10 @@ const userAccountInfo: Ref<UserAccountInfo> = ref({
       <el-table-column property="goodsName" label="商品名" width="120" />
       <el-table-column property="orderAddr" label="收货地址" show-overflow-tooltip width="200" />
       <el-table-column property="storeName" label="店铺名" show-overflow-tooltip />
-      <el-table-column property="goodsPrice" label="价格" show-overflow-tooltip />
+      <el-table-column property="goodsPrice" label="单价" show-overflow-tooltip />
+      <el-table-column property="vipPrice" label="减免" show-overflow-tooltip />
       <el-table-column property="orderNo" label="订单编号" show-overflow-tooltip />
+      <el-table-column property="totalCost" label="实付款" show-overflow-tooltip />
       <el-table-column label="数量">
         <template #default="scope">
           <span>{{ scope.row.goodsNum }}</span>
