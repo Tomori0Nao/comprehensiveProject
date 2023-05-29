@@ -82,9 +82,7 @@ const onAddItem = () => {
       <el-table-column fixed="right" label="操作" width="200">
         <template #default="scope">
           <RouterLink to="/ChangeAddress">
-            <el-button size="small" link type="primary" @click="handleEdit(scope.$index, scope.row)"
-              >Edit</el-button
-            >
+            <el-button size="small" link type="primary" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
           </RouterLink>
 
           <el-button size="small" type="primary" link @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
