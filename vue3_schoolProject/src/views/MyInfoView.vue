@@ -31,7 +31,7 @@ import type { Ref } from 'vue'
 import { ElTable } from 'element-plus'
 import axios from 'axios'
 import OrderList from '@/components/OrderList.vue'
-import AddressAdmin from '@/components/addressAdmin.vue'
+import AddressAdmin from '@/components/AddressAdmin.vue'
 
 // ----订单信息
 // 用户账号

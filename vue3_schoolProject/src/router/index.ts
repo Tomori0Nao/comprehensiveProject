@@ -63,14 +63,16 @@ const router = createRouter({
     },
     {
       path: '/Admin',
-      name: 'Admin',
-      component: () => import('../views/AdminView.vue')
-    },
-    {
-      path: '/ChangeAddress',
-      name: 'ChangeAddress',
-      component: () => import('../views/AdminView.vue')
-    },
+      // name: 'Admin',
+      component: () => import('../views/AdminViewTest.vue'),
+      children: [
+        {
+          path: 'Category',
+          name: 'Category',
+          component: () => import('../views/CategoryView.vue')
+        }
+      ]
+    }
   ]
 })
 
