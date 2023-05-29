@@ -2,3 +2,4 @@
 foreign key (user_account) reference user_info(user_account)
 这跟我们之前sqlserver直接写表名不一样！！！！跟上列名。
 2.img渲染不上问题，异步请求，接收的数据写到ref中
+3.vue2的axios的方法是method,不是methods

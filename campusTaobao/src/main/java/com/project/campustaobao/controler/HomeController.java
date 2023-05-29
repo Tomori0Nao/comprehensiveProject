@@ -25,6 +25,7 @@ public class HomeController {
         //System.out.println("img");
         System.out.println("主页请求图片");
         begin += count;
+        System.out.println(begin);
         if(resultMsg.getData().size() == 0){
             begin = 0;
         }

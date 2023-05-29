@@ -29,9 +29,11 @@ public class ShoppingCartImpl implements ShoppingCartServer {
         //在map中取出来商品编号
         for(Map<String,Object> cartGoods : cartGoodsList){
             String goodsNo = (String)cartGoods.get("goods_no");
-            //拿着取出来的编号查找goods_info中的实际信息，这样是为了获得商品的具体信息
-            //为什么没用多对一处理?
-            // 因为shoppingCart中没有Goods类型的属性
+            /*
+                拿着取出来的编号查找goods_info中的实际信息，这样是为了获得商品的具体信息
+                为什么没用多对一处理?
+                因为shoppingCart中没有Goods类型的属性
+            */
             Goods goods = queryShoppingCartGoodsByGoodsNo(goodsNo);
             String totalCost = (String)cartGoods.get("total_cost");
             int goodsNumber =

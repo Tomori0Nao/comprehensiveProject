@@ -1,5 +1,6 @@
 package com.project.campustaobao.mapper;
 
+import com.project.campustaobao.pojo.VIPUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -11,5 +12,7 @@ public interface VIPUserMapper {
      * @param account
      * @return 是vip用户则返回true
      */
-    boolean queryVIPAccountByAccount(String account);
+    boolean isVIPUser(String account);
+
+    VIPUser queryVIPUserByAccount(String vipAccount);
 }

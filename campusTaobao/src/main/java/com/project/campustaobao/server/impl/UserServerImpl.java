@@ -31,8 +31,8 @@ public class UserServerImpl implements UserServer {
      */
     @Override
     public boolean isRegistered(String account) {
-        String queryAccount = userMapper.queryAccountByAccount(account);
-        return queryAccount != null;
+        String a = userMapper.queryAccountByAccount(account);
+        return a != null;
     }
 
     /**
@@ -53,27 +53,27 @@ public class UserServerImpl implements UserServer {
      */
     @Override
     public boolean isVIPUser(String account) {
-        return vipUserMapper.queryVIPAccountByAccount(account);
+        return vipUserMapper.isVIPUser(account);
     }
 
     @Override
-    public boolean register(String password, String tel){
-        //注册账号之前首先检查账号是否存在
+    public boolean register(String password,String name,String tel){
         String account = RegisterUser.generateAccount(tel);
-        //如果用户已经注册过就返回false
+        /*
+            注册账号之前首先检查账号是否存在
+            如果用户已经注册过就返回false
+        */
         if(isRegistered(account)){
             return false;
         }else{
             Date date = new Date();
             String registerDate = DateUtils.formatDate(date);
-            return userMapper.register(account,password,tel,registerDate);
+            return userMapper.register(account,password,name,tel,registerDate);
         }
-
     }
-
     @Override
     public VIPUser queryVIPUserByAccount(String vipAccount) {
-        return userMapper.queryVIPUserByAccount(vipAccount);
+        return vipUserMapper.queryVIPUserByAccount(vipAccount);
     }
 
     @Override

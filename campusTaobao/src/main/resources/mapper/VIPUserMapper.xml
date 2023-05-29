@@ -9,7 +9,17 @@
 
 
 <!--    查询VIP用户是否存在-->
-    <select id="queryVIPUserByAccount" resultType="String">
+    <select id="isVIPUser" resultType="String">
         select vip_user_account from vip_user where vip_user_account = #{account}
     </select>
+    <!--    查询VIP用户的信息-->
+    <select id="queryVIPUserByAccount" resultMap="vipMap">
+        select * from vip_user where vip_user_account = #{vipAccount}
+    </select>
+    <resultMap id="vipMap" type="VIPUser">
+        <result property="vipAccount" column="vip_user_account"/>
+        <result property="expirationTime" column="expiration_time"/>
+        <result property="integral" column="integral"/>
+        <result property="saving" column="saving"/>
+    </resultMap>
 </mapper>

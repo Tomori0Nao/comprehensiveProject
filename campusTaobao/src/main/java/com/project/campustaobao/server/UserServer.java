@@ -12,7 +12,14 @@ public interface UserServer {
      boolean isRegistered(String account);
      boolean login(String account,String password);
      boolean isVIPUser(String account);
-     boolean register(String password,String tel);
+
+     /**
+      * 注册一个账号，并插入到数据库
+      * @param password 用户注册时的密码
+      * @param tel 用户注册时填写的电话号码
+      * @return 插入成功即注册成功返回false
+      */
+     boolean register(String password,String name,String tel);
      VIPUser queryVIPUserByAccount(String vipAccount);
      List<ShoppingCartGoods> queryAllShoppingCartGoods(String account);
 

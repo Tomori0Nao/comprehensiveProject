@@ -1,148 +1,295 @@
-<script lang="ts" setup>
-import { ElMessage, ElMessageBox } from 'element-plus'
-</script> 
 <template>
-    <div class="box">
-        <div class="box-left">&nbsp;</div>
-        <el-form ref="loginForm" :model="form" :rules="rules" label-width="80px" class="login-box">
-            <h3 class="login-title">欢迎注册</h3>
-            <el-form-item label="电话号码" prop="username" label-width="80px">
-                <el-input type="text" placeholder="请输入11位电话号码" v-model="form.tel" size="medium" />
-            </el-form-item>
-            <el-form-item label="密码" prop="password">
-                <el-input type="password" placeholder="请输入密码" v-model="form.password" size="medium" />
-            </el-form-item>
-            <el-form-item label="确认密码" prop="password">
-                <el-input type="password" placeholder="请再次输入密码" v-model="form.password1" size="medium" />
-            </el-form-item>
-            <el-form-item>
-                <el-button type="primary" v-on:click="register">提交</el-button>
-                <el-button type="success" v-on:click="resetForm" style="margin-left: 60px;">重新填写</el-button>
-            </el-form-item>
+    <div class="rg_layout">
+        <div class="rg_left">
+            <p>新用户注册</p>
+            <p>USER REGISTER</p>
+        </div>
+        <div class="rg_center">
+            <div class="rg_form">
+                <div style="margin: 50px 0;"></div>
+                <el-form ref="form" :model="form" :rules="rules" label-width="80px">
+                    <!-- <el-form-item label="Email" prop="Email">
+                        <el-col :span="12">
+                            <el-input placeholder="请输入邮箱号" v-model="form.email"></el-input>
+                        </el-col>
+                        <el-col :span="9">
+                            <el-button type="success" plain @click="sendEmail">发送邮件验证</el-button>
+                        </el-col>
+                    </el-form-item> -->
+                    <el-form-item label="电话号码" prop="mobileNumber">
+                        <el-col :span="15">
+                            <el-input placeholder="请输入11位手机号" v-model="form.tel"></el-input>
+                        </el-col>
+                    </el-form-item>
+                    <el-form-item label="用户昵称" prop="username">
+                        <el-col :span="15">
+                            <el-input placeholder="请输入用户昵称" v-model="form.username"></el-input>
+                        </el-col>
+                    </el-form-item>
+                    <el-form-item label="密码">
+                        <el-col :span="15">
+                            <el-input type="password" placeholder="请输入密码" v-model="form.password"></el-input>
+                        </el-col>
+                    </el-form-item>
+                    <el-form-item label="确认密码">
+                        <el-col :span="15">
+                            <el-input type="password" placeholder="请再次输入密码" v-model="form.password1"></el-input>
+                        </el-col>
+                    </el-form-item>
+                    <el-form-item label="性别">
+                        <el-col :span="5">
+                            <el-radio v-model="form.radio" label="1">男</el-radio>
+                        </el-col>
+                        <el-col :span="3">
+                            <el-radio v-model="form.radio" label="2">女</el-radio>
+                        </el-col>
+                    </el-form-item>
 
-        </el-form>
-
-
+                    <!-- <el-form-item label="验证码">
+                        <el-col :span="15">
+                            <el-input type="text" placeholder="验证码将会发送到您的邮箱" v-model="form.text"
+                                oninput="value=value.replace(/\D/g,'')" maxlength="6" show-word-limit>
+                            </el-input>
+                        </el-col>
+                    </el-form-item> -->
+                    <el-form-item>
+                        <el-col :span="20">
+                            <el-button type="primary" @click="onSubmit">立即注册</el-button>
+                        </el-col>
+                    </el-form-item>
+                </el-form>
+            </div>
+        </div>
+        <div class="rg_right">
+            <p>已有账号?
+                <el-link icon="el-icon-user-solid" type="primary" href="/login">立刻登陆</el-link>
+            </p>
+        </div>
 
     </div>
 </template>
-<script lang="ts">
-import axios from 'axios';
-import { h, ref } from 'vue'
-//没有输入账号或密码则提示
-const open1 = () => {
-    ElMessage({
-        dangerouslyUseHTMLString: true,
-        message: '<strong>电话号码或密码不能为空</strong>',
-    })
-}
-// 没有输入验证码则提示
-const open2 = () => {
-    ElMessage({
-        dangerouslyUseHTMLString: true,
-        message: '<strong>请检查两次输入的密码</strong>',
-    })
-}
+  
+<script>
+import axios from "axios";
+
 export default {
-    name: "Content",
-    data() {
+    // mounted() {
+    //     this.$store.state.yesOrNo = false
+    // },
+    name: "signUp",
+    data: function () {
         return {
             form: {
+                // email: '',
                 tel: '',
+                username: '',
                 password: '',
-                password1: ''
+                password1: '',
+                radio: '1',
+                date: '',
+                text: ''
             },
-
-            // 表单验证，需要在 el-form-item 元素中增加 prop 属性
-            rules: {
-                username: [
-                    { required: true, message: '电话号码不可为空', trigger: 'blur' }
-                ],
-                password: [
-                    { required: true, message: '密码不可为空', trigger: 'blur' }
-                ],
-                password1: [
-                    { required: true, message: '密码不可为空', trigger: 'blur' }
-                ]
-            },
-            // 对话框显示和隐藏
-            dialogVisible: false
+            // rules: {
+            //     Email: [{ required: true, message: '请输入邮箱', trigger: 'blur' }],
+            //     mobileNumber: [
+            //         { required: true, message: "请输入电话号码", trigger: "blur" },
+            //     ],
+            //     username: [
+            //         { required: true, message: "请输入昵称", trigger: "blur" },
+            //     ]
+            // },
+            msg: ''
         }
     },
     methods: {
-        register: function () {
-            if (this.form.tel == '' || this.form.password == '' || this.form.password1 == '') {
-                open1()
-            } else if (this.form.tel.length != 11) {
-                ElMessage({
-                    dangerouslyUseHTMLString: true,
-                    message: '<strong>请输入11位电话号码</strong>',
-                })
-            }
-            else if (this.form.password1 != this.form.password) {
-                open2()
-            }
-            else {
-                axios({
-                    method: 'POST',
-                    url: 'http://localhost:8080/register',
-                    params: {
-                        tel: this.form.tel,
-                        password: this.form.password
-                    }
-                }).then(
-                    response => {
-                        if (response.data != '') {
-                            console.log("注册成功");
-                            ElMessageBox({
-                                title: 'Message',
-                                message: h('p', null, [
-                                    h('span', null, '注册成功 '),
-                                    h('i', { style: 'color: teal' }, '账号是：' + response.data),
-                                ]),
-                            }),
-                                this.$router.push('/login');
-                        } else {
-                            alert("同一个身份信息请勿重复注册");
-                        }
-
-                    }
-                ).catch(error => {
-                    console.log(error);
-                })
-            }
+        login_asd() {
+            this.$router.push('/login');
         },
-        resetForm: function () {
-            this.form.tel = '';
-            this.form.password = '',
-                this.form.password1 = ''
+        open1() {
+            this.$message({
+                showClose: true,
+                message: this.msg,
+                type: 'warning'
+            });
+        },
+        open2() {
+            this.$message({
+                showClose: true,
+                message: this.msg,
+                type: 'success'
+            });
+        },
+        open3() {
+            this.$message({
+                showClose: true,
+                message: this.msg,
+                type: 'error'
+            });
+        },
+        // sendEmail() {
+        //     //邮箱校验的正则表达式
+        //     const emailRegExp = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+        //     const urlPrefix = "http://localhost:8080";
+
+        //     if (this.form.email == '') {
+        //         this.msg = "请输入你的邮箱"
+        //         this.open1();
+        //         return;
+        //     } else if (!emailRegExp.test(this.form.email)) {
+        //         this.msg = "请输入正确的邮箱"
+        //         this.open1();
+        //         return;
+        //     }
+        //     //发送邮箱的路径
+        //     axios.post(':8412/user/sendSignUpCode?email=' + _this.form.email,
+        //     ).catch(function (error) {
+        //         this.msg = "邮箱格式不正确！"
+        //         this.open1()
+        //     }).then(function (response) {
+        //         if (response.data.code === 200) {
+        //             this.msg = response.data.msg
+        //             this.open2()
+        //         } else {
+        //             this.msg = response.data.msg
+        //             this.open3()
+        //         }
+        //     })
+
+
+        // },
+        onSubmit() {
+            //邮箱校验的正则表达式
+            // const emailRegExp = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            const urlPrefix = "http://localhost:8080";
+            {
+                /*if (this.form.email == '') {
+                    this.msg = "请输入你的邮箱"
+                    this.open1();
+                    return;
+                } else if (!emailRegExp.test(this.form.email)) {
+                    this.msg = "请输入正确的邮箱"
+                    this.open1();
+                    return;
+                } else */if (this.form.tel == '') {
+                    this.msg = "请输入你的电话"
+                    this.open1();
+                    return;
+                } else if (this.form.tel.length != 11) {
+                    this.msg = "请输入11位正确的电话号码"
+                    this.open1();
+                    return;
+                } else if (this.form.username == '') {
+                    this.msg = "请输入你的昵称"
+                    this.open1();
+                    return;
+                } else if (this.form.password == '') {
+                    this.msg = "请输入你的密码"
+                    this.open1();
+                    return;
+                } else if (this.form.password != this.form.password1) {
+                    this.msg = "两次密码输入不一致，请检查"
+                    this.open1();
+                    return;
+                }
+                //  else if (this.form.text == '') {
+                //     this.msg = "请输入验证码"
+                //     this.open1();
+                //     return;
+                // } 
+                else {
+                    console.log("恭喜通过层层考验");
+                    axios({
+                        method: "post",
+                        url: urlPrefix + '/register',
+                        params: {
+                            //email: this.form.email,
+                            tel: this.form.tel,
+                            password: this.form.password,
+                            username: this.form.username
+                        }
+                    }).catch((error) => {
+                        this.msg = "注册失败"
+                        this.open1()
+                    }).then(response => {
+                        console.log(response.data)
+                        if (response.data.code === 1) {
+                            console.log("注册成功");
+                            this.$alert('<strong>账号：' + response.data.data + '</strong>', '注册成功', {
+                                dangerouslyUseHTMLString: true
+                            });
+                            //this.$router.push('/login');
+                        } else {
+                            this.msg = response.data.msg
+                            this.open3()
+                        }
+                    })
+                }
+            }
         }
     }
 }
 </script>
   
+  
 <style>
-.box {
-    height: 650px;
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
 }
 
-.login-box {
-    display: inline-block;
-    border: 1px solid #DCDFE6;
-    width: 350px;
-    margin: 150px 300px 180px 800px;
-    padding: 35px 35px 15px 35px;
-    border-radius: 5px;
-    -webkit-border-radius: 5px;
-    -moz-border-radius: 5px;
-    box-shadow: 0 0 25px #909399;
+body {
+    /* background-image: url(https://img-blog.csdnimg.cn/76110abf7fb84ee28c50bfbfa7fa8e11.jpg); */
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-position: 0px -50px;
 }
 
-.login-title {
-    text-align: center;
-    margin: 0 auto 40px auto;
-    color: #303133;
+.rg_layout {
+    width: 900px;
+    height: 500px;
+    border: 5px solid #EEEEEE;
+    background-color: white;
+    opacity: 0.8;
+    /*让div水平居中*/
+    margin: auto;
+    margin-top: 100px;
+}
+
+.rg_left {
+    float: left;
+    margin: 15px;
+    width: 20%;
+}
+
+.rg_left>p:first-child {
+    color: #FFD026;
+    font-size: 20px;
+}
+
+.rg_left>p:last-child {
+    color: #A6A6A6;
+}
+
+.rg_center {
+    /*border: 1px solid red;*/
+    float: left;
+    width: 450px;
+    /*margin: 15px;*/
+}
+
+.rg_right {
+    float: right;
+    margin: 15px;
+}
+
+.rg_right>p:first-child {
+    font-size: 15px;
+}
+
+.rg_right p a {
+    color: pink;
 }
 </style>
-    
-    
+  
+  

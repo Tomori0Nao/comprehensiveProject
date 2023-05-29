@@ -11,11 +11,8 @@ import java.util.Map;
 @Repository
 public interface UserMapper {
     Map<String,String> login(String account, String password);
-    boolean register(@Param("account") String account ,@Param("password") String password,@Param("tel") String tel,@Param("registerDate") String registerDate);
-
+    boolean register(@Param("account") String account ,@Param("password") String password,@Param("name")String name ,@Param("tel") String tel,@Param("registerDate") String registerDate);
     String queryAccountByAccount(@Param("account") String account);
-
-    VIPUser queryVIPUserByAccount(@Param("vipAccount") String vipAccount);
     Map<String,String> queryUserInfoByAccount(@Param("account") String account);
 }
 
