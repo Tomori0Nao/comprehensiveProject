@@ -10,7 +10,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+
 
 @RestController
 public class LoginRegisterController {
@@ -46,9 +46,13 @@ public class LoginRegisterController {
     /**
      * 我没有选用@RequestBody Map的形式，因为Map自动拆箱和装箱，性能不好
      */
-    public ResultMessage<String> register(String tel, String password){
-        if(!userServer.register(password,tel)){
-            return new ResultMessage<>(ResultMessage.ERROR_CODE,"同一个账号不能多次注册","false");
+    public ResultMessage<String> register(){
+        HttpServletRequest req = (HttpServletRequest)Request.getRequest();
+        String tel= req.getParameter("tel");
+        String password= req.getParameter("password");
+        String userName= req.getParameter("username");
+        if(!userServer.register(password,userName,tel)){
+            return new ResultMessage<>(ResultMessage.ERROR_CODE,"同一个手机号不能多次注册","false");
         }
         return new ResultMessage<>(ResultMessage.SUCCESS_CODE,"恭喜你注册成功",RegisterUser.generateAccount(tel));
     }

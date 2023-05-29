@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.campustaobao.mapper.DeliveryAddressMapper">
+    <insert id="insertDeliveryAddress" parameterType="DeliveryAddress">
+        insert into delivery_address values
+        (#{addr.addressNo},#{addr.userAccount}, #{addr.consigneeName},
+         #{addr.consigneeTel},#{addr.address})
+    </insert>
+    <!--获取某用户的收获地址数目    -->
+    <select id="getDeliveryAddressCount" resultType="int">
+        select count(user_account) from delivery_address
+        where user_account = #{account}
+    </select>
+
+    <select id="getDeliveryAddressList" resultMap="addressListMapper">
+        select * from delivery_address where user_account = #{account}
+    </select>
+    <resultMap id="addressListMapper" type="DeliveryAddress">
+        <id property="addressNo" column="address_no"/>
+        <id property="userAccount" column="user_account"/>
+        <result property="consigneeName" column="consignee_name"/>
+        <result property="consigneeTel" column="consignee_tel"/>
+        <result property="consigneeTel" column="consignee_tel"/>
+        <result property="address" column="address" />
+    </resultMap>
+</mapper>

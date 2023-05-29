@@ -16,7 +16,6 @@ interface GoodsCardInfo {
   goodsNo: string
   goodsPictureAddr: string
   goodsName: string
-  goodsNo: string
   goodsPrice: number
 }
 const goodCardInfoList: Ref<GoodsCardInfo[]> = ref([
@@ -38,7 +37,7 @@ const path = 'http://localhost:8080'
 if (goodCardInfoList.value.length <= 0) {
   axios({
     method: 'get',
-    url: path + '/homeImages',
+    url: path + '/homeGoods',
     params: { para1: 'img1' }
   })
     .then((response) => {
@@ -47,7 +46,7 @@ if (goodCardInfoList.value.length <= 0) {
       console.log(goodsInfo)
 
       for (var i = 0; i < goodsInfo.length; ++i) {
-        var image = imagesURLPrefix + goodsInfo[i].goods_image_name + '.png'
+        var imageName = imagesURLPrefix + goodsInfo[i].goodsImageName + '.png'
         let tem: GoodsCardInfo = {
           // 临时变量 接受后端数据后，push到goodCardInfoList中
           goodsNo: '14543',
@@ -55,9 +54,9 @@ if (goodCardInfoList.value.length <= 0) {
           goodsName: '三星 s23',
           goodsPrice: 6933
         }
-        tem.goodsPictureAddr = image
-        tem.goodsName = goodsInfo[i].goods_image_name
-        tem.goodsPrice = parseFloat(goodsInfo[i].goods_price)
+        tem.goodsPictureAddr = imageName
+        tem.goodsName = goodsInfo[i].goodsName
+        tem.goodsPrice = parseFloat(goodsInfo[i].goodsPrice)
         // console.log(imageArr[i])
         // console.log(tem)
         goodCardInfoList.value.push(tem)
@@ -76,14 +75,9 @@ if (goodCardInfoList.value.length <= 0) {
       <el-col :span="4" v-for="(item, index) in goodCardInfoList">
         <RouterLink to="/goodsInfo">
           <el-card :body-style="{ padding: '5px' }" style="width: 200px">
-            <img
-              :key="index"
-              :src="item.goodsPictureAddr"
-              class="image"
-              style="width: 200px; height: 220px"
-            />
+            <img :key="index" :src="item.goodsPictureAddr" class="image" style="width: 200px; height: 220px" />
             <div class="bottom">
-              {{ item.goodsName }}
+              {{ item.goodsName }}<br>
               <el-button text class="button">{{ item.goodsPrice }}</el-button>
             </div>
           </el-card>

@@ -2,9 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.project.campustaobao.mapper.GoodsMapper">
 <!--    首页商品图片检索暂时前面5张-->
-    <select id="queryHomeGoods" resultType="map">
+    <select id="queryHomeGoods" resultMap="homeGoodsMap">
         select goods_no, goods_name,goods_price,goods_image_name from goods_info limit #{begin} ,#{count} ;
     </select>
+    <resultMap id="homeGoodsMap" type="java.util.Map">
+        <id property="goodsNo" column="goods_no" />
+        <result property="goodsName" column="goods_name" />
+        <result property="goodsPrice" column="goods_price" />
+        <result property="goodsImageName" column="goods_image_name" />
+
+    </resultMap>
     
 
     

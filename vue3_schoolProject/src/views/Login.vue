@@ -1,90 +1,101 @@
-<script lang="ts" setup>
-import { ElMessage } from 'element-plus'
-import axios from 'axios'
-// import { defineComponent } from 'vue'
-
-// export default defineComponent ({
-//   methods: {
-//     logout() {
-//       clearStore();
-//       this.$router.push('/');
-//     }
-//   }
-// })
-</script>
 <template>
-  <div class="box">
-    <div class="box-left">&nbsp;</div>
-    <el-form ref="loginForm" :model="form" :rules="rules" label-width="80px" class="login-box">
-      <h3 class="login-title">欢迎登录</h3>
-      <el-form-item label="账号" prop="username" label-width="80px">
-        <el-input type="text" placeholder="请输入账号" v-model="form.account" size="medium" />
-      </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input type="password" placeholder="请输入密码" v-model="form.password" size="medium" />
-      </el-form-item>
-      <el-form-item label="验证码" prop="captcha">
-        <el-col :span="10">
-          <el-input type="text" placeholder="请输入验证码" v-model="form.captcha" size="medium" maxlength="4" />
-        </el-col>
-      </el-form-item>
+  <div>
+    <div class="b1">
+      <h2>欢迎登录</h2>
+    </div>
+    <el-form :model="formLogin" :rules="rules" ref="ruleForm" label-width="0px" class="login-bok">
+      <el-col :span="16" style="margin-left: 60px; margin-top: 30px;">
+        <el-form-item prop="account">
+          <el-input v-model="formLogin.account" placeholder="请输入账号">
+            <i slot="prepend" class="el-icon-s-custom"></i>
+          </el-input>
+        </el-form-item></el-col>
+
+      <el-col :span="16" style="margin-left: 60px;">
+        <el-form-item prop="password">
+          <el-input type="password" placeholder="请输入密码" v-model="formLogin.password">
+            <i slot="prepend" class="el-icon-lock"></i>
+          </el-input>
+        </el-form-item>
+      </el-col>
+      <el-col :span="16" style="margin-left: 60px;">
+        <el-form-item prop="captcha">
+          <el-row :span="16">
+            <el-col :span="13">
+              <el-input v-model="formLogin.captcha" auto-complete="off" placeholder="请输入验证码" size=""></el-input>
+            </el-col>
+            <el-col :span="5">
+              <div class="login-code" @click="refreshCode">
+                <!--验证码组件-->
+                <s-identify :identifyCode="identifyCode"></s-identify>
+              </div>
+            </el-col>
+          </el-row>
+        </el-form-item>
+      </el-col>
       <el-form-item>
-        <el-button type="primary" v-on:click="toLogin">登录</el-button>
-        <el-button type="success" v-on:click="toRegister" style="margin-left: 60px">注册</el-button>
+        <div class="login-btn-box">
+          <el-button class="login-btn" type="primary" @click="toLogin"
+            style="margin-left: 10px; width: 35%">登录</el-button>
+          <el-button class="register-btn" type="primary" @click="toRegister"
+            style="margin-left: 20px; width: 35%">注册</el-button>
+        </div>
       </el-form-item>
     </el-form>
   </div>
 </template>
-<script lang="ts">
-//没有输入账号或密码则提示
-const open1 = () => {
-  ElMessage({
-    dangerouslyUseHTMLString: true,
-    message: '<strong>请输入账号或密码</strong>'
-  })
-}
-// 没有输入验证码则提示
-const open2 = () => {
-  ElMessage({
-    dangerouslyUseHTMLString: true,
-    message: '<strong>请正确地输入验证码</strong>'
-  })
-}
+<script>
+import axios from 'axios'
+import SIdentify from "../components/SIdentify.vue"
 export default {
-  name: 'Content',
+  name: "Login",
+  components: { SIdentify },
   data() {
     return {
-      form: {
-        account: '',
-        password: '',
-        captcha: ''
+      formLogin: {
+        account: "",
+        password: "",
+        captcha: "",
       },
-
-      // 表单验证，需要在 el-form-item 元素中增加 prop 属性
+      identifyCodes: "1234567890abcdefjhijklinopqrsduvwxyz", //随机串内容
+      identifyCode: "",
+      // 校验
       rules: {
-        username: [{ required: true, message: '账号不可为空', trigger: 'blur' }],
-        password: [{ required: true, message: '密码不可为空', trigger: 'blur' }],
-        captcha: [{ required: true, message: '验证码不可为空', trigger: 'blur' }]
+        account: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+        ],
+
+        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        captcha: [{ required: true, message: "请输入验证码", trigger: "blur" }],
       },
-      // 对话框显示和隐藏
-      dialogVisible: false
-    }
+    };
+  },
+  mounted() {
+    // 初始化验证码
+    this.identifyCode = "";
+    this.makeCode(this.identifyCodes, 4);
   },
   methods: {
-    toLogin: function () {
-      if (this.form.account == '' || this.form.password == '') {
-        open1()
-      } else if (this.form.captcha == '' || this.form.captcha != '1234') {
-        open2()
-      }
-      //账号密码不空，且验证码输入正确
+    toLogin() {
+      if (this.formLogin.account == '' || this.formLogin.password == '') {
+        this.$message.error("请填写账号和密码");
+      } else if (this.formLogin.captcha == '') {
+        this.$message.error("请填写验证码");
+      } else if (
+        this.formLogin.captcha.toLowerCase() != this.identifyCode.toLowerCase()
+      ) {
+        console.log(this.formLogin.captcha);
+        console.log(this.identifyCode.toLowerCase());
+        this.$message.error("请填写正确验证码");
+        this.refreshCode();
+      } //账号密码不空，且验证码输入正确
       else {
         axios({
           method: 'POST',
           url: 'http://localhost:8080/checkLogin',
           params: {
-            account: this.form.account,
-            password: this.form.password
+            account: this.formLogin.account,
+            password: this.formLogin.password
           }
         })
           .then((response) => {
@@ -101,33 +112,52 @@ export default {
           })
       }
     },
-    toRegister: function () {
+    toRegister() {
       this.$router.push('/register')
-    }
-  }
-}
+    },
+    refreshCode() {
+      this.identifyCode = "";
+      this.makeCode(this.identifyCodes, 4);
+    },
+    makeCode(o, l) {
+      for (let i = 0; i < l; i++) {
+        this.identifyCode +=
+          this.identifyCodes[this.randomNum(0, this.identifyCodes.length)];
+      }
+    },
+    randomNum(min, max) {
+      return Math.floor(Math.random() * (max - min) + min);
+    },
+
+    submitForm() {
+      //this.$router.push("/space");
+      sessionStorage.setItem("isLogin", true);
+
+    },
+  },
+};
 </script>
 
 <style>
-.box {
-  height: 650px;
-}
-
-.login-box {
-  display: inline-block;
-  border: 1px solid #dcdfe6;
-  width: 350px;
-  margin: 150px 300px 180px 800px;
-  padding: 35px 35px 15px 35px;
-  border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  box-shadow: 0 0 25px #909399;
-}
-
-.login-title {
+.b1 {
+  margin-top: 50px;
   text-align: center;
-  margin: 0 auto 40px auto;
-  color: #303133;
+}
+
+.login-bok {
+  width: 30%;
+  margin: 50px auto;
+  border: 1px solid #dcdfe6;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 30px #dcdfe6;
+}
+
+.login-bok .login-btn-box {
+  margin: auto;
+  /* background-color: pink; */
 }
 </style>
+
+
+

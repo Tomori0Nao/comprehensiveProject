@@ -4,6 +4,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.ServletRequest;
+import java.util.Map;
 
 /**
  * 为什么我要多此一举，单独写一个类来获取ServletRequest对象?
@@ -19,5 +20,7 @@ public class Request {
                         RequestContextHolder.getRequestAttributes());
         return requestAttributes.getRequest();
     }
-
+    public static Object getParameter(String name){
+        return getRequest().getParameter(name);
+    }
 }

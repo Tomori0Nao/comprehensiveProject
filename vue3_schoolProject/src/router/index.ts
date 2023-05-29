@@ -42,7 +42,7 @@ const router = createRouter({
       component: () => import('../views/GoodsInfoView.vue')
     },
     {
-      path: '/Login',
+      path: '/login',
       name: 'Login',
       component: () => import('../views/Login.vue')
     },
@@ -52,7 +52,7 @@ const router = createRouter({
       component: () => import('../views/LogOutView.vue')
     },
     {
-      path: '/Register',
+      path: '/register',
       name: 'Register',
       component: () => import('../views/Register.vue')
     },
