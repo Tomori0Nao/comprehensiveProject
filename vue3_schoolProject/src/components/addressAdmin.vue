@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import axios from 'axios'
 import { ref } from 'vue'
-import { reactive } from 'vue'
 import type { Ref } from 'vue'
 import ChangeAddress from './ChangeAddress.vue'
 
@@ -29,13 +28,42 @@ const handleEdit = (index: number, row: Address) => {
   // editAddres.value = true
   // console.log(index, row, 'edit', editAddres.value)
 }
+/**
+ * 删除用户的收货地址
+ * @param index 收货地址数组的下标
+ * @param row 这一行的元素
+ */
 const handleDelete = (index: number, row: Address) => {
   // 先发送请求，收到后端发来的响应后，再删除数组中订单
+  axios({
+    method: 'get',
+    url: path + '/deleteDeliveryAddress',
+    params: {
+      account: '111',
+      addressNo: 'addr1113'
+      // addressNo: addressList.value[index].addressNo,
+    }
+  }).then((response) => {
+    const respData = response.data;
+    console.log(respData);
+    if (respData.code == 1) {
+      console.log(index, row, 'delete')
+      addressList.value.splice(index, 1)
+      console.log(respData.msg);
+    } else {
 
-  console.log(index, row, 'delete')
-  addressList.value.splice(index, 1)
+      console.log(respData.msg);
+    }
+
+  }).catch((error) => {
+
+  })
+
 }
 const path = 'http://localhost:8080'
+/**
+ * 添加一个收货地址
+ */
 const onAddItem = () => {
   let tem: Address = {
     addressNo: '1000',
@@ -45,16 +73,16 @@ const onAddItem = () => {
   }
   //////////////////////////////////////////////////////////////////
   /**
-   * 添加一件商品，发起的求请求
+   * 添加一个收货地址，发起的请求
    */
   axios({
     method: 'get',
     url: path + '/addAddress',
     params: {
-      name: '班县人',
-      tel: '0371-5698-269',
-      address: '重庆市渝中区幸福路99号',
-      account: '333'
+      consigneeName: '班县人',
+      consigneeTel: '0371-5698-269',
+      address: '重庆市渝中区幸福路110号',
+      userAccount: '111'
     }
   })
     .then((response) => {
@@ -63,9 +91,12 @@ const onAddItem = () => {
       if (respData.code == 1) {
         tem.consigneeName = respData.name
         tem = respData.data
+        console.log(tem);
+
         addressList.value.push(tem)
       } else {
-        console.log(respData.data)
+        //出错的情况可能是同一个收货地址多次添加
+        console.log(respData.msg)
       }
     })
     .catch((error) => {
@@ -112,13 +143,8 @@ axios({
       <el-table-column prop="address" label="收货地址" width="300" />
       <el-table-column fixed="right" label="操作" width="200">
         <template #default="scope">
-          <el-button size="small" link type="primary" @click="handleEdit(scope.$index, scope.row)"
-            >Edit</el-button
-          >
-
-          <el-button size="small" type="primary" link @click="handleDelete(scope.$index, scope.row)"
-            >Delete</el-button
-          >
+          <el-button size="small" link type="primary" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
+          <el-button size="small" type="primary" link @click="handleDelete(scope.$index, scope.row)">Delete</el-button>
         </template>
       </el-table-column>
     </el-table>
