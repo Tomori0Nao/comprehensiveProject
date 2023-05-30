@@ -8,22 +8,20 @@
         label-width="100px"
         class="goodForm"
       >
-        <!-- <el-form-item required label="商品分类">
-            <el-cascader :placeholder="state.defaultCate" style="width: 300px" :props="state.category" @change="handleChangeCate"></el-cascader>
-          </el-form-item> -->
-        <el-form-item label="管理员昵称" prop="goodsName">
+        <el-form-item required label="商品分类">
+          <el-select v-model="state.category" class="m-2" placeholder="Select">
+            <el-option
+              v-for="item in categoryList"
+              :key="item.categoryId"
+              :label="item.categoryName"
+              :value="item.categoryName"
+          /></el-select>
+        </el-form-item>
+        <el-form-item label="商品名称" prop="goodsName">
           <el-input
             style="width: 300px"
             v-model="state.goodForm.goodsName"
             placeholder="请输入商品名称"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="商品简介" prop="goodsIntro">
-          <el-input
-            style="width: 300px"
-            type="textarea"
-            v-model="state.goodForm.goodsIntro"
-            placeholder="请输入商品简介(100字)"
           ></el-input>
         </el-form-item>
         <el-form-item label="商品价格" prop="originalPrice">
@@ -53,13 +51,6 @@
             placeholder="请输入商品库存"
           ></el-input>
         </el-form-item>
-        <el-form-item label="商品标签" prop="tag">
-          <el-input
-            style="width: 300px"
-            v-model="state.goodForm.tag"
-            placeholder="请输入商品小标签"
-          ></el-input>
-        </el-form-item>
         <el-form-item label="上架状态" prop="goodsSellStatus">
           <el-radio-group v-model="state.goodForm.goodsSellStatus">
             <el-radio label="0">上架</el-radio>
@@ -69,26 +60,20 @@
         <el-form-item required label="商品主图" prop="goodsCoverImg">
           <el-upload
             class="avatar-uploader"
+            :action="state"
             accept="jpg,jpeg,png"
-            :headers="{}"
             :show-file-list="false"
-            :on-success="handleUrlSuccess"
+            :on-success="handleAvatarSuccess"
+            :before-upload="beforeAvatarUpload"
           >
-            <img
-              style="width: 100px; height: 100px; border: 1px solid #e9e9e9"
-              v-if="state.goodForm.goodsCoverImg"
-              :src="state.goodForm.goodsCoverImg"
-              class="avatar"
-            />
+            <img v-if="imageUrl" :src="imageUrl" class="avatar" />
             <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
           </el-upload>
         </el-form-item>
-        <el-form-item label="详情内容">
-          <div ref="editor"></div>
-        </el-form-item>
+
         <el-form-item>
-          <el-button type="primary" @click="submitAdd()">{{
-            state.postParam ? '立即修改' : '立即创建'
+          <el-button type="primary" @click="onSubmit">{{
+            state.id ? '立即修改' : '立即创建'
           }}</el-button>
         </el-form-item>
       </el-form>
@@ -97,13 +82,54 @@
 </template>
 
 <script setup lang="ts">
-import { reactive, ref} from 'vue'
+import { reactive, ref, onMounted, onBeforeUnmount, getCurrentInstance } from 'vue'
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
+import { useRoute, useRouter } from 'vue-router'
+import type { UploadProps } from 'element-plus'
+import { Delete, Download, Plus, ZoomIn } from '@element-plus/icons-vue'
 
+// ----商品信息
+// 商品名称
+// 商品价格
+// 店铺名称
+// 商品数量
+// 品牌
+// 商品编号
+// 商品重量
+// 商品产地
+interface GoodsInfo {
+  goodsName: string
+  goodsImageName: string
+  goodsPrice: number
+  storeName: string
+  goodsNumber: number
+  goodsBrand: string
+  goodsNo: string
+  goodsWeight: string
+  goodsProducingArea: string
+}
 const goodRef = ref(null)
+const route = useRoute()
+const router = useRouter()
+const { id } = route.query
+const imageUrl = ref('')
+interface CateoryInfo {
+  categoryId: string
+  categoryName: string
+  addTime: string
+}
+const categoryList = ref<CateoryInfo[]>([
+  {
+    categoryId: '135435',
+    categoryName: '手机',
+    addTime: '2023-4-4'
+  }
+])
 const state = reactive({
-  postParam: false,
+  id: id,
+  category: '手机',
+  action: 'http://localhost:8080/uploadTest',
   defaultCate: '',
   goodForm: {
     goodsName: '',
@@ -123,14 +149,23 @@ const state = reactive({
   },
   categoryId: ''
 })
-const submitAdd = () => {}
+const handleAvatarSuccess: UploadProps['onSuccess'] = (response: any, uploadFile: any) => {
+  imageUrl.value = URL.createObjectURL(uploadFile.raw!)
+}
 
-const handleUrlSuccess = () => {
-  // state.goodForm.goodsCoverImg = val.data || ''
+const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile: any) => {
+  if (rawFile.type !== 'image/jpeg') {
+    ElMessage.error('Avatar picture must be JPG format!')
+    return false
+  } else if (rawFile.size / 1024 / 1024 > 2) {
+    ElMessage.error('Avatar picture size can not exceed 2MB!')
+    return false
+  }
+  return true
 }
-const handleChangeCate = () => {
-  // state.categoryId = val[2] || 0
-}
+const onSubmit = () => {}
+// const
+const handleChangeCate = () => {}
 </script>
 
 <style scoped>

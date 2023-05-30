@@ -5,12 +5,13 @@
         <el-input
           style="width: 200px; margin-right: 10px"
           placeholder="请输入管理员账号"
-          v-model="state.userAccount"
+          v-model="state.adminAccount"
           @change="handleSearch"
           clearable
         />
         <el-button type="primary" :icon="Plus" @click="handleSolve">解除禁用</el-button>
         <el-button type="danger" :icon="Delete" @click="handleForbid">禁用账户</el-button>
+        <el-button type="primary" :icon="Plus" @click="handleAdd">增加账户</el-button>
       </div>
     </template>
     <el-table
@@ -35,15 +36,28 @@
       <el-table-column prop="rigisterDate" label="注册时间"> </el-table-column>
       <el-table-column label="操作">
         <template #default="scope">
-          <router-link
-            class="routerLink"
-            :to="{ path: '/admin/ChangeAdminInfo', query: { id: scope.row.orderId } }"
-            >修改</router-link
+          <el-button size="small" link type="primary" @click="handleEdit(scope.$index, scope.row)"
+            >Edit</el-button
           >
         </template>
       </el-table-column>
       <!-- </template> -->
     </el-table>
+    <el-pagination
+    background
+    layout="prev, pager, next"
+    :total="state.total"
+    :page-size="state.pageSize"
+    :current-page="state.currentPage"
+    @current-change="changePage"
+  />
+    <!-- <el-button class="mt-4" style="width: 100%" @click="handleAdd">Add Item</el-button> -->
+    <el-dialog v-model="dialogFormVisibleChange" title="管理员信息修改" center width="30%">
+      <ChangeAdminInfo @close-dialog="handleCloseDialog"></ChangeAdminInfo>
+    </el-dialog>
+    <el-dialog v-model="dialogFormVisibleAdd" title="添加管理员" center width="30%">
+      <AddAdminInfo @close-dialog="handleCloseDialog"></AddAdminInfo>
+    </el-dialog>
   </el-card>
 </template>
 
@@ -53,16 +67,18 @@ import { ElMessage, ElTable } from 'element-plus'
 import { Plus, Delete } from '@element-plus/icons-vue'
 import axios from 'axios'
 import { reactive } from 'vue'
+import ChangeAdminInfo from '@/components/ChangeAdminInfo.vue'
+import AddAdminInfo from '@/components/AddAdminInfo.vue'
 
 interface AdminInfo {
-  adminType:string
+  adminType: string
   adminNakeName: string
   adminAccount: string
   adminAccountState: string
   rigisterDate: string
   isBaned: boolean
 }
-let tableData = ref<AdminInfo[]>([
+const tableData = ref<AdminInfo[]>([
   {
     adminType: '商品专员',
     adminNakeName: 'sjgdlkfh',
@@ -72,12 +88,21 @@ let tableData = ref<AdminInfo[]>([
     isBaned: false
   }
 ])
+const dialogFormVisibleChange = ref(false)
+const dialogFormVisibleAdd = ref(false)
+
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<AdminInfo[]>([])
 
 const state = reactive({
+  adminAccount: '',
   loading: false,
-  userAccount: ''
+  total: 0, // 总条数
+  currentPage: 1, // 当前页
+  pageSize: 10, // 分页大小
+  type: 'add', // 操作类型
+  level: 1,
+  parent_id: 0
 })
 const handleSolve = () => {
   if (multipleSelection.value.length == 0) {
@@ -98,17 +123,33 @@ const handleForbid = () => {
 }
 const handleSearch = () => {
   // 查询账号
-  state.userAccount
+  // state.userAccount
   // axios
 }
 const handleSelectionChange = (val: AdminInfo[]) => {
   multipleSelection.value = val
 }
+const handleEdit = (index: number, row: AdminInfo) => {
+  dialogFormVisibleChange.value = true
+}
+const handleCloseDialog = () => {
+  dialogFormVisibleChange.value = false
+  dialogFormVisibleAdd.value = false
+}
+const handleAdd = () => {
+  
+  dialogFormVisibleAdd.value = true
+}
+const changePage = (val: number) => {
+  state.currentPage = val
+  getAdminList()
+}
+const getAdminList = ()=> {
+// axios
+// 根据state.currentPage来获取管理员信息列表
+}
 </script>
 
 <style scoped>
-.routerLink {
-  color: #409eff;
-  text-decoration: none;
-}
+
 </style>

@@ -92,9 +92,9 @@ const router = createRouter({
           component: () => import('../views/AdminManageView.vue')
         },
         {
-          path: 'ChangeAdminInfo',
-          name: 'ChangeAdminInfo',
-          component: () => import('../views/ChangeAdminInfoView.vue')
+          path: 'AddGoods',
+          name: 'AddGoods',
+          component: () => import('../views/AddGoodsInfoView.vue')
         },
       ]
     }

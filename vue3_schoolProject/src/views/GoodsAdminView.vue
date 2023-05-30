@@ -70,12 +70,12 @@ import { reactive, ref } from 'vue'
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 import { Plus, Delete } from '@element-plus/icons-vue'
-import { getInnerRange } from '@vue/compiler-core';
-//   import { useRouter } from 'vue-router'
+// import { getInnerRange } from '@vue/compiler-core';
+  import { useRouter } from 'vue-router'
 
 //   const app = getCurrentInstance()
 //   const { goTop } = app.appContext.config.globalProperties
-//   const router = useRouter()
+  const router = useRouter()
 
 //----商品信息
 // 商品名称
@@ -115,15 +115,16 @@ const state = reactive({
 
 const getGoodList = () => {
   state.loading = true
+  // state.currentPage 为当前页码
   // axios
 }
 const handleAdd = () => {
     console.log('Add Goods!!!')
-  // router.push({ path: '/add' })
+  router.push({ path: '/admin/AddGoods' })
 }
 const handleEdit = (id: string) => {
     console.log('Edit goods!!!')
-//   router.push({ path: '/add', query: { id } })
+  // router.push({ path: '/add', query: { id } })
 }
 const changePage = (val: number) => {
   state.currentPage = val

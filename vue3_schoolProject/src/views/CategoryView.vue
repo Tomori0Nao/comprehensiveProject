@@ -25,17 +25,15 @@
     >
       <el-table-column type="selection" width="55"> </el-table-column>
       <el-table-column prop="categoryName" label="类型名称"> </el-table-column>
-      <el-table-column prop="createTime" label="添加时间" width="200"> </el-table-column>
+      <el-table-column prop="addTime" label="添加时间" width="200"> </el-table-column>
       <el-table-column label="操作" width="220">
         <template #default="scope">
-          <a style="cursor: pointer; margin-right: 10px" @click="handleEdit(scope.row.categoryId)"
-            >修改</a
-          >
+          <a style="cursor: pointer; margin-right: 10px" @click="handleEdit(scope.row)">修改</a>
           <el-popconfirm
             title="确定删除吗？"
             confirmButtonText="确定"
             cancelButtonText="取消"
-            @confirm="handleDeleteOne(scope.row.categoryId)"
+            @confirm="handleDeleteOne(scope.row)"
           >
             <template #reference>
               <a style="cursor: pointer">删除</a>
@@ -53,8 +51,13 @@
       :current-page="state.currentPage"
       @current-change="changePage"
     />
-    <AddCategory ref="addCate" :reload="getCategory" :type="state.type"></AddCategory>
-    <!-- <DialogAddCategory ref="addCate" :reload="getCategory" :type="state.type" /> -->
+    <AddCategory
+      ref="addCate"
+      :reload="getCategory"
+      :type="state.type"
+      @add-category="handleAddCategory"
+      @edit-category="handleEditCategory"
+    ></AddCategory>
   </el-card>
 </template>
 
@@ -71,11 +74,13 @@ interface CateoryInfo {
   categoryName: string
   addTime: string
 }
-const tableData = ref<CateoryInfo[]>([{
+const tableData = ref<CateoryInfo[]>([
+  {
     categoryId: '14353245',
     categoryName: '手机',
     addTime: '2033-4-23'
-}])
+  }
+])
 const multipleSelection = ref<CateoryInfo[]>([])
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 
@@ -96,6 +101,7 @@ onMounted(() => {
 // 获取分类列表
 const getCategory = () => {
   state.loading = true
+  // axios
 }
 const changePage = (val: number) => {
   state.currentPage = val
@@ -108,10 +114,9 @@ const handleAdd = () => {
   addCate.value?.open()
 }
 // 修改分类
-const handleEdit = (id: string) => {
+const handleEdit = (row: CateoryInfo) => {
   state.type = 'edit'
-  addCate.value?.open(id)
-//   addCate.value.open(id)
+  addCate.value?.open(row.categoryId, row.categoryName)
 }
 // 选择项
 const handleSelectionChange = (val: CateoryInfo[]) => {
@@ -123,11 +128,22 @@ const handleDelete = () => {
     ElMessage.error('请选择项')
     return
   }
+  // multipleSelection.value 为待删除的数组
   //   axios
 }
 // 单个删除
-const handleDeleteOne = (id: string) => {
+const handleDeleteOne = (row: CateoryInfo) => {
   //   axios
+}
+const handleAddCategory = () => {}
+const handleEditCategory = (categoryId: string,categoryName:string) => {
+  for (const iterator of tableData.value) {
+    if (iterator.categoryId == categoryId) {
+      iterator.categoryName = categoryName
+      // console.log(iterator,'find it !!!')
+    }
+  }
+  // tableData.value[index].categoryName = categoryName
 }
 </script>
 

@@ -8,7 +8,6 @@ import { ElNotification } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import type { UploadProps } from 'element-plus'
-import { method } from 'lodash'
 const store = useUserInfoStore()
 const fit = ref('fill')
 // ----用户信息
@@ -108,7 +107,7 @@ const imageUrl = ref('')
 
 const handleAvatarSuccess: UploadProps['onSuccess'] = (response: any, uploadFile: any) => {
   imageUrl.value = URL.createObjectURL(uploadFile.raw!)
-  // isChangeAvatar.value = false
+  isChangeAvatar.value = false
 }
 
 const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile: any) => {

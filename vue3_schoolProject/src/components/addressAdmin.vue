@@ -23,11 +23,11 @@ const addressList: Ref<Address[]> = ref([
     address: '重庆市巴南区红光大道69号'
   }
 ])
-const editAddres = ref(false)
+// const editAddres = ref(false)
 const handleEdit = (index: number, row: Address) => {
   dialogFormVisible.value = true
-  editAddres.value = true
-  console.log(index, row, 'edit', editAddres.value)
+  // editAddres.value = true
+  // console.log(index, row, 'edit', editAddres.value)
 }
 const handleDelete = (index: number, row: Address) => {
   // 先发送请求，收到后端发来的响应后，再删除数组中订单
