@@ -7,36 +7,64 @@ package com.project.campustaobao.pojo;
  * 2023-5.26 14:30
  */
 public class UserOrder {
-    private String orderId;
+    private String userAccount;
+    private String orderNo;
     private String orderTime;
     private String deliveryAddress;
-    private String goodsPrice;
-    private String vipDerate;
+    private String orderPrice;
+    private String orderDerate;
     private String actualPayment;
     private String goodsName;
-    private String goodsNumber;
+    private int goodsNumber;
+    private String goodsImageName;
+    private String storeName;
     public UserOrder(){}
 
-    public UserOrder(String orderId, String orderTime,
-                     String deliveryAddress, String goodsPrice,
-                     String vipDerate, String actualPayment,
-                     String goodsName, String goodsNumber) {
-        this.orderId = orderId;
+    public UserOrder(String userAccount, String orderNo, String orderTime, String deliveryAddress, String goodsPrice, String vipDerate, String actualPayment, String goodsName, int goodsNumber, String goodsImageName, String storeName) {
+        this.userAccount = userAccount;
+        this.orderNo = orderNo;
         this.orderTime = orderTime;
         this.deliveryAddress = deliveryAddress;
-        this.goodsPrice = goodsPrice;
-        this.vipDerate = vipDerate;
+        this.orderPrice = goodsPrice;
+        this.orderDerate = vipDerate;
         this.actualPayment = actualPayment;
         this.goodsName = goodsName;
         this.goodsNumber = goodsNumber;
+        this.goodsImageName = goodsImageName;
+        this.storeName = storeName;
     }
 
-    public String getOrderId() {
-        return orderId;
+    public String getUserAccount() {
+        return userAccount;
     }
 
-    public void setOrderId(String orderId) {
-        this.orderId = orderId;
+    public void setUserAccount(String userAccount) {
+        this.userAccount = userAccount;
+    }
+
+    @Override
+    public String toString() {
+        return "UserOrder{" +
+                "userAccount='" + userAccount + '\'' +
+                ", orderNo='" + orderNo + '\'' +
+                ", orderTime='" + orderTime + '\'' +
+                ", deliveryAddress='" + deliveryAddress + '\'' +
+                ", goodsPrice='" + orderPrice + '\'' +
+                ", vipDerate='" + orderDerate + '\'' +
+                ", actualPayment='" + actualPayment + '\'' +
+                ", goodsName='" + goodsName + '\'' +
+                ", goodsNumber='" + goodsNumber + '\'' +
+                ", goodsImageName='" + goodsImageName + '\'' +
+                ", storeName='" + storeName + '\'' +
+                '}';
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 
     public String getOrderTime() {
@@ -55,12 +83,20 @@ public class UserOrder {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public String getGoodsPrice() {
-        return goodsPrice;
+    public String getOrderPrice() {
+        return orderPrice;
     }
 
-    public void setGoodsPrice(String goodsPrice) {
-        this.goodsPrice = goodsPrice;
+    public void setOrderPrice(String orderPrice) {
+        this.orderPrice = orderPrice;
+    }
+
+    public String getOrderDerate() {
+        return orderDerate;
+    }
+
+    public void setOrderDerate(String orderDerate) {
+        this.orderDerate = orderDerate;
     }
 
     public String getActualPayment() {
@@ -79,19 +115,27 @@ public class UserOrder {
         this.goodsName = goodsName;
     }
 
-    public String getVipDerate() {
-        return vipDerate;
-    }
-
-    public void setVipDerate(String vipDerate) {
-        this.vipDerate = vipDerate;
-    }
-
-    public String getGoodsNumber() {
+    public int getGoodsNumber() {
         return goodsNumber;
     }
 
-    public void setGoodsNumber(String goodsNumber) {
+    public void setGoodsNumber(int goodsNumber) {
         this.goodsNumber = goodsNumber;
+    }
+
+    public String getGoodsImageName() {
+        return goodsImageName;
+    }
+
+    public void setGoodsImageName(String goodsImageName) {
+        this.goodsImageName = goodsImageName;
+    }
+
+    public String getStoreName() {
+        return storeName;
+    }
+
+    public void setStoreName(String storeName) {
+        this.storeName = storeName;
     }
 }

@@ -2,7 +2,7 @@
 import axios from 'axios'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
-
+axios.defaults.withCredentials = true
 const goodsPictureAddr =
   '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png'
 // const goodsPictureList: string[] = []

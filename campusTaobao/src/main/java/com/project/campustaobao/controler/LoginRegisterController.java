@@ -6,10 +6,8 @@ import com.project.campustaobao.utils.Session;
 import com.project.campustaobao.vo.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 
 @RestController
@@ -29,11 +27,14 @@ public class LoginRegisterController {
     }
     @PostMapping("/checkLogin")
     @ResponseBody
-    /**
-     * 我没有选用@RequestBody Map的形式，因为Map自动拆箱和装箱，性能不好
+    /*
+      我没有选用@RequestBody Map的形式，因为Map自动拆箱和装箱，性能不好
      */
     public boolean login(){
         HttpServletRequest req = (HttpServletRequest) Request.getRequest();
+        HttpSession session = req.getSession();
+        //设置session最大存活时间5小时
+        session.setMaxInactiveInterval(5*3600);
         String account = req.getParameter("account");
         String password = req.getParameter("password");
         Session.setSessionAttribute(req, "account",account);

@@ -47,6 +47,11 @@
 <script>
 import axios from 'axios'
 import SIdentify from "../components/SIdentify.vue"
+/////////////////////////////////////////////////////////////
+///////////////////
+//下面这行代码一定要加上，这样才能保证浏览器与服务器的会话是同一个会话sessionId才是固定不变的
+axios.defaults.withCredentials = true
+////////////////////////////////////////////////////////////
 export default {
   name: "Login",
   components: { SIdentify },

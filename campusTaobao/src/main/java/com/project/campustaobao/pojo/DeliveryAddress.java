@@ -62,4 +62,15 @@ public class DeliveryAddress {
     public void setUserAccount(String userAccount) {
         this.userAccount = userAccount;
     }
+
+    @Override
+    public String toString() {
+        return "DeliveryAddress{" +
+                "addressNo='" + addressNo + '\'' +
+                ", userAccount='" + userAccount + '\'' +
+                ", consigneeName='" + consigneeName + '\'' +
+                ", consigneeTel='" + consigneeTel + '\'' +
+                ", address='" + address + '\'' +
+                '}';
+    }
 }

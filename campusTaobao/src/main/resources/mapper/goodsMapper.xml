@@ -12,7 +12,28 @@
         <result property="goodsImageName" column="goods_image_name" />
 
     </resultMap>
-    
+    <select id="queryGoodsByGoodsNo" resultMap="goodsMap">
+        select * from goods_info where goods_no = #{goodsNo}
+    </select>
+    <resultMap id="goodsMap" type="Goods">
+        <id property="goodsNo" column="goods_no" />
+        <result property="goodsName" column="goods_name" />
+        <result property="goodsType" column="goods_type" />
+        <result property="goodsPrice" column="goods_price" />
+        <result property="goodsPurchasePrice" column="goods_purchase_price" />
+        <result property="goodsBrand" column="goods_brand" />
+        <result property="goodsImageName" column="goods_image_name" />
+        <result property="goodsWeight" column="goods_weight" />
+        <result property="goodsOrigin" column="goods_origin" />
+        <result property="goodsSpecialInfo" column="goods_special_info" />
+        <result property="goodsNumber" column="goods_num" />
+        <result property="maxNumOfSinglePurchase" column="max_num_single_purchase" />
+        <result property="goodsMonthSales" column="goods_month_sales" />
+        <result property="goodsPurchaseDate" column="goods_purchase_date" />
+        <result property="storeName" column="store_name" />
+        <result property="vipDerate" column="vip_derate" />
+
+    </resultMap>
 
     
     <!--    通过商品编号查找商品的详细信息-->

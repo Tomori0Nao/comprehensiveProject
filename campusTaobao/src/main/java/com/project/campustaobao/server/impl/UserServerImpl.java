@@ -85,4 +85,9 @@ public class UserServerImpl implements UserServer {
     public Map<String,String> queryUserInfoByAccount(String account) {
         return userMapper.queryUserInfoByAccount(account);
     }
+
+    @Override
+    public boolean updateUserNameByAccount(String account, String newName) {
+        return userMapper.updateUserNameByAccount(account,newName);
+    }
 }

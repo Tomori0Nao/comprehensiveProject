@@ -1,11 +1,15 @@
 package com.project.campustaobao.controler;
 
 import com.project.campustaobao.server.GoodsServer;
+import com.project.campustaobao.utils.Request;
+import com.project.campustaobao.utils.Session;
 import com.project.campustaobao.vo.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +24,7 @@ public class HomeController {
     private static final int count = 5;
     @GetMapping("/homeGoods")
     public ResultMessage<List<Map<String, String>>> getHomeGoods(){
+        HttpServletRequest req = (HttpServletRequest) Request.getRequest();
         ResultMessage<List<Map<String,String>>> resultMsg = new ResultMessage<>(ResultMessage.SUCCESS_CODE,"ok",
                 goodsServer.queryHomeGoods(begin,count));
         //System.out.println("img");
@@ -29,6 +34,13 @@ public class HomeController {
         if(resultMsg.getData().size() == 0){
             begin = 0;
         }
+        HttpSession session = req.getSession();
+        System.out.println("homeGoods中sessionId="+session.getId());
+        String account = (String) session.getAttribute ("account");
+        String password = (String) session.getAttribute("password");
+        System.out.println("在homegoods中");
+        System.out.println(account);
+        System.out.println(password);
         return resultMsg;
     }
 }

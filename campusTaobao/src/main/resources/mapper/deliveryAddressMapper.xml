@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.project.campustaobao.mapper.DeliveryAddressMapper">
+<!--    查找收货地址是否存在，主要用于插入之前的校验
+        只需要比较收货地址、收获电话、账号、地址这三个是否一致
+-->
+<select id="queryAddressNoByAddressInfo" parameterType="DeliveryAddress" resultType="String">
+    select address_no from delivery_address where user_account = #{addr.userAccount}
+    and consignee_name = #{addr.consigneeName} and consignee_tel = #{addr.consigneeTel}
+    and address = #{addr.address}
+</select>
+<!--    通过收货地址编号获取收货地址address-->
+    <select id="queryAddressByAddressNo" resultType="String">
+        select address from delivery_address where address_no = #{addressNo}
+    </select>
+<!--    添加一个收货地址-->
     <insert id="insertDeliveryAddress" parameterType="DeliveryAddress">
         insert into delivery_address values
         (#{addr.addressNo},#{addr.userAccount}, #{addr.consigneeName},
@@ -11,7 +24,7 @@
         select count(user_account) from delivery_address
         where user_account = #{account}
     </select>
-
+<!--    获取用户所有的收货地址-->
     <select id="getDeliveryAddressList" resultMap="addressListMapper">
         select * from delivery_address where user_account = #{account}
     </select>
@@ -23,4 +36,16 @@
         <result property="consigneeTel" column="consignee_tel"/>
         <result property="address" column="address" />
     </resultMap>
+<!--    删除用户某一个收货地址-->
+    <delete id="deleteDeliveryAddress">
+        delete from delivery_address where user_account = #{account}
+        and address_no = #{addressNo}
+    </delete>
+<!--    更新用户收货地址-->
+    <update id="updateDeliveryAddress" parameterType="DeliveryAddress">
+        update delivery_address set consignee_name = #{addr.consigneeName},
+                consignee_tel = #{addr.consigneeTel},
+                address_no = #{addr.address}
+                where address_no = #{addr.addressNo}
+    </update>
 </mapper>

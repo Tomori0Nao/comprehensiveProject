@@ -14,5 +14,13 @@ public interface UserMapper {
     boolean register(@Param("account") String account ,@Param("password") String password,@Param("name")String name ,@Param("tel") String tel,@Param("registerDate") String registerDate);
     String queryAccountByAccount(@Param("account") String account);
     Map<String,String> queryUserInfoByAccount(@Param("account") String account);
+
+    /**
+     * 修改用户昵称
+     * @param account 用户账号
+     * @param newName 用户新昵称
+     * @return 成功修改则返回true
+     */
+    boolean updateUserNameByAccount(@Param("account") String account,@Param("newName")String newName);
 }
 
