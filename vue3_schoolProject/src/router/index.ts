@@ -70,7 +70,32 @@ const router = createRouter({
           path: 'Category',
           name: 'Category',
           component: () => import('../views/CategoryView.vue')
-        }
+        },
+        {
+          path: 'Goods',
+          name: 'Goods',
+          component: () => import('../views/GoodsAdminView.vue')
+        },
+        {
+          path: 'User',
+          name: 'User',
+          component: () => import('../views/UserAdminView.vue')
+        },
+        {
+          path: 'Order',
+          name: 'Order',
+          component: () => import('../views/OrderAdminView.vue')
+        },
+        {
+          path: 'AdminManage',
+          name: 'AdminManage',
+          component: () => import('../views/AdminManageView.vue')
+        },
+        {
+          path: 'AddGoods',
+          name: 'AddGoods',
+          component: () => import('../views/AddGoodsInfoView.vue')
+        },
       ]
     }
   ]

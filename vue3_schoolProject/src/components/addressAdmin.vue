@@ -22,11 +22,11 @@ const addressList: Ref<Address[]> = ref([
     address: '重庆市巴南区红光大道69号'
   }
 ])
-const editAddres = ref(false)
+// const editAddres = ref(false)
 const handleEdit = (index: number, row: Address) => {
   dialogFormVisible.value = true
-  editAddres.value = true
-  console.log(index, row, 'edit', editAddres.value)
+  // editAddres.value = true
+  // console.log(index, row, 'edit', editAddres.value)
 }
 /**
  * 删除用户的收货地址

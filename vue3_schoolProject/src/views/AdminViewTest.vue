@@ -12,6 +12,7 @@
         <el-menu
           background-color="#409EFF"
           text-color="#fff"
+          active-text-color="#c6e2ff"
           :router="true"
           :default-openeds="state.defaultOpen"
           :default-active="state.currentPath"
@@ -21,12 +22,8 @@
               <span>商品管理</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/admin/Category"
-                >商品类型</el-menu-item
-              >
-              <el-menu-item index="/hot"
-                >商品信息</el-menu-item
-              >
+              <el-menu-item index="/admin/Category">商品类型</el-menu-item>
+              <el-menu-item index="/admin/Goods">商品信息</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
           <el-sub-menu index="3">
@@ -34,12 +31,8 @@
               <span>用户管理</span>
             </template>
             <el-menu-item-group>
-              <el-menu-item index="/admin/category"
-                >用户信息</el-menu-item
-              >
-              <el-menu-item index="/order"
-                >订单</el-menu-item
-              >
+              <el-menu-item index="/admin/User">用户信息</el-menu-item>
+              <el-menu-item index="/admin/Order">订单</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
           <el-sub-menu index="4">
@@ -47,12 +40,8 @@
               <span>管理员管理</span>
             </template>
             <el-menu-item-group>
-                <el-menu-item index="/account"
-                >普通管理员管理</el-menu-item
-              >
-              <el-menu-item index="/account"
-                >修改密码</el-menu-item
-              >
+              <el-menu-item index="/admin/AdminManage">普通管理员管理</el-menu-item>
+              <el-menu-item index="/admin/ChangePasswd">修改密码</el-menu-item>
             </el-menu-item-group>
           </el-sub-menu>
         </el-menu>
@@ -68,10 +57,10 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { useRouter } from 'vue-router'
+// import { useRouter } from 'vue-router'
 
-const noMenu = ['/login']
-const router = useRouter()
+// const noMenu = ['/login']
+// const router = useRouter()
 const state = reactive({
   showMenu: true,
   defaultOpen: ['1', '2', '3', '4'],
@@ -125,5 +114,9 @@ const state = reactive({
   height: calc(100vh - 100px);
   overflow: auto;
   padding: 10px;
+}
+a {
+  color: #409eff;
+  text-decoration: none;
 }
 </style>
