@@ -61,8 +61,6 @@
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
 import { ElMessage, ElTable } from 'element-plus'
-// import { ElTable } from 'element-plus'
-// import
 import { Plus, Delete } from '@element-plus/icons-vue'
 import axios from 'axios'
 import AddCategory from '@/components/AddCategory.vue'
