@@ -66,7 +66,7 @@ axios({
 })
   .then((response) => {
     var respData = response.data
-    console.log(respData)
+    console.log(respData);
   })
   .catch((error) => {
     console.log(error)
@@ -86,7 +86,9 @@ const changeAvatar = () => {
   isChangeAvatar.value = !isChangeAvatar.value
   console.log(isChangeAvatar.value)
 }
-
+/**
+ * 处理修改昵称
+ */
 const onSubmit = () => {
   if (userNakeNameInput.value.length == 0) {
     ElNotification.success({
@@ -96,8 +98,32 @@ const onSubmit = () => {
     })
     console.log('error!!!')
   } else {
-    store.userNakeName = userNakeNameInput.value
-    console.log('submit!', store.userNakeName)
+    let tempName = userNakeNameInput.value;
+    console.log('submit!', tempName)
+    console.log('原来的名字：' + store.userNakeName);
+    axios({
+      method: 'get',
+      url: path + '/setUserName',   //修改昵称的url
+      params: {
+        //account: userAccountInfo.value.userAccount,
+        account: 'sk1112002797',  //此处我先给一个账号做测试
+        newName: tempName
+      }
+    }).then((response) => {
+      const respData = response.data;
+      console.log(respData.msg);
+      //code是1说明后端已经处理了昵称的修改
+      //就将store.wuerNakeName修改为新的昵称
+      if (respData.code == 1) {
+        console.log(respData.msg);
+        store.userNakeName = tempName;
+      } else {
+        console.log(respData.msg);
+      }
+    }).catch((error) => {
+      console.log('error = ' + error);
+
+    })
   }
 }
 const onCancel = () => {
@@ -191,18 +217,12 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile: any) => {
           <el-button @click="onCancel">Cancel</el-button>
         </el-form-item>
       </el-form>
-      <el-upload
-        class="avatar-uploader"
-        :action="uploadPath"
-        method="post"
-        :headers=headers
-        :show-file-list="false"
-        :on-success="handleAvatarSuccess"
-        :before-upload="beforeAvatarUpload"
-        v-show="isChangeAvatar"
-      >
+      <el-upload class="avatar-uploader" :action="uploadPath" method="post" :headers=headers :show-file-list="false"
+        :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" v-show="isChangeAvatar">
         <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-        <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+        <el-icon v-else class="avatar-uploader-icon">
+          <Plus />
+        </el-icon>
       </el-upload>
     </div>
   </div>
@@ -212,9 +232,11 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile: any) => {
 .changeNakeNameOrAvatar {
   margin-top: 30px;
 }
+
 .nakeNameInput {
   width: 30%;
 }
+
 .avatar-uploader .el-upload {
   border: 1px dashed var(--el-border-color);
   border-radius: 6px;
