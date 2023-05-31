@@ -1,6 +1,8 @@
 package com.project.campustaobao.controler;
 
+import com.project.campustaobao.mapper.GoodsMapper;
 import com.project.campustaobao.pojo.Administrator;
+import com.project.campustaobao.pojo.Goods;
 import com.project.campustaobao.pojo.UserOrder;
 import com.project.campustaobao.server.AdminServer;
 import com.project.campustaobao.server.OrderServer;
@@ -24,6 +26,8 @@ public class AdminController {
     private UserServer userServer;
     @Autowired
     private OrderServer orderServer;
+    @Autowired
+    private GoodsMapper goodsMapper;
     @GetMapping("/searchAdmin")
     @ResponseBody
     public ResultMessage<Administrator> getAdmin(String adminAccount){
@@ -205,6 +209,20 @@ public class AdminController {
         ResultMessage<Map<String,String>> resultMessage;
         resultMessage = new ResultMessage<>(ResultMessage.SUCCESS_CODE,
                 "查找该订单的详细信息",orderSimpleInfo);
+        return resultMessage;
+    }
+    @GetMapping("/getAllGoods")
+    @ResponseBody
+    public ResultMessage<List<Goods>> getAllGoods(){
+        ResultMessage<List<Goods>> resultMessage = null;
+        List<Goods> goodsList = goodsMapper.queryAllGoods();
+        if(goodsList == null){
+            resultMessage = new ResultMessage<>(ResultMessage.SUCCESS_CODE,
+                    "没有一件商品",null);
+        }else{
+            resultMessage = new ResultMessage<>(ResultMessage.SUCCESS_CODE,
+                    "查找到所有商品",goodsList);
+        }
         return resultMessage;
     }
 

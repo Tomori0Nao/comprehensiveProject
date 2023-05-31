@@ -22,6 +22,11 @@ public class GoodsServerImpl implements GoodsServer {
     }
 
     @Override
+    public List<Goods> queryAllGoods() {
+        return goodsMapper.queryAllGoods();
+    }
+
+    @Override
     public List<Map<String,String>> querySimilarGoodsByGoodsNo(String goodsNo) {
         /*
           1.首先根据商品编号查找到商品的种类
@@ -50,6 +55,12 @@ public class GoodsServerImpl implements GoodsServer {
     public List<Map<String,String>> querySimilarGoodsByGoodsType(String goodsType) {
         return goodsMapper.querySimilarGoodsByGoodsType(goodsType);
     }
+
+    @Override
+    public boolean addGoods(Goods goods) {
+        return goodsMapper.insertGoods(goods);
+    }
+
     @Override
     public Map<String, String> queryGoodsInfoByGoodsNo(String goodsNo) {
         return goodsMapper.queryGoodsInfoByGoodsNo(goodsNo);

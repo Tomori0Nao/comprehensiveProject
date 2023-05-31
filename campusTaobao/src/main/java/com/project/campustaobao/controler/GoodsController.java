@@ -42,4 +42,19 @@ public class GoodsController {
         List list = goodsServer.querySimilarGoodsByGoodsType(type);
         return resultMsg;
     }
+    @GetMapping("/addGoods")
+    @ResponseBody
+    public ResultMessage<String> addGoods(Goods goods){
+        System.out.println(goods);
+        ResultMessage<String> resultMsg;
+        boolean add = goodsServer.addGoods(goods);
+        if(add) {
+            resultMsg = new ResultMessage<>(ResultMessage.SUCCESS_CODE,
+                    "商品添加成功", null);
+        }else{
+            resultMsg = new ResultMessage<>(ResultMessage.ERROR_CODE,
+                    "商品添加失败", null);
+        }
+        return resultMsg;
+    }
 }

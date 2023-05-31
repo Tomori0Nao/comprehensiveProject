@@ -10,7 +10,6 @@
         <result property="goodsName" column="goods_name" />
         <result property="goodsPrice" column="goods_price" />
         <result property="goodsImageName" column="goods_image_name" />
-
     </resultMap>
     <select id="queryGoodsByGoodsNo" resultMap="goodsMap">
         select * from goods_info where goods_no = #{goodsNo}
@@ -34,6 +33,10 @@
         <result property="vipDerate" column="vip_derate" />
 
     </resultMap>
+<!--    查找所有商品-->
+    <select id="queryAllGoods" resultMap="goodsMap">
+        select * from goods_info
+    </select>
 <!--    通过商品编号查找商品名字-->
     <select id="queryGoodsNameByGoodsNo" resultType="String">
         select goods_name from goods_info where goods_no = #{goodsNo}
@@ -72,4 +75,13 @@
         <result property="goodsPrice" column="goods_price" />
         <result property="goodsImageName" column="goods_image_name" />
     </resultMap>
+<!--    添加一件商品-->
+    <insert id="insertGoods" parameterType="Goods">
+        insert into goods_info values
+        (#{goods.goodsNo},#{goods.goodsName},#{goods.goodsType},
+         #{goods.goodsPrice},#{goods.vipDerate},#{goods.goodsPurchasePrice},
+         #{goods.goodsNumber},#{goods.goodsBrand},#{goods.goodsImageName},
+         #{goods.goodsWeight}, #{goods.goodsSpecialInfo},#{goods.goodsOrigin},#{goods.goodsNumber},
+         '0',#{goods.goodsPurchaseDate},#{goods.storeName})
+    </insert>
 </mapper>
