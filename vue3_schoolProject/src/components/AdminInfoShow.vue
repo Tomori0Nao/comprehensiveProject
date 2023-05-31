@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import type { Ref } from 'vue'
+import axios from 'axios'
+axios.defaults.withCredentials = true
+
 // 先将系统管理员功能做完,完成相应组件后，再完成其他管理员的页面展示
 
 // 管理员页面
@@ -14,18 +17,18 @@ import type { Ref } from 'vue'
 interface AdminInfo {
   adminAccount: string
   adminNakeMame: string
-  adminType:string
+  adminType: string
   isBaned: boolean
   lastLoginTime: string
   createTime: string
 }
-const adminInfo:Ref<AdminInfo> = ref({
-    adminAccount: '123543532',
-    adminNakeMame: 'hello World',
-    adminType: '系统管理员',
-    isBaned: false,
-    lastLoginTime: '2023-5-27',
-    createTime: '2023-5-15'
+const adminInfo: Ref<AdminInfo> = ref({
+  adminAccount: '123543532',
+  adminNakeMame: 'hello World',
+  adminType: '系统管理员',
+  isBaned: false,
+  lastLoginTime: '2023-5-27',
+  createTime: '2023-5-15'
 })
 </script>
 

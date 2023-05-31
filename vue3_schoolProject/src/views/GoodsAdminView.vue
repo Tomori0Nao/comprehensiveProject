@@ -5,12 +5,7 @@
         <el-button type="primary" :icon="Plus" @click="handleAdd">新增商品</el-button>
       </div>
     </template>
-    <el-table
-      :load="state.loading"
-      :data="tableData"
-      tooltip-effect="dark"
-      style="width: 100%"
-    >
+    <el-table :load="state.loading" :data="tableData" tooltip-effect="dark" style="width: 100%">
       <el-table-column prop="goodsNo" label="商品编号"> </el-table-column>
       <el-table-column prop="goodsName" label="商品名"> </el-table-column>
       <el-table-column prop="goodsBrand" label="品牌"> </el-table-column>
@@ -71,9 +66,10 @@ import axios from 'axios'
 import { ElMessage } from 'element-plus'
 import { Plus, Delete } from '@element-plus/icons-vue'
 // import { getInnerRange } from '@vue/compiler-core';
-  import { useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
+axios.defaults.withCredentials = true
 
-  const router = useRouter()
+const router = useRouter()
 
 //----商品信息
 // 商品名称
@@ -94,7 +90,8 @@ interface GoodsInfo {
   goodsNo: string
   goodsState: string
 }
-const tableData = ref<GoodsInfo[]>([{
+const tableData = ref<GoodsInfo[]>([
+  {
     goodsName: '三星s23',
     goodsImageName: '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png',
     goodsPrice: 6999,
@@ -103,7 +100,8 @@ const tableData = ref<GoodsInfo[]>([{
     goodsNo: '318458',
     goodsBrand: '三星',
     goodsState: '上架'
-}])
+  }
+])
 const state = reactive({
   loading: false,
   total: 0, // 总条数
@@ -121,7 +119,7 @@ const handleAdd = () => {
   router.push({ path: '/admin/AddGoods' })
 }
 const handleEdit = (id: string) => {
-    console.log('Edit goods!!!')
+  console.log('Edit goods!!!')
   router.push({ path: '/admin/EditGoods', query: { id } })
 }
 const changePage = (val: number) => {
@@ -129,7 +127,7 @@ const changePage = (val: number) => {
   getGoodList()
 }
 const handleStatus = (row: GoodsInfo, status: boolean) => {
-    console.log(row)
+  console.log(row)
   // axios
 }
 </script>

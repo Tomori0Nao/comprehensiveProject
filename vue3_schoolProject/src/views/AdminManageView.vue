@@ -74,6 +74,8 @@ import ChangeAdminInfo from '@/components/ChangeAdminInfo.vue'
 import AddAdminInfo from '@/components/AddAdminInfo.vue'
 import { useEditAdminStore } from '../stores/EditAdmin'
 
+axios.defaults.withCredentials = true
+
 const editAdmin = useEditAdminStore()
 
 interface AdminInfo {
@@ -89,32 +91,7 @@ const tableData = ref<AdminInfo[]>([])
  * 渲染前，请求管理员信息
  */
 const path = 'http://localhost:8080'
-axios({
-  method: 'get',
-  url: path + '/getAdmins'
-})
-  .then((response) => {
-    const respData = response.data
-    const adminInfoList = respData.data
-    for (const iterator of adminInfoList) {
-      let tem: AdminInfo = {
-        adminType: '',
-        adminNakeName: '',
-        adminAccount: '',
-        adminAccountState: '',
-        rigisterDate: '',
-        isBaned: false
-      }
-      tem.adminType = iterator.adminType
-      tem.adminNakeName = iterator.adminNakeName
-      tem.adminAccount = iterator.adminAccount
-      tem.rigisterDate = iterator.registerDate
-      tem.isBaned = iterator.baned
-      tableData.value.push(tem)
-    }
-    console.log(respData.data)
-  })
-  .catch((error) => {})
+
 const dialogFormVisibleChange = ref(false)
 const dialogFormVisibleAdd = ref(false)
 const editAdminAccount = ref('')
@@ -252,6 +229,9 @@ const handleEdit = (index: number, row: AdminInfo) => {
 const handleCloseDialog = () => {
   dialogFormVisibleChange.value = false
   dialogFormVisibleAdd.value = false
+  setTimeout(getAdminList, 1000)
+
+  // getAdminList()
 }
 const handleAdd = () => {
   dialogFormVisibleAdd.value = true
@@ -261,9 +241,37 @@ const changePage = (val: number) => {
   getAdminList()
 }
 const getAdminList = () => {
+  tableData.value = []
   // axios
   // 根据state.currentPage来获取管理员信息列表
+  axios({
+    method: 'get',
+    url: path + '/getAdmins'
+  })
+    .then((response) => {
+      const respData = response.data
+      const adminInfoList = respData.data
+      for (const iterator of adminInfoList) {
+        let tem: AdminInfo = {
+          adminType: '',
+          adminNakeName: '',
+          adminAccount: '',
+          adminAccountState: '',
+          rigisterDate: '',
+          isBaned: false
+        }
+        tem.adminType = iterator.adminType
+        tem.adminNakeName = iterator.adminNakeName
+        tem.adminAccount = iterator.adminAccount
+        tem.rigisterDate = iterator.registerDate
+        tem.isBaned = iterator.baned
+        tableData.value.push(tem)
+      }
+      console.log(respData.data)
+    })
+    .catch((error) => {})
 }
+getAdminList()
 </script>
 
 <style scoped></style>

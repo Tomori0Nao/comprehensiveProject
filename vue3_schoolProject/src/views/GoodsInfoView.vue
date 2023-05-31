@@ -95,7 +95,7 @@ import { Minus, Plus } from '@element-plus/icons-vue'
 import { ElNotification } from 'element-plus'
 import { h } from 'vue'
 import axios from 'axios'
-
+axios.defaults.withCredentials = true
 
 let url = window.location.href
 let para = url.split('?').at(1)?.split('=').at(1)
@@ -160,7 +160,7 @@ const addToCart = () => {
   // axios
   ElNotification({
     title: '用户你好',
-    message: h('i', { style: 'color: teal' }, '商品已加入购物车'),
+    message: h('i', { style: 'color: teal' }, '商品已加入购物车')
   })
   console.log('added to cart')
 }
@@ -198,7 +198,7 @@ axios({
     const respData = response.data
     var goods: GoodsInfo = respData.data
     goodsInfo.value = goods
-    goodsInfo.value.goodsImageName = imagesURLPrefix+goods.goodsImageName+'.png'
+    goodsInfo.value.goodsImageName = imagesURLPrefix + goods.goodsImageName + '.png'
     console.log(goods)
   })
   .catch((error) => {

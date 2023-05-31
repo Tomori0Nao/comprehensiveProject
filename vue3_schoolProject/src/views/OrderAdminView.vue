@@ -15,8 +15,11 @@
       <el-table-column prop="orderDate" label="创建时间"> </el-table-column>
       <el-table-column label="操作">
         <template #default="scope">
-          <router-link class="routerLink"
-            :to="{ path: '/admin/OrderDetail', query: { id: scope.row.orderNo } }">订单详情</router-link>
+          <router-link
+            class="routerLink"
+            :to="{ path: '/admin/OrderDetail', query: { id: scope.row.orderNo } }"
+            >订单详情</router-link
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -29,6 +32,8 @@ import { onMounted, reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { HomeFilled, Delete } from '@element-plus/icons-vue'
 import axios from 'axios'
+axios.defaults.withCredentials = true
+
 interface OrderInfo {
   orderNo: string
   orderDate: string

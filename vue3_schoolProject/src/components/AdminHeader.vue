@@ -7,6 +7,9 @@
 </template>
 <script setup lang="ts">
 import { reactive } from 'vue'
+import axios from 'axios'
+axios.defaults.withCredentials = true
+
 const state = reactive({
   name: 'dashboard'
 })

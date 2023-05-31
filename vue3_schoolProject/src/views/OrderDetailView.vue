@@ -59,10 +59,11 @@ import type { RouterLink } from 'vue-router';
 import { ref } from 'vue'
 import { Minus, Plus } from '@element-plus/icons-vue'
 import axios from 'axios'
+axios.defaults.withCredentials = true
+
 const fit: string = 'fill'
 const picture: string =
   '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png'
-
 
 //----订单信息
 // 订单编号
