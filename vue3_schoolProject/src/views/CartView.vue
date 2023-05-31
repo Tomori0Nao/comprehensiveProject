@@ -134,15 +134,6 @@ interface GoodsInfo {
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<GoodsInfo[]>([])
 const cartSum: Ref<number> = ref(0)
-const toggleSelection = (rows?: GoodsInfo[]) => {
-  if (rows) {
-    rows.forEach((row) => {
-      multipleTableRef.value!.toggleRowSelection(row, undefined)
-    })
-  } else {
-    multipleTableRef.value!.clearSelection()
-  }
-}
 const handleSelectionChange = (val: GoodsInfo[]) => {
   multipleSelection.value = val
   console.log(multipleSelection, 'hello')
@@ -155,7 +146,6 @@ const handleSelectionChange = (val: GoodsInfo[]) => {
 }
 
 const handleMinus = (index: number, row: GoodsInfo) => {
-  // console.log(index, row)
   if (row.purchaseNumber < 2) {
   } else {
     row.purchaseNumber -= 1
@@ -169,7 +159,6 @@ const handleMinus = (index: number, row: GoodsInfo) => {
   }
 }
 const handlePlus = (index: number, row: GoodsInfo) => {
-  // console.log(index, row)
   if (row.purchaseNumber >= row.goodsNumber) {
   } else {
     row.purchaseNumber += 1
@@ -198,6 +187,7 @@ const deleteGoods = (index: number, row: GoodsInfo) => {
   console.log(tableData.value)
 }
 const goToPay = () => {
+  // 
   console.log(multipleSelection)
 }
 const clearCart = () => {
@@ -231,13 +221,13 @@ axios({
         vipPrice: 0
       }
       tem.goodsName = iterator.cartGoodsName
-      tem.goodsPrice = iterator.cartGoodsPrice
+      tem.goodsPrice = Number(iterator.cartGoodsPrice)
       tem.storeName = iterator.cartGoodsStoreName
-      tem.goodsNumber = iterator.maxNumOfSinglePurchase
-      tem.totalCost = iterator.totalCost
+      tem.goodsNumber = Number(iterator.maxNumOfSinglePurchase)
+      tem.totalCost = Number(iterator.totalCost)
       tem.picture = imagesURLPrefix+ iterator.cartGoodsImageName+'.png'
-      tem.purchaseNumber = iterator.cartGoodsNumber
-      tem.vipPrice = iterator.vipDerate
+      tem.purchaseNumber = Number(iterator.cartGoodsNumber)
+      tem.vipPrice = Number(iterator.vipDerate)
       tableData.value.push(tem)
     }
     ///////////////////////////////////////////////////////////////////////////////
