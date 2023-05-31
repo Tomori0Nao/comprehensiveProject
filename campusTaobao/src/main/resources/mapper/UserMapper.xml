@@ -26,7 +26,11 @@
         select user_account,user_password from user_info
         where user_account = #{account} and user_password = #{password}
     </select>
-
+<!--更新用户登陆时间-->
+    <update id="updateLoginTime">
+        update user_info set last_login_time = #{lastLoginTime}
+        where user_account = #{account}
+    </update>
     <insert id="register">
         insert into user_info(user_account,user_password,user_name,user_tel,
                               user_balance,total_consumption ,register_date)

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.project.campustaobao.mapper.AdminMapper">
+    <select id="queryAdminByAccount" resultMap="adminMap">
+        select * from admin where admin_account = #{account}
+    </select>
+    <resultMap id="adminMap" type="Administrator">
+        <id property="adminAccount" column="admin_account" />
+        <result property="adminPassword" column="admin_password" />
+        <result property="adminNakeName" column="admin_nake_name" />
+        <result property="adminType" column="admin_type" />
+        <result property="registerDate" column="register_date"/>
+        <result property="is_baned" column="isBaned" />
+    </resultMap>
+<!--    获取除系统管理员以外的所有管理员-->
+    <select id="queryAdminList" resultMap="adminMap">
+        select * from admin where admin_type != '系统管理员'
+    </select>
+<!--    获取管理员是否被禁用-->
+    <select id="isBaned" >
+        select is_baned from admin where admin_account = #{account}
+    </select>
+<!--    通过账号获取管理员的密码-->
+    <select id="queryPasswordAccount" resultType="String">
+        select admin_password from admin where admin_account = #{account}
+    </select>
+<!--    修改管理员信息前需要获取管理员的昵称，密码，管理员类型-->
+    <select id="queryAdminSimpleInfo" resultMap="adminSimpleInfo">
+        select admin_account, admin_nake_name,admin_password,admin_type from admin
+        where admin_account = #{account}
+    </select>
+    <resultMap id="adminSimpleInfo" type="java.util.Map">
+        <id property="adminAccount" column="admin_account" />
+        <result property="adminPassword" column="admin_password" />
+        <result property="adminNakeName" column="admin_nake_name" />
+        <result property="adminType" column="admin_type" />
+    </resultMap>
+</mapper>
