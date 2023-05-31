@@ -28,6 +28,7 @@ public interface GoodsMapper {
     List<Map<String,String>> queryHomeGoods(@Param("begin") int begin,
                                            @Param("count") int count);
     Goods  queryGoodsByGoodsNo(@Param("goodsNo") String goodsNo);
+    String queryGoodsNameByGoodsNo(@Param("goodsNo")String goodsNo);
     /**
      * 通过商品编号查找相似商品
      * @param goodsNo 商品编号

@@ -103,6 +103,25 @@ const orderInfo = ref<OrderInfo>({
   vipPrice: 0,
   totalCost: 0
 })
+let url = window.location.href
+let para = url.split('?').at(1)?.split('=').at(1)
+const path = 'http://localhost:8080'
+axios({
+  method: 'get',
+  url: path + '/getOrderDetailInfo',
+  params: {
+    orderNo: para,
+  }
+}).then((response) => {
+  const respData = response.data;
+  console.log(respData);
+
+}).catch((error) => {
+  console.log('error = ' + error);
+
+})
+
+
 </script>
 
 <style scoped>

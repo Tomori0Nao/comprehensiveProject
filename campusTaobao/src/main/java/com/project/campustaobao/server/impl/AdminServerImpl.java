@@ -58,8 +58,8 @@ public class AdminServerImpl implements AdminServer {
     }
 
     @Override
-    public Map<String,String> queryAdminSimpleInfo(String adminAccount) {
-        return adminMapper.queryAdminSimpleInfo(adminAccount);
+    public Map<String,String> queryAdminSimpleInfoByAdminAccount(String adminAccount) {
+        return adminMapper.queryAdminSimpleInfoByAdminAccount(adminAccount);
     }
 
     @Override

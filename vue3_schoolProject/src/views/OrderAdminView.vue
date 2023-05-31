@@ -2,22 +2,12 @@
   <el-card class="order-container">
     <template #header>
       <div class="header">
-        <el-input
-          style="width: 200px; margin-right: 10px"
-          placeholder="请输入订单号"
-          v-model="state.orderNo"
-          @change="handleOption"
-          clearable
-        />
+        <el-input style="width: 200px; margin-right: 10px" placeholder="请输入订单号" v-model="state.orderNo"
+          @change="handleOption" clearable />
       </div>
     </template>
-    <el-table
-      :load="state.loading"
-      :data="tableData"
-      tooltip-effect="dark"
-      style="width: 100%"
-      @selection-change="handleSelectionChange"
-    >
+    <el-table :load="state.loading" :data="tableData" tooltip-effect="dark" style="width: 100%"
+      @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"> </el-table-column>
       <el-table-column prop="orderNo" label="订单号"> </el-table-column>
       <el-table-column prop="totalCost" label="订单总价"> </el-table-column>
@@ -33,14 +23,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination
-      background
-      layout="prev, pager, next"
-      :total="state.total"
-      :page-size="state.pageSize"
-      :current-page="state.currentPage"
-      @current-change="changePage"
-    />
+    <el-pagination background layout="prev, pager, next" :total="state.total" :page-size="state.pageSize"
+      :current-page="state.currentPage" @current-change="changePage" />
   </el-card>
 </template>
 
@@ -60,7 +44,7 @@ interface OrderInfo {
 const multipleSelection = ref<OrderInfo[]>([])
 const tableData = ref<OrderInfo[]>([
   {
-    orderNo: '1354235',
+    orderNo: 'order2',
     orderDate: '2023-4-4',
     totalCost: 6999,
     userAccount: '1235432'
@@ -96,11 +80,23 @@ const changePage = (val: number) => {
   state.currentPage = val
   getOrderList()
 }
+const path = 'http://localhost:8080'
+axios({
+  method: 'get',
+  url: path + '/getOrders',
+}).then((response) => {
+  const respData = response.data;
+  console.log(respData);
+
+}).catch((error) => {
+  console.log('error = ' + error);
+
+})
 </script>
 
 <style scoped>
 .routerLink {
-  color: #409eff;
+  color: #409EFF;
   text-decoration: none;
 }
 </style>

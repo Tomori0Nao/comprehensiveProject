@@ -35,7 +35,7 @@ public interface AdminMapper {
      * @return 返回管理员注册时的密码
      */
     String queryPasswordAccount(@Param("account")String adminAccount);
-    Map<String,String> queryAdminSimpleInfo(@Param("account")String adminAccount);
+    Map<String,String> queryAdminSimpleInfoByAdminAccount(@Param("account")String adminAccount);
     boolean updateAdminSimpleInfo(Map<String,String> simpleInfo);
 
     /**

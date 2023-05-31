@@ -1,9 +1,11 @@
 package com.project.campustaobao.mapper;
+import com.project.campustaobao.pojo.User;
 import com.project.campustaobao.pojo.VIPUser;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Map;
 
 //这是对接 MyBatis 连接数据库的的XML 文件的层次
@@ -29,7 +31,7 @@ public interface UserMapper {
     boolean register(@Param("account") String account ,@Param("password") String password,@Param("name")String name ,@Param("tel") String tel,@Param("registerDate") String registerDate);
     String queryAccountByAccount(@Param("account") String account);
     Map<String,String> queryUserInfoByAccount(@Param("account") String account);
-
+    Map<String,String> queryUserSimpleInfoByAccount(@Param("account")String account);
     /**
      * 修改用户昵称
      * @param account 用户账号
@@ -38,5 +40,10 @@ public interface UserMapper {
      */
     boolean updateUserNameByAccount(@Param("account") String account,@Param("newName")String newName);
 
+    /**
+     * 查找所有用户的部分信息
+     * @return 所有用户的部分信息
+     */
+    List<Map<String,String>> queryUsers();
 }
 

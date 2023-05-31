@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,6 +26,16 @@ public class OrderServerImpl implements OrderServer {
     private GoodsMapper goodsMapper;
     @Autowired
     private DeliveryAddressMapper addressMapper;
+
+    /**
+     * 管理员查看订单
+     * @return 所有订单的信息(部分信息)
+     */
+    @Override
+    public List<Map<String, String>> queryAllOrders() {
+        return orderMapper.queryAllOrders();
+    }
+
     @Override
     public List<UserOrder> getOrderListByAccount(String account) {
         List<Map<String,Object>> orderList = orderMapper.queryOrderListByAccount(account);
@@ -54,5 +65,27 @@ public class OrderServerImpl implements OrderServer {
     @Override
     public boolean deleteOrder(String orderNo) {
         return orderMapper.deleteOrderByOrderNo(orderNo);
+    }
+
+    @Override
+    public Map<String, String> querySimpleInfoByOrderNo(String orderNo) {
+        return orderMapper.queryOrderSimpleInfoByOrderNo(orderNo);
+    }
+
+    @Override
+    public Map<String,String> queryOrderByOrderNo(String orderNo) {
+        return orderMapper.queryOrderByOrderNo(orderNo);
+    }
+    @Override
+    public Map<String,String> queryOrderDetailInfo(String orderNo){
+        //先通过订单编号查找订单表里的订单信息
+        Map<String,String> orderInfo = queryOrderByOrderNo(orderNo);
+        //然后再获取其他信息
+        orderInfo.put("goodsName",goodsMapper.queryGoodsNameByGoodsNo(
+                orderInfo.get("goodsNo")));
+        orderInfo.put("deliveryAddress",addressMapper.queryAddressByAddressNo(
+                orderInfo.get("deliveryNo")));
+        orderInfo.remove("deliveryNo");
+        return orderInfo;
     }
 }

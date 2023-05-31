@@ -10,6 +10,7 @@ import java.util.Map;
 //服务层接口 对接的是 controller
 public interface UserServer {
      boolean isBaned(String account);
+     boolean updateUserStatus(String account,boolean status);
      boolean forbidUser(String account);
      boolean notForbidUser(String account);
      boolean isRegistered(String account);
@@ -26,8 +27,11 @@ public interface UserServer {
      VIPUser queryVIPUserByAccount(String vipAccount);
      List<ShoppingCartGoods> queryAllShoppingCartGoods(String account);
 
+
      Map<String,String> queryUserInfoByAccount(String account);
 
      boolean updateUserNameByAccount(String account,String newName);
 
+     Map<String,String> queryUserSimpleInfoByAccount(String userAccount);
+     List<Map<String,String>> queryUsers();
 }

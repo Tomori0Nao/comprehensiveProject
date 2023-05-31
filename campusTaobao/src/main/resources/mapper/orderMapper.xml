@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.project.campustaobao.mapper.OrderMapper">
+<!--    查找用户所有订单-->
+    <select id="queryAllOrders" resultMap="orderSimpleInfoMap">
+        select order_no,order_price,user_account,order_time from user_order;
+    </select>
+<!--    根据订单编号获取订单详细信息-->
+    <select id="queryOrderByOrderNo" resultMap="orderInfoMap">
+        select * from user_order where order_no = #{orderNo};
+    </select>
+    <resultMap id="orderInfoMap" type="java.util.Map">
+        <id property="orderNo" column="order_no" />
+        <result property="orderTime" column="order_time"/>
+        <result property="goodsNo" column="goods_no"/>
+        <result property="goodsNumber" column="goods_num"/>
+        <result property="delivery_no" column="delivery_no"/>
+        <result property="orderDerate" column="order_derate"/>
+        <result property="actualPayment" column="actual_payment"/>
+    </resultMap>
+    <resultMap id="orderSimpleInfoMap" type="java.util.Map">
+        <id property="orderNo" column="order_no" />
+        <result property="orderPrice" column="order_price" />
+        <result property="userAccount" column="user_account" />
+        <result property="orderTime" column="order_time" />
+
+    </resultMap>
 <!--查询用户所有订单-->
     <select id="queryOrderListByAccount" resultType="map">
         select * from user_order where user_account = #{account}
