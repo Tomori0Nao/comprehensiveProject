@@ -23,7 +23,8 @@ axios.defaults.withCredentials = true
 
 const props = defineProps({
   type: String, // 用于判断是添加还是编辑
-  reload: Function // 添加或修改完后，刷新列表页
+  reload: Function ,// 添加或修改完后，刷新列表页
+  categoryNo: String
 })
 interface CateoryInfo {
   categoryId: string
@@ -97,7 +98,7 @@ const submitForm = () => {
           method: 'get',
           url: path + '/addGoodsType',
           params: {
-            categoryName: '武器'
+            categoryName: state.ruleForm.name
           }
         }).then((response) => {
           const respData = response.data;
@@ -120,8 +121,8 @@ const submitForm = () => {
           method: 'get',
           url: path + '/updateGoodsType',
           params: {
-            categoryNo: 'category002',
-            categoryName: '手机666'
+            categoryNo: state.id,
+            categoryName: state.ruleForm.name
           }
         }).then((response) => {
           const respData = response.data;
