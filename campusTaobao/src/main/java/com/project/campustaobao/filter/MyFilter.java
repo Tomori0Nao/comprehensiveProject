@@ -10,12 +10,13 @@ import java.io.IOException;
 public class MyFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest)servletRequest;
-        HttpServletResponse resp = (HttpServletResponse)servletResponse;
-        //设置跨域请求
-        resp.setHeader("Access-Control-Allow-Origin", "*");
-        resp.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT");
-        resp.setHeader("Access-Control-Max-Age", "3628800");
+        HttpServletResponse resp = (HttpServletResponse) servletResponse;
+        HttpServletRequest req = (HttpServletRequest) servletRequest;
+        String curOrigin = req.getHeader("Origin");
+        resp.setHeader("Access-Control-Allow-Origin", curOrigin == null ? "true" : curOrigin);
+        resp.setHeader("Access-Control-Allow-Credentials", "true");
+        resp.setHeader("Access-Control-Allow-Methods", "POST, GET, PATCH, DELETE, PUT");
+        resp.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         filterChain.doFilter(req,resp);
     }
 }

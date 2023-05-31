@@ -50,4 +50,10 @@
         <result property="lastLoginTime" column="last_login_time" />
         <result property="avatar" column="user_avatar" />
     </resultMap>
+
+<!--    修改用户昵称-->
+    <update id="updateUserNameByAccount" parameterType="String">
+        update user_info set user_name = #{newName}
+        where user_account = #{account}
+    </update>
 </mapper>

@@ -4,13 +4,11 @@ import type { RouterLink } from 'vue-router';
   <div class="container">
     <MallHeader></MallHeader>
     <el-tabs tab-position="left" class="demo-tabs">
-      <el-tab-pane label="我的订单"
-        >我的订单
+      <el-tab-pane label="我的订单">我的订单
         <OrderList></OrderList>
       </el-tab-pane>
 
-      <el-tab-pane label="账号管理"
-        >账号管理
+      <el-tab-pane label="账号管理">账号管理
         <el-tabs type="border-card">
           <el-tab-pane label="基本信息">
             <UserInfo></UserInfo>
@@ -18,7 +16,9 @@ import type { RouterLink } from 'vue-router';
           <el-tab-pane label="登录历史">登录历史</el-tab-pane>
         </el-tabs>
       </el-tab-pane>
-      <el-tab-pane label="地址管理"><AddressAdmin></AddressAdmin></el-tab-pane>
+      <el-tab-pane label="地址管理">
+        <AddressAdmin></AddressAdmin>
+      </el-tab-pane>
     </el-tabs>
   </div>
 </template>
@@ -106,17 +106,7 @@ const userAccountInfo: Ref<UserAccountInfo> = ref({
   userMoney: 8888,
   userAvatar: '/src/assets/github3.svg'
 })
-/**
- * 请求订单数据
- */
-const path = 'http://localhost:8080/'
-axios({
-  method: 'get'
-})
-  .then((response) => {})
-  .catch((error) => {
-    console.log('error = ' + error)
-  })
+
 </script>
 
 <style scoped>

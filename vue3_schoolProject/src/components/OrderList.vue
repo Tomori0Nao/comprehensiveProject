@@ -4,6 +4,7 @@ import MallHeader from '../components/MallHeader.vue'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { ElTable } from 'element-plus'
+import axios from 'axios';
 
 // ----订单信息
 // 用户账号
@@ -54,10 +55,34 @@ const fit: string = 'fill'
 const handleSelectionChange = (val: OrderInfo[]) => {
   multipleSelection.value = val
 }
-
+const path = 'http://localhost:8080'
 const deleteGoods = (index: number, row: OrderInfo) => {
   console.log(index, row)
-  orderInfoTableData.value.splice(index, 1)
+  /**
+   * 向后端请求删除操作
+   */
+  axios({
+    method: 'get',
+    url: path + '/deleteUserOrder',
+    //account参数实际上不用传递，因为后端可以在session中获得
+    //但是此处为了测试，暂时加上account属性，
+    params: {
+      //每个用户的每一个订单的编号都是唯一的，因此只需要发送订单编号即可
+      //orderNo: orderInfoTableData.value[index].orderNo,
+      orderNo: 'order1'    //先用一个写好的值测试
+    }
+  }).then((response) => {
+    const respData = response.data;
+    if (respData.code == 1) {
+      orderInfoTableData.value.splice(index, 1);
+    } else {
+      console.log(respData.msg);
+
+    }
+  }).catch((error) => {
+    console.log('error = ' + error);
+
+  });
   console.log(orderInfoTableData.value)
 }
 
@@ -85,16 +110,50 @@ const userAccountInfo: Ref<UserAccountInfo> = ref({
   userMoney: 8888,
   userAvatar: '/src/assets/github3.svg'
 })
+/**
+ * 加载页面时，将用户的订单信息加载出来
+ *  "data": [
+        {
+            "userAccount": null,                     用户账号不需要
+            "orderNo": "order1",                     订单编号
+            "orderTime": "2023-12-14 15:30:06",      下单时间
+            "deliveryAddress": "重庆市巴南社区",      下单时收货地址
+            "orderPrice": "12.3",                     下单时价格
+            "orderDerate": "1.33",                    下单时优惠额
+            "actualPayment": "100.96",                实际总付款
+            "goodsName": "牛别克手机",                商品名字
+            "goodsNumber": 2,                        购买数量
+            "goodsImageName": "homeGoods-1",         商品图片
+            "storeName": "上酒乐乐公司"              商品所属的店铺名
+        },
+ */
+
+axios({
+  method: 'get',
+  url: path + '/userOrder',
+  //这个参数实际上不用传递，因为后端可以在session中获得
+  //但是此处为了测试，暂时加上account属性，
+  params: {
+    account: '111',
+  }
+}).then((response) => {
+  const respData = response.data;
+  console.log(respData);
+  var orderList = respData.data;
+  for (var i = 0; i < orderList.length; ++i) {
+    console.log(orderList[i]);
+  }
+}).catch((error) => {
+  console.log('error = ' + error);
+
+});
+
 </script>
 
 <template>
-  <div >
-    <el-table
-      ref="multipleTableRef"
-      :data="orderInfoTableData"
-      style="width: 100%"
-      @selection-change="handleSelectionChange"
-    >
+  <div>
+    <el-table ref="multipleTableRef" :data="orderInfoTableData" style="width: 100%"
+      @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" />
       <el-table-column label="商品" width="120">
         <template #default="scope">
@@ -115,9 +174,7 @@ const userAccountInfo: Ref<UserAccountInfo> = ref({
       </el-table-column>
       <el-table-column label="操作" show-overflow-tooltip>
         <template #default="scope">
-          <el-button type="danger" @click.prevent="deleteGoods(scope.$index, scope.row)" plain
-            >删除</el-button
-          >
+          <el-button type="danger" @click.prevent="deleteGoods(scope.$index, scope.row)" plain>删除</el-button>
         </template>
       </el-table-column>
     </el-table>

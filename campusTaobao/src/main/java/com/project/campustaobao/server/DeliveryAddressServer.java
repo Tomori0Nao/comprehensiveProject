@@ -3,8 +3,10 @@ package com.project.campustaobao.server;
 import com.project.campustaobao.pojo.DeliveryAddress;
 
 import java.util.List;
+import java.util.Map;
 
 public interface DeliveryAddressServer {
+    boolean isExist(DeliveryAddress address);
     /**
      * 用户添加一个收货地址
      * @param account 用户账号
@@ -22,5 +24,9 @@ public interface DeliveryAddressServer {
      * @return 返回该账号的用户的所有收货地址
      */
     List<DeliveryAddress> getDeliveryAddressList(String account);
+
+    boolean deleteDeliveryAddress(String account,String addressNo);
+
+    boolean updateDeliveryAddress(DeliveryAddress address);
 
 }

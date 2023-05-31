@@ -25,4 +25,6 @@ public interface UserServer {
 
      Map<String,String> queryUserInfoByAccount(String account);
 
+     boolean updateUserNameByAccount(String account,String newName);
+
 }

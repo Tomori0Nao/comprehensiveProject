@@ -6,6 +6,7 @@ import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './src/router'
 
+
 const app = createApp(App)
 
 app.use(createPinia())
