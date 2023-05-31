@@ -56,13 +56,14 @@ import { useRouter } from 'vue-router'
 axios.defaults.withCredentials = true
 
 
+const router = useRouter()
 // const router = useRouter()
 // router.beforeEach(async (to, from) => {
 //   console.log(window.localStorage.getItem('userAccount'))
 //     // 如果不是 /login，判断是否有 token
 //     if (!window.localStorage.getItem('adminAccount')&&to.name !== 'Login') {
 //       // 如果没有，则跳至登录页面
-//       return { name: 'Login' }
+//       return { name: 'adminLogin'}
 //     } else {
 //       // 否则继续执行
 //     }

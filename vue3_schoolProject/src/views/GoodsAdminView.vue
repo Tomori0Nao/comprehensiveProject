@@ -9,7 +9,7 @@
       <el-table-column prop="goodsNo" label="商品编号"> </el-table-column>
       <el-table-column prop="goodsName" label="商品名"> </el-table-column>
       <el-table-column prop="goodsBrand" label="品牌"> </el-table-column>
-      <el-table-column label="商品图片" width="150px">
+      <el-table-column label="商品图片" width="130px">
         <template #default="scope">
           <img style="width: 100px; height: 100px" :key="scope.row.goodsNo" :src="scope.row.goodsImageName" alt="商品主图" />
         </template>
@@ -57,17 +57,19 @@ interface GoodsInfo {
   goodsNumber: number
   goodsBrand: string
   goodsNo: string
+  goodsType: string
 }
 const tableData = ref<GoodsInfo[]>([
-  {
-    goodsName: '三星s23',
-    goodsImageName: '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png',
-    goodsPrice: 6999,
-    storeName: 'git商城自营店',
-    goodsNumber: 100,
-    goodsNo: '318458',
-    goodsBrand: '三星',
-  }
+  // {
+  //   goodsName: '三星s23',
+  //   goodsImageName: '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png',
+  //   goodsPrice: 6999,
+  //   storeName: 'git商城自营店',
+  //   goodsNumber: 100,
+  //   goodsNo: '318458',
+  //   goodsBrand: '三星',
+  //   goodsType: '手机'
+  // }
 ])
 const state = reactive({
   loading: false,
@@ -118,18 +120,40 @@ const path = 'http://localhost:8080'
 axios({
   method: 'get',
   url: path + '/getAllGoods',
-  params: {
-
-  }
-}).then((response) => {
-  const respData = response.data;
-  console.log(respData);
-
-}).catch((error) => {
-  console.log("error = " + error);
-
-
+  params: {}
 })
+  .then((response) => {
+    const imagesURLPrefix = 'http://localhost:8080/static/images/'
+    tableData.value = []
+    const respData = response.data
+    const resGoodsList = respData.data
+    for (const iterator of resGoodsList) {
+      let tem: GoodsInfo = {
+        goodsName: '',
+        goodsImageName:
+          '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png',
+        goodsPrice: 0,
+        storeName: '',
+        goodsNumber: 0,
+        goodsNo: '',
+        goodsBrand: '',
+        goodsType: ''
+      }
+      tem.goodsName = iterator.goodsName
+      tem.goodsNo = iterator.goodsNo
+      tem.goodsNumber = iterator.goodsNumber
+      tem.goodsPrice = iterator.goodsPrice
+      tem.storeName = iterator.storeName
+      tem.goodsImageName = imagesURLPrefix + iterator.goodsImageName + '.png'
+      tem.goodsType = iterator.goodsType
+      tem.goodsBrand = iterator.goodsBrand
+      tableData.value.push(tem)
+    }
+    console.log(respData)
+  })
+  .catch((error) => {
+    console.log('error = ' + error)
+  })
 </script>
 
 <style scoped>

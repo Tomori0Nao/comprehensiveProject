@@ -35,6 +35,12 @@ import type { RouterLink } from 'vue-router';
       </el-descriptions-item>
       <el-descriptions-item>
         <template #label>
+          <div class="cell-item">商品单价</div>
+        </template>
+        {{ orderInfo.goodsPrice }}
+      </el-descriptions-item>
+      <el-descriptions-item>
+        <template #label>
           <div class="cell-item">收货地址</div>
         </template>
         {{ orderInfo.address }}
@@ -86,6 +92,7 @@ interface OrderInfo {
   address: string
   userAccount: string
   goodsPicture: string
+  goodsPrice: number
   storeName: string
   vipPrice: number
   totalCost: number
@@ -99,6 +106,7 @@ const orderInfo = ref<OrderInfo>({
   address: '',
   userAccount: '',
   goodsPicture: '',
+  goodsPrice: 0,
   storeName: '',
   vipPrice: 0,
   totalCost: 0
@@ -110,18 +118,44 @@ axios({
   method: 'get',
   url: path + '/getOrderDetailInfo',
   params: {
-    orderNo: para,
+    orderNo: para
   }
-}).then((response) => {
-  const respData = response.data;
-  console.log(respData);
-
-}).catch((error) => {
-  console.log('error = ' + error);
-
 })
-
-
+  .then((response) => {
+    const respData = response.data
+    const resOrderInfo = respData.data
+    // for (const iterator of resOrderInfo) {
+      let tem: OrderInfo = {
+        orderNo: '',
+        orderDate: '',
+        goodsNo: '',
+        goodsName: '',
+        goodsNumber: 0,
+        address: '',
+        userAccount: '',
+        goodsPicture: '',
+        goodsPrice: 0,
+        storeName: '',
+        vipPrice: 0,
+        totalCost: 0
+      }
+      orderInfo.value.goodsNo = resOrderInfo.goodsNo
+      orderInfo.value.orderNo = resOrderInfo.orderNo
+      orderInfo.value.orderDate = resOrderInfo.orderTime
+      orderInfo.value.totalCost = resOrderInfo.actualPayment
+      orderInfo.value.address = resOrderInfo.deliveryAddress
+      orderInfo.value.goodsName = resOrderInfo.goodsName
+      orderInfo.value.goodsNumber = resOrderInfo.goodsNumber
+      orderInfo.value.vipPrice = resOrderInfo.orderDerate
+      orderInfo.value.goodsPrice = resOrderInfo.order_price
+      orderInfo.value.userAccount = resOrderInfo.user_account
+      
+    // }
+    console.log(respData)
+  })
+  .catch((error) => {
+    console.log('error = ' + error)
+  })
 </script>
 
 <style scoped>

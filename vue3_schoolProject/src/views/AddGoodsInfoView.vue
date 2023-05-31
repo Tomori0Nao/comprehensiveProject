@@ -64,9 +64,9 @@
             v-model="goodsInfo.goodsWeight"
             placeholder="请输入商品重量"
           ></el-input>
-          <span class="weight">(kg)</span>
+          <span class="weight">(g)</span>
         </el-form-item>
-        <el-form-item label="商品产地" prop="goodsProducingArea">
+        <el-form-item label="商品产地" prop="goodsOrigin">
           <el-input
             min="0"
             style="width: 300px"
@@ -88,6 +88,12 @@
           ></el-input>
         </el-form-item>
         <el-form-item label="进货日期" prop="goodsPurchaseDate">
+          <!-- <el-input
+            style="width: 300px"
+            type="textarea"
+            v-model="goodsInfo.goodsSpecifiedInfo"
+            placeholder="请输入商品简介(100字)"
+          ></el-input> -->
           <el-date-picker
             v-model="goodsInfo.goodsPurchaseDate"
             type="date"
@@ -102,7 +108,7 @@
             placeholder="请输入商品简介(100字)"
           ></el-input>
         </el-form-item>
-        <el-form-item required label="商品图片" prop="goodsImageName">
+        <el-form-item  label="商品图片" prop="goodsImageName">
           <el-upload
             class="avatar-uploader"
             :action="state"
@@ -134,7 +140,7 @@ import { ElMessage } from 'element-plus'
 import { useRoute, useRouter } from 'vue-router'
 import type { UploadProps } from 'element-plus'
 import { Delete, Download, Plus, ZoomIn } from '@element-plus/icons-vue'
-
+const goodsDate= ref('')
 axios.defaults.withCredentials = true
 
 // ----商品信息
@@ -175,18 +181,18 @@ interface GoodsInfo {
 const goodsInfo = ref<GoodsInfo>({
   goodsName: '',
   goodsImageName: '',
-  goodsPrice: '12.3',
+  goodsPrice: '',
   storeName: '',
   goodsNumber: 0,
   goodsBrand: '',
   goodsNo: '',
-  goodsWeight: '50.36',
+  goodsWeight: '',
   goodsOrigin: '',
   goodsType: '',
   //storeNo: '',
-  goodsPurchasePrice: '12.3',
-  vipDerate: '12.36',
-  goodsPurchaseDate: '0',
+  goodsPurchasePrice: '',
+  vipDerate: '',
+  goodsPurchaseDate: '',
   goodsSpecifiedInfo: ''
   //goodsState: true
 })
@@ -219,7 +225,7 @@ const state = reactive({
     goodsNumber: [{ required: 'true', message: '请填写商品库存', trigger: ['change'] }],
     goodsBrand: [{ required: 'true', message: '请填写商品品牌', trigger: ['change'] }],
     goodsWeight: [{ required: 'true', message: '请填写商品重量', trigger: ['change'] }],
-    goodsProducingArea: [{ required: 'true', message: '请填写商品产地', trigger: ['change'] }],
+    goodsOrigin: [{ required: 'true', message: '请填写商品产地', trigger: ['change'] }],
     goodsType: [{ required: 'true', message: '请填写商品类型', trigger: ['change'] }],
     vipDerate: [{ required: 'true', message: '请填写会员减免', trigger: ['change'] }],
     goodsPurchaseDate: [{ required: 'true', message: '请填写进货日期', trigger: ['change'] }]
@@ -242,25 +248,26 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile: any) => {
 }
 const path = 'http://localhost:8080'
 const onSubmit = () => {
+  // goodsDate.value = goodsInfo.value.goodsPurchaseDate.split('T').at(0)
+  console.log(goodsInfo.value.goodsPurchaseDate,'date')
   axios({
     method: 'get',
     url: path + '/addGoods',
     params: {
-      goodsName: '小熊饼干',
-      goodsImageName: '小熊图片',
-      goodsPrice: '12.3',
-      storeName: '小熊饼干店铺',
-      goodsNumber: 16,
-      goodsBrand: '小熊零食',
-      goodsNo: 'xiaoxiong',
-      goodsWeight: '100',
-      goodsOrigin: '北京市朝阳区',
-      goodsType: '零食',
+      goodsName: goodsInfo.value.goodsName,
+      goodsImageName: goodsInfo.value.goodsImageName,
+      goodsPrice: goodsInfo.value.goodsPrice,
+      storeName: goodsInfo.value.storeName,
+      goodsNumber: goodsInfo.value.goodsNumber,
+      goodsBrand: goodsInfo.value.goodsBrand,
+      goodsWeight: goodsInfo.value.goodsWeight,
+      goodsOrigin: goodsInfo.value.goodsOrigin,
+      goodsType: goodsInfo.value.goodsType,
       //storeNo: '',
-      goodsPurchasePrice: '5.69',
-      vipDerate: '0.88',
-      goodsPurchaseDate: '2023-12-23',
-      goodsSpecialInfo: '好吃又美味'
+      goodsPurchasePrice: goodsInfo.value.goodsPurchasePrice,
+      vipDerate: goodsInfo.value.vipDerate,
+      goodsPurchaseDate: goodsInfo.value.goodsPurchaseDate,
+      goodsSpecialInfo: goodsInfo.value.goodsSpecifiedInfo
     }
   })
     .then((response) => {
