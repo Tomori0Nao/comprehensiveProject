@@ -62,4 +62,6 @@ public interface GoodsMapper {
     boolean updateGoodsType(@Param("categoryNo")String categoryNo, @Param("categoryName")String goodsType);
     boolean updateGoodsTypeByGoodsType(@Param("goodsOldType")String oldType,@Param("goodsNewType")String newType);
     boolean deleteGoodsType(@Param("categoryName")String goodsType);
+
+    int queryGoodsAccount();
 }

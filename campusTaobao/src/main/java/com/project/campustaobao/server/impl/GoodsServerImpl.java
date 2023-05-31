@@ -131,6 +131,8 @@ public class GoodsServerImpl implements GoodsServer {
 
     @Override
     public boolean addGoods(Goods goods) {
+        int count = goodsMapper.queryGoodsAccount();
+        goods.setGoodsNo("goods"+count);
         return goodsMapper.insertGoods(goods);
     }
 

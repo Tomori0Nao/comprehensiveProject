@@ -75,6 +75,10 @@
         <result property="goodsPrice" column="goods_price" />
         <result property="goodsImageName" column="goods_image_name" />
     </resultMap>
+<!--    获取商品数目-->
+    <select id="queryGoodsAccount" resultType="int">
+        select count(goods_no) from goods_info
+    </select>
 <!--    添加一件商品-->
     <insert id="insertGoods" parameterType="Goods">
         insert into goods_info values
