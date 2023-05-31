@@ -5,11 +5,10 @@ import com.project.campustaobao.server.AdminServer;
 import com.project.campustaobao.utils.Request;
 import com.project.campustaobao.vo.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.kafka.KafkaProperties;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,6 +17,20 @@ import java.util.Map;
 public class AdminController {
     @Autowired
     private AdminServer adminServer;
+    @GetMapping("/searchAdmin")
+    @ResponseBody
+    public ResultMessage<Administrator> getAdmin(String adminAccount){
+        Administrator admin = adminServer.queryAdminByAccount(adminAccount);
+        ResultMessage<Administrator> resultMessage;
+        if(admin == null){
+            resultMessage = new ResultMessage<>(ResultMessage.ERROR_CODE,
+                    "此管理员不存在",null);
+        }else{
+            resultMessage = new ResultMessage<>(ResultMessage.SUCCESS_CODE,
+                    "查找到此管理员",admin);
+        }
+        return resultMessage;
+    }
     /**
      * 获取所有的普通管理员
      * @return 返回管理员集合

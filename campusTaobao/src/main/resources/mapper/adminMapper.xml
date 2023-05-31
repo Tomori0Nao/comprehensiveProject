@@ -10,7 +10,7 @@
         <result property="adminNakeName" column="admin_nake_name" />
         <result property="adminType" column="admin_type" />
         <result property="registerDate" column="register_date"/>
-        <result property="is_baned" column="isBaned" />
+        <result property="isBaned" column="is_baned" />
     </resultMap>
 <!--    获取除系统管理员以外的所有管理员-->
     <select id="queryAdminList" resultMap="adminMap">

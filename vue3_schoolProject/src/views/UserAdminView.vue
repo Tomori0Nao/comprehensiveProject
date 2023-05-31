@@ -68,6 +68,7 @@ const state = reactive({
   loading: false,
   userAccount: ''
 })
+const path = 'http://localhost:8080'
 const handleSolve = () => {
   if (multipleSelection.value.length == 0) {
     ElMessage.error('请选择项')

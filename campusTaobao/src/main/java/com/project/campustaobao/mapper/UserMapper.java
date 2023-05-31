@@ -10,6 +10,20 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface UserMapper {
+    /**
+     * 查询用户禁用状态
+     * @param account 用户账号
+     * @return 返回该用户的禁用状态
+     */
+    boolean isBaned(@Param("account")String account);
+    /**
+     * 更新用户状态   正常or禁用
+     * @param account
+     * @return 更新成功返回true,否则返回false
+     */
+    boolean updateUserStatus(@Param("account")String account, @Param("status")boolean baned);
+
+
     Map<String,String> login(String account, String password);
     boolean updateLoginTime(@Param("account") String account,@Param("lastLoginTime") String time);
     boolean register(@Param("account") String account ,@Param("password") String password,@Param("name")String name ,@Param("tel") String tel,@Param("registerDate") String registerDate);
