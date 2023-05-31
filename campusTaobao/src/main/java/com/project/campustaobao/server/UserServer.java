@@ -9,8 +9,11 @@ import java.util.Map;
 
 //服务层接口 对接的是 controller
 public interface UserServer {
+     boolean isBaned(String account);
+     boolean forbidUser(String account);
+     boolean notForbidUser(String account);
      boolean isRegistered(String account);
-     boolean login(String account,String password);
+     int login(String account,String password);
      boolean isVIPUser(String account);
 
      /**

@@ -30,7 +30,7 @@ public class LoginRegisterController {
     /*
       我没有选用@RequestBody Map的形式，因为Map自动拆箱和装箱，性能不好
      */
-    public boolean login(){
+    public ResultMessage<Integer> login(){
         HttpServletRequest req = (HttpServletRequest) Request.getRequest();
         HttpSession session = req.getSession();
         //设置session最大存活时间5小时
@@ -40,7 +40,20 @@ public class LoginRegisterController {
         Session.setSessionAttribute(req, "account",account);
         Session.setSessionAttribute(req,"password",password);
         Session.setSessionAttribute(req,"notLogin",false);
-        return userServer.login(account,password);
+        int login = userServer.login(account,password);
+        System.out.println("login="+login);
+        ResultMessage<Integer> resultMessage;
+        if(login == 0){
+            resultMessage = new ResultMessage<>(ResultMessage.SUCCESS_CODE,
+                    "成功登录",login);
+        }else if(login == 1){
+            resultMessage = new ResultMessage<>(ResultMessage.ERROR_CODE,
+                    "账号已经被禁用",login);
+        }else{
+            resultMessage = new ResultMessage<>(ResultMessage.ERROR_CODE,
+                    "请检查你的账号和密码是否正确",login);
+        }
+        return resultMessage;
     }
     @PostMapping("/register")
     @ResponseBody

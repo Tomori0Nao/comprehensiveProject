@@ -27,6 +27,24 @@ public class UserServerImpl implements UserServer {
     private VIPUserMapper vipUserMapper;
     @Autowired
     private ShoppingCartServer shoppingCartServer;
+
+    /**
+     * 判断用户是否被禁用
+     * @param account
+     * @return 该用户禁用则返回true
+     */
+    @Override
+    public boolean isBaned(String account) {
+        return userMapper.isBaned(account);
+    }
+    @Override
+    public boolean forbidUser(String account){
+        return userMapper.updateUserStatus(account,true);
+    }
+    @Override
+    public boolean notForbidUser(String account){
+        return userMapper.updateUserStatus(account,false);
+    }
     /**
      * 判断账号是否被注册过
      * @param account 传入的账号
@@ -45,17 +63,20 @@ public class UserServerImpl implements UserServer {
      * @return 验证通过返回true
      */
     @Override
-    public boolean login(String account, String password) {
-        boolean login = userMapper.login(account,password) != null;
-        if(login){
+    public int login(String account, String password) {
+        if(userMapper.isBaned(account)){
+            return 1;
+        }else if(userMapper.login(account,password) !=null){
             DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
             LocalDateTime time = LocalDateTime.now();
             String localDateTime = df.format(time);
             LocalDateTime ldt = LocalDateTime.parse(localDateTime, df);
             System.out.println(ldt);
             userMapper.updateLoginTime(account,ldt.toString());
+            return 0;
+        } else{
+            return 2;
         }
-        return login;
     }
 
     /**

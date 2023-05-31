@@ -50,6 +50,8 @@
       :current-page="state.currentPage"
       @current-change="changePage"
     />
+
+    <!-- <el-button class="mt-4" style="width: 100%" @click="handleAdd">Add Item</el-button> -->
     <el-dialog v-model="dialogFormVisibleChange" title="管理员信息修改" center width="30%">
       <ChangeAdminInfo
         @close-dialog="handleCloseDialog"
@@ -203,10 +205,36 @@ const handleForbid = () => {
     // axios
   }
 }
+/**
+ * 输入管理员账号查找管理员信息
+ */
 const handleSearch = () => {
   // 查询账号
   // state.userAccount
   // axios
+  axios({
+    method: 'get',
+    url: path + '/searchAdmin',
+    params: {
+      adminAccount: state.adminAccount
+      //我写一个固定值测试
+      // adminAccount: 'admin002'
+    }
+  })
+    .then((response) => {
+      const respData = response.data
+      //下面是查找的管理员信息
+      console.log(respData)
+      //查找到
+      if (respData.code == 1) {
+        console.log(respData.msg)
+      }
+      //没找到
+      else {
+        console.log(respData.msg)
+      }
+    })
+    .catch((error) => {})
 }
 const handleSelectionChange = (val: AdminInfo[]) => {
   multipleSelection.value = val
@@ -217,8 +245,9 @@ const handleEdit = (index: number, row: AdminInfo) => {
   editAdmin.adminType = row.adminType
   editAdmin.isBaned = row.isBaned
   state.editAdminAccount = row.adminAccount
-  console.log(state.editAdminAccount,'selected!!!')
+  console.log(state.editAdminAccount, 'selected!!!')
   dialogFormVisibleChange.value = true
+  //请求已在ChangeAdminInfo中写
 }
 const handleCloseDialog = () => {
   dialogFormVisibleChange.value = false

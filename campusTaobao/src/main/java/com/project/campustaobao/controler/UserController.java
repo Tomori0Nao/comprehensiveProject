@@ -33,6 +33,13 @@ public class UserController {
         return "image";
     }
 
+    @GetMapping("/getUserStatus")
+    @ResponseBody
+    public ResultMessage<Boolean> getUsrStatus(String userAccount){
+        return new ResultMessage<>(ResultMessage.SUCCESS_CODE,
+                "查找到该用户的状态",userServer.isBaned(userAccount));
+    }
+
     @GetMapping("/vipInfo")
     @ResponseBody
     public ResultMessage<VIPUser> getVIPInfo(String vipAccount) {

@@ -95,21 +95,23 @@ export default {
         this.refreshCode();
       } //账号密码不空，且验证码输入正确
       else {
+        const path = 'http://localhost:8080'
         axios({
           method: 'POST',
-          url: 'http://localhost:8080/checkLogin',
+          url: path + '/checkLogin',
           params: {
             account: this.formLogin.account,
             password: this.formLogin.password
           }
         })
           .then((response) => {
-            if (response.data == true) {
-              console.log('登陆成功')
+            const respData = response.data;
+            if (respData.data == 0) {
+              this.$message(respData.msg)
               window.sessionStorage.setItem('notLogin', JSON.stringify(response.data))
               this.$router.push('/test')
             } else {
-              alert('请检查账号密码')
+              this.$message.error(respData.msg);
             }
           })
           .catch((error) => {
