@@ -51,13 +51,14 @@ public interface GoodsMapper {
      * @return 商品种类相同的商品集合
      */
     List<Map<String,String>> querySimilarGoodsByGoodsType(@Param("goodsType") String goodsType);
+    int queryCategoryCount();
     boolean insertGoods(@Param("goods")Goods goods);
     boolean deleteGoodsByGoodsNo(@Param("goodsNo")String goodsNo);
     boolean deleteGoodsByGoodsType(@Param("goodType")String goodsType);
-
+    String queryCategoryNameByCategoryNo(@Param("categoryNo")String categoryNo);
     boolean updateGoodsInfo(@Param("goods")Goods goods);
     boolean insertGoodsType(@Param("categoryNo")String categoryNo, @Param("categoryName")String goodsType);
-    String goodsTypeIsExist(@Param("categoryNo")String categoryNo, @Param("categoryName")String goodsType);
+    String goodsTypeIsExist(@Param("categoryName")String categoryName);
     boolean updateGoodsType(@Param("categoryNo")String categoryNo, @Param("categoryName")String goodsType);
     boolean updateGoodsTypeByGoodsType(@Param("goodsOldType")String oldType,@Param("goodsNewType")String newType);
     boolean deleteGoodsType(@Param("categoryName")String goodsType);

@@ -84,27 +84,48 @@ public class GoodsServerImpl implements GoodsServer {
     }
 
     @Override
-    public boolean insertGoodsType(String categoryNo, String goodsType) {
+    public boolean addGoodsType(String goodsType) {
+        if(goodsTypeIsExist(goodsType)){
+            return false;
+        }
+        int count = goodsMapper.queryCategoryCount();
+        String categoryNo = "category" + count;
         return goodsMapper.insertGoodsType(categoryNo, goodsType);
     }
 
     @Override
-    public boolean goodsTypeIsExist(String categoryNo, String goodsType) {
-        return goodsMapper.goodsTypeIsExist(categoryNo, goodsType) != null;
+    public boolean goodsTypeIsExist(String categoryName) {
+        return goodsMapper.goodsTypeIsExist(categoryName) != null;
     }
 
     @Override
     public boolean updateGoodsType(String categoryNo, String goodsType) {
+        //先获取原本的商品种类
+        String type = goodsMapper.queryCategoryNameByCategoryNo(categoryNo);
+        //将此种类修改
+        if(goodsMapper.updateGoodsType(categoryNo, goodsType)){
+            //然后将商品表中此类商品修改种类
+            updateGoodsTypeByGoodsType(type,goodsType);
+            return true;
+        }
         return false;
     }
 
     @Override
     public boolean updateGoodsTypeByGoodsType(String oldType, String newType) {
-        return false;
+        return goodsMapper.updateGoodsTypeByGoodsType(oldType, newType);
     }
 
     @Override
-    public boolean deleteGoodsType(String goodsType) {
+    public boolean deleteGoodsType(String categoryNo) {
+        //先获取原本的商品种类
+        String type = goodsMapper.queryCategoryNameByCategoryNo(categoryNo);
+        //将此种类删除
+        if(goodsMapper.deleteGoodsType(categoryNo)){
+            //然后将商品表中此类商品删除
+            deleteGoodsByGoodsType(type);
+            return true;
+        }
         return false;
     }
 

@@ -63,9 +63,9 @@ public interface GoodsServer {
     boolean deleteGoodsByGoodsNo(String goodsNo);
 
     boolean updateGoodsInfo(Goods goods);
-    boolean insertGoodsType(String categoryNo,String goodsType);
-    boolean goodsTypeIsExist(String categoryNo,String goodsType);
+    boolean addGoodsType(String goodsType);
+    boolean goodsTypeIsExist(String categoryNo);
     boolean updateGoodsType(String categoryNo,String goodsType);
     boolean updateGoodsTypeByGoodsType(String oldType,String newType);
-    boolean deleteGoodsType(String goodsType);
+    boolean deleteGoodsType(String categoryNo);
 }

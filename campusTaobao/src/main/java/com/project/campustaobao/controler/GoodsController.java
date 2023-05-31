@@ -72,4 +72,49 @@ public class GoodsController {
         }
         return resultMsg;
     }
+    @GetMapping("/addGoodsType")
+    @ResponseBody
+    public ResultMessage<String> addGoodsType(String categoryName){
+        System.out.println(categoryName);
+        ResultMessage<String> resultMsg;
+        boolean add = goodsServer.addGoodsType(categoryName);
+        if(add) {
+            resultMsg = new ResultMessage<>(ResultMessage.SUCCESS_CODE,
+                    "商品种类添加成功", null);
+        }else{
+            resultMsg = new ResultMessage<>(ResultMessage.ERROR_CODE,
+                    "商品种类添加失败", null);
+        }
+        return resultMsg;
+    }
+    @GetMapping("/updateGoodsType")
+    @ResponseBody
+    public ResultMessage<String> updateGoodsType(String categoryNo,String categoryName){
+        System.out.println(categoryNo);
+        ResultMessage<String> resultMsg;
+        boolean add = goodsServer.updateGoodsType(categoryNo, categoryName);
+        if(add) {
+            resultMsg = new ResultMessage<>(ResultMessage.SUCCESS_CODE,
+                    "商品种类修改成功", null);
+        }else{
+            resultMsg = new ResultMessage<>(ResultMessage.ERROR_CODE,
+                    "商品种类修改失败", null);
+        }
+        return resultMsg;
+    }
+    @GetMapping("/deleteGoodsType")
+    @ResponseBody
+    public ResultMessage<String> deleteGoodsType(String categoryNo){
+        System.out.println(categoryNo);
+        ResultMessage<String> resultMsg;
+        boolean add = goodsServer.deleteGoodsType(categoryNo);
+        if(add) {
+            resultMsg = new ResultMessage<>(ResultMessage.SUCCESS_CODE,
+                    "商品种类删除成功", null);
+        }else{
+            resultMsg = new ResultMessage<>(ResultMessage.ERROR_CODE,
+                    "商品种类删除失败", null);
+        }
+        return resultMsg;
+    }
 }
