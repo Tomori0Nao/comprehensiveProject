@@ -21,31 +21,16 @@
       </el-table-column>
       <el-table-column prop="goodsNumber" label="商品库存"> </el-table-column>
       <el-table-column prop="goodsPrice" label="商品售价"> </el-table-column>
-      <el-table-column label="上架状态">
-        <template #default="scope">
-          <span style="color: green" v-if="0 == 0">销售中</span>
-          <span style="color: red" v-else>已下架</span>
-        </template>
-      </el-table-column>
-
       <el-table-column label="操作" width="100">
         <template #default="scope">
           <a style="cursor: pointer; margin-right: 10px" @click="handleEdit(scope.row.goodsId)"
             >修改</a
           >
-          <a
-            style="cursor: pointer; margin-right: 10px"
-            v-if="scope.row.goodsSellStatus == 0"
-            @click="handleStatus(scope.row, true)"
-            >下架</a
-          >
-          <a
-            style="cursor: pointer; margin-right: 10px"
-            v-else
-            @click="handleStatus(scope.row, false)"
-            >上架</a
+          <a style="cursor: pointer; margin-right: 10px" @click="handleDelete(scope.row.goodsId)"
+            >删除</a
           >
         </template>
+        
       </el-table-column>
     </el-table>
     <!--总数超过一页，再展示分页器-->
@@ -78,7 +63,6 @@ const router = useRouter()
 // 商品品牌
 // 商品数量
 // 商品编号
-// 商品状态（下架/销售中）
 //
 interface GoodsInfo {
   goodsName: string
@@ -88,7 +72,6 @@ interface GoodsInfo {
   goodsNumber: number
   goodsBrand: string
   goodsNo: string
-  goodsState: string
 }
 const tableData = ref<GoodsInfo[]>([
   {
@@ -99,7 +82,6 @@ const tableData = ref<GoodsInfo[]>([
     goodsNumber: 100,
     goodsNo: '318458',
     goodsBrand: '三星',
-    goodsState: '上架'
   }
 ])
 const state = reactive({
@@ -115,12 +97,14 @@ const getGoodList = () => {
   // axios
 }
 const handleAdd = () => {
-  console.log('Add Goods!!!')
   router.push({ path: '/admin/AddGoods' })
 }
 const handleEdit = (id: string) => {
-  console.log('Edit goods!!!')
   router.push({ path: '/admin/EditGoods', query: { id } })
+}
+const handleDelete = (id: string) => {
+  // axios
+
 }
 const changePage = (val: number) => {
   state.currentPage = val
