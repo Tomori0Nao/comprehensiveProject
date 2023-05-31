@@ -27,6 +27,7 @@ public interface GoodsMapper {
      */
     List<Map<String,String>> queryHomeGoods(@Param("begin") int begin,
                                            @Param("count") int count);
+    List<Goods> queryAllGoods();
     Goods  queryGoodsByGoodsNo(@Param("goodsNo") String goodsNo);
     String queryGoodsNameByGoodsNo(@Param("goodsNo")String goodsNo);
     /**
@@ -50,5 +51,5 @@ public interface GoodsMapper {
      * @return 商品种类相同的商品集合
      */
     List<Map<String,String>> querySimilarGoodsByGoodsType(@Param("goodsType") String goodsType);
-
+    boolean insertGoods(@Param("goods")Goods goods);
 }

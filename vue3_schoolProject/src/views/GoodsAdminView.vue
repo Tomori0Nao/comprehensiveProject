@@ -11,12 +11,7 @@
       <el-table-column prop="goodsBrand" label="品牌"> </el-table-column>
       <el-table-column label="商品图片" width="150px">
         <template #default="scope">
-          <img
-            style="width: 100px; height: 100px"
-            :key="scope.row.goodsNo"
-            :src="scope.row.goodsImageName"
-            alt="商品主图"
-          />
+          <img style="width: 100px; height: 100px" :key="scope.row.goodsNo" :src="scope.row.goodsImageName" alt="商品主图" />
         </template>
       </el-table-column>
       <el-table-column prop="goodsNumber" label="商品库存"> </el-table-column>
@@ -34,14 +29,8 @@
       </el-table-column>
     </el-table>
     <!--总数超过一页，再展示分页器-->
-    <el-pagination
-      background
-      layout="prev, pager, next"
-      :total="state.total"
-      :page-size="state.pageSize"
-      :current-page="state.currentPage"
-      @current-change="changePage"
-    />
+    <el-pagination background layout="prev, pager, next" :total="state.total" :page-size="state.pageSize"
+      :current-page="state.currentPage" @current-change="changePage" />
   </el-card>
 </template>
 
@@ -114,12 +103,32 @@ const handleStatus = (row: GoodsInfo, status: boolean) => {
   console.log(row)
   // axios
 }
+/**
+ * 获取所有信息
+ */
+const path = 'http://localhost:8080'
+axios({
+  method: 'get',
+  url: path + '/getAllGoods',
+  params: {
+
+  }
+}).then((response) => {
+  const respData = response.data;
+  console.log(respData);
+
+}).catch((error) => {
+  console.log("error = " + error);
+
+
+})
 </script>
 
 <style scoped>
 .good-container {
   min-height: 100%;
 }
+
 .el-card.is-always-shadow {
   min-height: 100% !important;
 }

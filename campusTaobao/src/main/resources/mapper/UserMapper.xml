@@ -41,8 +41,8 @@
     </update>
     <insert id="register">
         insert into user_info(user_account,user_password,user_name,user_tel,
-                              user_balance,total_consumption ,register_date,is_baned)
-        values (#{account},#{password},#{name},#{tel},'0','0',#{registerDate},false)
+                              user_balance,total_consumption ,register_date)
+        values (#{account},#{password},#{name},#{tel},'0','0',#{registerDate})
     </insert>
 
 

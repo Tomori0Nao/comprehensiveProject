@@ -70,19 +70,14 @@
           <el-input
             min="0"
             style="width: 300px"
-            v-model="goodsInfo.goodsProducingArea"
+            v-model="goodsInfo.goodsOrigin"
             placeholder="请输入商品产地"
           ></el-input>
         </el-form-item>
-        <el-form-item label="店铺编号" prop="storeNo">
-          <el-input
-            type="number"
-            min="0"
-            style="width: 300px"
-            v-model="goodsInfo.storeNo"
-            placeholder="请输入商品编号"
-          ></el-input>
-        </el-form-item>
+        <!-- <el-form-item label="店铺编号" prop="storeNo">
+          <el-input type="number" min="0" style="width: 300px" v-model="goodsInfo.storeNo"
+            placeholder="请输入商品编号"></el-input>
+        </el-form-item> -->
         <el-form-item label="会员减免" prop="vipDerate">
           <el-input
             type="number"
@@ -117,7 +112,9 @@
             :before-upload="beforeAvatarUpload"
           >
             <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+            <el-icon v-else class="avatar-uploader-icon">
+              <Plus />
+            </el-icon>
           </el-upload>
         </el-form-item>
 
@@ -130,7 +127,6 @@
     </el-card>
   </div>
 </template>
-
 <script setup lang="ts">
 import { reactive, ref, onMounted, onBeforeUnmount, getCurrentInstance } from 'vue'
 import axios from 'axios'
@@ -161,38 +157,38 @@ axios.defaults.withCredentials = true
 interface GoodsInfo {
   goodsName: string
   goodsImageName: string
-  goodsPrice: number
+  goodsPrice: string
   storeName: string
   goodsNumber: number
   goodsBrand: string
   goodsNo: string
-  goodsWeight: number
-  goodsProducingArea: string
+  goodsWeight: string
+  goodsOrigin: string
   goodsType: string
-  storeNo: string
-  goodsPurchasePrice: number
-  vipDerate: number
+  // storeNo: string
+  goodsPurchasePrice: string
+  vipDerate: string
   goodsPurchaseDate: string
   goodsSpecifiedInfo: string
-  goodsState: boolean
+  //goodsState: boolean
 }
 const goodsInfo = ref<GoodsInfo>({
   goodsName: '',
   goodsImageName: '',
-  goodsPrice: 0,
+  goodsPrice: '12.3',
   storeName: '',
   goodsNumber: 0,
   goodsBrand: '',
   goodsNo: '',
-  goodsWeight: 0,
-  goodsProducingArea: '',
+  goodsWeight: '50.36',
+  goodsOrigin: '',
   goodsType: '',
-  storeNo: '',
-  goodsPurchasePrice: 0,
-  vipDerate: 0,
+  //storeNo: '',
+  goodsPurchasePrice: '12.3',
+  vipDerate: '12.36',
   goodsPurchaseDate: '0',
-  goodsSpecifiedInfo: '',
-  goodsState: true
+  goodsSpecifiedInfo: ''
+  //goodsState: true
 })
 const goodRef = ref(null)
 const route = useRoute()
@@ -244,9 +240,43 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile: any) => {
   }
   return true
 }
+const path = 'http://localhost:8080'
 const onSubmit = () => {
-  // axios
-  // 上传数据成功后跳转回商品管理页面
+  axios({
+    method: 'get',
+    url: path + '/addGoods',
+    params: {
+      goodsName: '小熊饼干',
+      goodsImageName: '小熊图片',
+      goodsPrice: '12.3',
+      storeName: '小熊饼干店铺',
+      goodsNumber: 16,
+      goodsBrand: '小熊零食',
+      goodsNo: 'xiaoxiong',
+      goodsWeight: '100',
+      goodsOrigin: '北京市朝阳区',
+      goodsType: '零食',
+      //storeNo: '',
+      goodsPurchasePrice: '5.69',
+      vipDerate: '0.88',
+      goodsPurchaseDate: '2023-12-23',
+      goodsSpecialInfo: '好吃又美味'
+    }
+  })
+    .then((response) => {
+      const respData = response.data
+      console.log(respData)
+      if (respData.code == 1) {
+        //增加一个消息提示框：添加成功
+        console.log(respData.msg)
+      } else {
+        //增加一个消息提示框：添加失败
+        console.log(respData.msg)
+      }
+    })
+    .catch((error) => {
+      console.log('error = ' + error)
+    })
 }
 // const
 const handleChangeCate = () => {}
@@ -256,16 +286,19 @@ const handleChangeCate = () => {}
 .add {
   display: flex;
 }
+
 .add-container {
   flex: 1;
   height: 100%;
 }
+
 .avatar-uploader {
   width: 100px;
   height: 100px;
   color: #ddd;
   font-size: 30px;
 }
+
 .avatar-uploader-icon {
   display: block;
   width: 100%;
@@ -273,6 +306,7 @@ const handleChangeCate = () => {}
   border: 1px solid #e9e9e9;
   padding: 32px 17px;
 }
+
 .weight {
   padding-left: 20px;
 }

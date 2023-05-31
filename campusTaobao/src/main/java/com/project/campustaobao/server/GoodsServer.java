@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface GoodsServer {
+    boolean addGoods(Goods goods);
     /**
      * 查找商品的详细信息
      * 用于商品详情页
@@ -24,6 +25,8 @@ public interface GoodsServer {
     List<Map<String,String>> queryHomeGoods(@Param("begin") int begin,
                                             @Param("count") int count);
     Goods queryGoodsByGoodsNo(String goodsNo);
+
+    List<Goods> queryAllGoods();
     /**
      * 通过商品编号查找相似商品
      * @param goodsNo 商品编号
