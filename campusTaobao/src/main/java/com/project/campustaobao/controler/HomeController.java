@@ -30,10 +30,6 @@ public class HomeController {
         //System.out.println("img");
         System.out.println("主页请求图片");
         begin += count;
-        HttpSession session = req.getSession();
-        System.out.println(session.getId());
-        System.out.println(session.getAttribute("account"));
-
         System.out.println(begin);
         if(resultMsg.getData().size() == 0){
             begin = 0;

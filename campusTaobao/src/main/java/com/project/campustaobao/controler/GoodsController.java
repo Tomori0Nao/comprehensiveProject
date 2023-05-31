@@ -57,4 +57,19 @@ public class GoodsController {
         }
         return resultMsg;
     }
+    @GetMapping("/updateGoodsInfo")
+    @ResponseBody
+    public ResultMessage<String> updateGoodsInfo(Goods goods){
+        System.out.println(goods);
+        ResultMessage<String> resultMsg;
+        boolean add = goodsServer.updateGoodsInfo(goods);
+        if(add) {
+            resultMsg = new ResultMessage<>(ResultMessage.SUCCESS_CODE,
+                    "商品修改成功", null);
+        }else{
+            resultMsg = new ResultMessage<>(ResultMessage.ERROR_CODE,
+                    "商品修改失败", null);
+        }
+        return resultMsg;
+    }
 }

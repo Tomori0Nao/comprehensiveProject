@@ -1,19 +1,9 @@
 <template>
   <div class="add">
     <el-card class="add-container">
-      <el-form
-        :model="goodsInfo"
-        :rules="state.rules"
-        ref="goodRef"
-        label-width="100px"
-        class="goodForm"
-      >
+      <el-form :model="goodsInfo" :rules="state.rules" ref="goodRef" label-width="100px" class="goodForm">
         <el-form-item required label="商品分类">
-          <el-input
-            style="width: 300px"
-            v-model="goodsInfo.goodsType"
-            placeholder="请输入商品分类"
-          ></el-input>
+          <el-input style="width: 300px" v-model="goodsInfo.goodsType" placeholder="请输入商品分类"></el-input>
           <!-- <el-select v-model="state.category" class="m-2" placeholder="Select">
             <el-option
               v-for="item in categoryList"
@@ -23,110 +13,54 @@
           /></el-select> -->
         </el-form-item>
         <el-form-item label="商品名称" prop="goodsName">
-          <el-input
-            style="width: 300px"
-            v-model="goodsInfo.goodsName"
-            placeholder="请输入商品名称"
-          ></el-input>
+          <el-input style="width: 300px" v-model="goodsInfo.goodsName" placeholder="请输入商品名称"></el-input>
         </el-form-item>
         <el-form-item label="商品价格" prop="goodsPrice">
-          <el-input
-            type="number"
-            min="0"
-            style="width: 300px"
-            v-model="goodsInfo.goodsPrice"
-            placeholder="请输入商品价格"
-          ></el-input>
+          <el-input type="number" min="0" style="width: 300px" v-model="goodsInfo.goodsPrice"
+            placeholder="请输入商品价格"></el-input>
         </el-form-item>
         <el-form-item label="商品进价" prop="goodsPurchasePrice">
-          <el-input
-            type="number"
-            min="0"
-            style="width: 300px"
-            v-model="goodsInfo.goodsPurchasePrice"
-            placeholder="请输入商品进价"
-          ></el-input>
+          <el-input type="number" min="0" style="width: 300px" v-model="goodsInfo.goodsPurchasePrice"
+            placeholder="请输入商品进价"></el-input>
         </el-form-item>
         <el-form-item label="商品库存" prop="goodsNumber">
-          <el-input
-            type="number"
-            min="0"
-            style="width: 300px"
-            v-model="goodsInfo.goodsNumber"
-            placeholder="请输入商品库存"
-          ></el-input>
+          <el-input type="number" min="0" style="width: 300px" v-model="goodsInfo.goodsNumber"
+            placeholder="请输入商品库存"></el-input>
         </el-form-item>
         <el-form-item label="品牌" prop="goodsBrand">
-          <el-input
-            min="0"
-            style="width: 300px"
-            v-model="goodsInfo.goodsBrand"
-            placeholder="请输入商品品牌"
-          ></el-input>
+          <el-input min="0" style="width: 300px" v-model="goodsInfo.goodsBrand" placeholder="请输入商品品牌"></el-input>
         </el-form-item>
         <el-form-item label="商品重量" prop="goodsWeight">
-          <el-input
-            min="0"
-            style="width: 300px"
-            v-model="goodsInfo.goodsWeight"
-            placeholder="请输入商品重量"
-          ></el-input>
+          <el-input min="0" style="width: 300px" v-model="goodsInfo.goodsWeight" placeholder="请输入商品重量"></el-input>
           <span class="weight">(kg)</span>
         </el-form-item>
         <el-form-item label="商品产地" prop="goodsProducingArea">
-          <el-input
-            min="0"
-            style="width: 300px"
-            v-model="goodsInfo.goodsProducingArea"
-            placeholder="请输入商品产地"
-          ></el-input>
+          <el-input min="0" style="width: 300px" v-model="goodsInfo.goodsOrigin" placeholder="请输入商品产地"></el-input>
         </el-form-item>
-        <el-form-item label="店铺编号" prop="storeNo">
-          <el-input
-            type="number"
-            min="0"
-            style="width: 300px"
-            v-model="goodsInfo.storeNo"
-            placeholder="请输入商品编号"
-          ></el-input>
-        </el-form-item>
+        <!-- <el-form-item label="店铺编号" prop="storeNo">
+          <el-input type="number" min="0" style="width: 300px" v-model="goodsInfo.storeNo"
+            placeholder="请输入商品编号"></el-input>
+        </el-form-item> -->
         <el-form-item label="会员减免" prop="vipDerate">
-          <el-input
-            type="number"
-            min="0"
-            style="width: 300px"
-            v-model="goodsInfo.vipDerate"
-            placeholder="请输入会员减免费用"
-          ></el-input>
+          <el-input type="number" min="0" style="width: 300px" v-model="goodsInfo.vipDerate"
+            placeholder="请输入会员减免费用"></el-input>
         </el-form-item>
         <el-form-item label="进货日期" prop="goodsPurchaseDate">
-          <el-date-picker
-            v-model="goodsInfo.goodsPurchaseDate"
-            type="date"
-            placeholder="请选择进货日期"
-          />
+          <el-date-picker v-model="goodsInfo.goodsPurchaseDate" type="date" placeholder="请选择进货日期" />
         </el-form-item>
         <el-form-item label="商品简介" prop="goodsSpecifiedInfo">
-          <el-input
-            style="width: 300px"
-            type="textarea"
-            v-model="goodsInfo.goodsSpecifiedInfo"
-            placeholder="请输入商品简介(100字)"
-          ></el-input>
+          <el-input style="width: 300px" type="textarea" v-model="goodsInfo.goodsSpecifiedInfo"
+            placeholder="请输入商品简介(30字)"></el-input>
         </el-form-item>
-        <el-form-item required label="商品图片" prop="goodsImageName">
-          <el-upload
-            class="avatar-uploader"
-            :action="state"
-            accept="jpg,jpeg,png"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
-            :before-upload="beforeAvatarUpload"
-          >
+        <!-- <el-form-item required label="商品图片" prop="goodsImageName">
+          <el-upload class="avatar-uploader" :action="state" accept="jpg,jpeg,png" :show-file-list="false"
+            :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload">
             <img v-if="imageUrl" :src="imageUrl" class="avatar" />
-            <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+            <el-icon v-else class="avatar-uploader-icon">
+              <Plus />
+            </el-icon>
           </el-upload>
-        </el-form-item>
+        </el-form-item> -->
 
         <el-form-item>
           <el-button type="primary" @click="onSubmit">{{
@@ -167,38 +101,38 @@ axios.defaults.withCredentials = true
 interface GoodsInfo {
   goodsName: string
   goodsImageName: string
-  goodsPrice: number
+  goodsPrice: string
   storeName: string
   goodsNumber: number
   goodsBrand: string
   goodsNo: string
-  goodsWeight: number
-  goodsProducingArea: string
+  goodsWeight: string
+  goodsOrigin: string
   goodsType: string
   storeNo: string
-  goodsPurchasePrice: number
-  vipDerate: number
+  goodsPurchasePrice: string
+  vipDerate: string
   goodsPurchaseDate: string
   goodsSpecifiedInfo: string
-  goodsState: boolean
+  // goodsState: boolean
 }
 const goodsInfo = ref<GoodsInfo>({
   goodsName: '',
   goodsImageName: '',
-  goodsPrice: 0,
+  goodsPrice: '12.36',
   storeName: '',
   goodsNumber: 0,
   goodsBrand: '',
   goodsNo: '',
-  goodsWeight: 0,
-  goodsProducingArea: '',
+  goodsWeight: '123',
+  goodsOrigin: '',
   goodsType: '',
   storeNo: '',
-  goodsPurchasePrice: 0,
-  vipDerate: 0,
+  goodsPurchasePrice: '12.3',
+  vipDerate: '0.3',
   goodsPurchaseDate: '0',
   goodsSpecifiedInfo: '',
-  goodsState: true
+  // goodsState: true
 })
 const goodRef = ref(null)
 const route = useRoute()
@@ -250,12 +184,40 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile: any) => {
   }
   return true
 }
+const path = 'http://localhost:8080'
 const onSubmit = () => {
   // axios
   // 上传数据成功后跳转回商品管理页面
+  axios({
+    method: 'get',
+    url: path + '/updateGoodsInfo',
+    params: {
+      goodsName: '牛逼手机',
+      // goodsImageName: '',
+      goodsPrice: '3999.69',
+      storeName: '手机专卖点',
+      goodsNumber: 10,
+      goodsBrand: '很牛逼的手机',
+      goodsNo: 'sh001',              //跳转界面时传入进来
+      goodsWeight: '123.6g',
+      goodsOrigin: '主营村',
+      goodsType: '手机',
+      // storeNo: '',
+      goodsPurchasePrice: '2699.36',
+      vipDerate: '100.3',
+      goodsPurchaseDate: '2023-12-9',
+      goodsSpecialInfo: '很好用的手机',
+    }
+  }).then((response) => {
+    const respData = response.data;
+    console.log(respData);
+  }).catch((error) => {
+    console.log("error = " + error);
+
+  })
 }
 // const
-const handleChangeCate = () => {}
+const handleChangeCate = () => { }
 //   获取商品信息
 //   axios
 </script>
@@ -264,16 +226,19 @@ const handleChangeCate = () => {}
 .add {
   display: flex;
 }
+
 .add-container {
   flex: 1;
   height: 100%;
 }
+
 .avatar-uploader {
   width: 100px;
   height: 100px;
   color: #ddd;
   font-size: 30px;
 }
+
 .avatar-uploader-icon {
   display: block;
   width: 100%;
@@ -281,6 +246,7 @@ const handleChangeCate = () => {}
   border: 1px solid #e9e9e9;
   padding: 32px 17px;
 }
+
 .weight {
   padding-left: 20px;
 }

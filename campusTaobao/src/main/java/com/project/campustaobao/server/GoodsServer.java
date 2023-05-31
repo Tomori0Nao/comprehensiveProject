@@ -61,4 +61,11 @@ public interface GoodsServer {
      * @return 删除成功返回true
      */
     boolean deleteGoodsByGoodsNo(String goodsNo);
+
+    boolean updateGoodsInfo(Goods goods);
+    boolean insertGoodsType(String categoryNo,String goodsType);
+    boolean goodsTypeIsExist(String categoryNo,String goodsType);
+    boolean updateGoodsType(String categoryNo,String goodsType);
+    boolean updateGoodsTypeByGoodsType(String oldType,String newType);
+    boolean deleteGoodsType(String goodsType);
 }
