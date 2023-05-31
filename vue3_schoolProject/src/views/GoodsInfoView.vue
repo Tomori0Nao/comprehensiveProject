@@ -196,8 +196,16 @@ axios({
   .then((response) => {
     const imagesURLPrefix = 'http://localhost:8080/static/images/'
     const respData = response.data
-    var goods: GoodsInfo = respData.data
-    goodsInfo.value = goods
+    var goods = respData.data
+    goodsInfo.value.goodsNo = goods.goodsNo
+    goodsInfo.value.goodsPrice = goods.goodsPrice
+    goodsInfo.value.goodsName = goods.goodsName
+    goodsInfo.value.goodsProducingArea = goods.goodsOrigin
+    goodsInfo.value.storeName = goods.storeName
+    goodsInfo.value.goodsNumber = goods.goodsNum
+    goodsInfo.value.goodsWeight = goods.goodsWeight
+    goodsInfo.value.goodsBrand = goods.goodsBrand
+    
     goodsInfo.value.goodsImageName = imagesURLPrefix + goods.goodsImageName + '.png'
     console.log(goods)
   })

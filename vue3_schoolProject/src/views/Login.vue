@@ -121,6 +121,7 @@ export default {
             const respData = response.data
             if (respData.data == 0) {
               store.userAccount = this.formLogin.account
+              window.localStorage.setItem('userAccount', this.formLogin.account)
               this.$message(respData.msg)
               window.sessionStorage.setItem('notLogin', JSON.stringify(response.data))
               this.$router.push('/test')

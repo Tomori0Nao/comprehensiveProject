@@ -9,13 +9,18 @@
         class="goodForm"
       >
         <el-form-item required label="商品分类">
-          <el-select v-model="state.category" class="m-2" placeholder="Select">
+          <el-input
+            style="width: 300px"
+            v-model="goodsInfo.goodsType"
+            placeholder="请输入商品分类"
+          ></el-input>
+          <!-- <el-select v-model="state.category" class="m-2" placeholder="Select">
             <el-option
               v-for="item in categoryList"
               :key="item.categoryId"
               :label="item.categoryName"
               :value="item.categoryName"
-          /></el-select>
+          /></el-select> -->
         </el-form-item>
         <el-form-item label="商品名称" prop="goodsName">
           <el-input

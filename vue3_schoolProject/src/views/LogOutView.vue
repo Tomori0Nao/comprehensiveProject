@@ -2,10 +2,11 @@
 import type { RouterLink } from 'vue-router';
 
 <template>
-    <span>LogOutView</span>
+    <span></span>
     
 </template>
   
 <script setup lang="ts">
+window.localStorage.removeItem('userAccount')
 </script>
   

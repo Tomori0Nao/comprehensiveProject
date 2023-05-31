@@ -1,6 +1,6 @@
 <template>
   <div class="layout">
-    <el-container v-if="state.showMenu" class="container">
+    <el-container v-if="true" class="container">
       <el-aside class="aside">
         <div class="head">
           <div>
@@ -14,8 +14,6 @@
           text-color="#fff"
           active-text-color="#c6e2ff"
           :router="true"
-          :default-openeds="state.defaultOpen"
-          :default-active="state.currentPath"
         >
           <el-sub-menu index="1">
             <template #title>
@@ -58,18 +56,23 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
 
 axios.defaults.withCredentials = true
 
-// import { useRouter } from 'vue-router'
 
-// const noMenu = ['/login']
-// const router = useRouter()
-const state = reactive({
-  showMenu: true,
-  defaultOpen: ['1', '2', '3', '4'],
-  currentPath: '/'
-})
+const router = useRouter()
+router.beforeEach(async (to, from) => {
+  console.log(window.localStorage.getItem('userAccount'))
+    // 如果不是 /login，判断是否有 token
+    if (!window.localStorage.getItem('adminAccount')&&to.name !== 'Login') {
+      // 如果没有，则跳至登录页面
+      return { name: 'Login' }
+    } else {
+      // 否则继续执行
+    }
+  }
+)
 </script>
 
 <style scoped>

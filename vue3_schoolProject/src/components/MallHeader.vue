@@ -49,6 +49,19 @@ import type { RouterLink } from 'vue-router';
 <script setup lang="ts">
 import { Search } from '@element-plus/icons-vue'
 import axios from 'axios'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+router.beforeEach(async (to, from) => {
+  // console.log(window.localStorage.getItem('userAccount'))
+    // 如果不是 /login，判断是否有 token
+    if (!window.localStorage.getItem('userAccount')&&to.name !== 'Login') {
+      // 如果没有，则跳至登录页面
+      return { name: 'Login' }
+    } else {
+      // 否则继续执行
+    }
+  }
+)
 axios.defaults.withCredentials = true
 </script>
 

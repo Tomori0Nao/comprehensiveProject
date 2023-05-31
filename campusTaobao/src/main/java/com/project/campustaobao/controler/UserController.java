@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +47,10 @@ public class UserController {
     @GetMapping("/vipInfo")
     @ResponseBody
     public ResultMessage<VIPUser> getVIPInfo(String vipAccount) {
+        HttpServletRequest req = (HttpServletRequest) Request.getRequest();
+        HttpSession session = req.getSession();
+        System.out.println(session.getId());
+        System.out.println(session.getAttribute("account"));
         ResultMessage<VIPUser> resultMessage = new ResultMessage<>(
                 ResultMessage.SUCCESS_CODE, "vip信息请求成功",
                 userServer.queryVIPUserByAccount(vipAccount)

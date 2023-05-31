@@ -8,14 +8,14 @@ const router = createRouter({
       name: 'home',
       component: () => import('../views/HomeView.vue')
     },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue')
-    },
+    // {
+    //   path: '/about',
+    //   name: 'about',
+    //   // route level code-splitting
+    //   // this generates a separate chunk (About.[hash].js) for this route
+    //   // which is lazy-loaded when the route is visited.
+    //   component: () => import('../views/AboutView.vue')
+    // },
     {
       path: '/test',
       name: 'test',
@@ -105,6 +105,11 @@ const router = createRouter({
           path: 'EditGoods',
           name: 'EditGoods',
           component: () => import('../views/EditGoodsInfoView.vue')
+        },
+        {
+          path: 'login',
+          name: 'adminLogin',
+          component: () => import('../views/AdminLogin.vue')
         },
       ]
     }
