@@ -137,4 +137,8 @@
         delete from category where category_no = #{categoryNo}
     </delete>
 <!--    同时删除此类商品-->
+
+<select id="queryGoodsPriceByGoodsNo" resultType="String">
+    select goods_price from goods_info where goods_no = #{goodsNo}
+</select>
 </mapper>

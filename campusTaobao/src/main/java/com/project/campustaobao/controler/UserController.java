@@ -5,6 +5,7 @@ import com.project.campustaobao.server.DeliveryAddressServer;
 import com.project.campustaobao.server.OrderServer;
 import com.project.campustaobao.server.UserServer;
 import com.project.campustaobao.utils.Request;
+import com.project.campustaobao.utils.Session;
 import com.project.campustaobao.vo.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -38,27 +39,59 @@ public class UserController {
 
     @GetMapping("/getUserStatus")
     @ResponseBody
-    public ResultMessage<Boolean> getUserStatus(String userAccount){
+    public ResultMessage<Boolean> getUserStatus(){
+        String account = (String) Session.getSessionAttribute(Request.getRequest(),"account");
+        System.out.println("account =" +account);
         return new ResultMessage<>(ResultMessage.SUCCESS_CODE,
-                "查找到该用户的状态",userServer.isBaned(userAccount));
+                "查找到该用户的状态",userServer.isBaned(account));
     }
 
     @GetMapping("/vipInfo")
     @ResponseBody
-    public ResultMessage<VIPUser> getVIPInfo(String vipAccount) {
+    public ResultMessage<VIPUser> getVIPInfo() {
+        String account = (String) Session.getSessionAttribute(Request.getRequest(),"account");
+        System.out.println("account =" +account);
         ResultMessage<VIPUser> resultMessage = new ResultMessage<>(
                 ResultMessage.SUCCESS_CODE, "vip信息请求成功",
-                userServer.queryVIPUserByAccount(vipAccount)
+                userServer.queryVIPUserByAccount(account)
         );
         return resultMessage;
     }
     @GetMapping("/shoppingCart")
     @ResponseBody
-    public ResultMessage<List<ShoppingCartGoods>> getShoppingCart(String account) {
+    public ResultMessage<List<ShoppingCartGoods>> getShoppingCart() {
+        String account = (String) Session.getSessionAttribute(Request.getRequest(),"account");
+        System.out.println("account =" +account);
         ResultMessage<List<ShoppingCartGoods>> resultMessage = new ResultMessage<>(
                 ResultMessage.SUCCESS_CODE, "vip信息请求成功",
                 userServer.queryAllShoppingCartGoods(account)
         );
+        return resultMessage;
+    }
+    @GetMapping("/addCartGoods")
+    @ResponseBody
+    public ResultMessage<Boolean> addCartGoods(String goodsNo,Integer goodsNumber) {
+        String account = (String) Session.getSessionAttribute(Request.getRequest(),"account");
+        System.out.println("account =" +account);
+        System.out.println(goodsNo+","+goodsNumber);
+        ResultMessage<Boolean> resultMessage;
+        if(userServer.insertGoodsToCart(account,goodsNo,goodsNumber)){
+            resultMessage = new ResultMessage<>(
+                    ResultMessage.SUCCESS_CODE, "添加到购物车",
+                    true);
+        }else{
+            resultMessage = new ResultMessage<>(
+                    ResultMessage.SUCCESS_CODE, "添加到购物车",
+                    false);
+        }
+        return resultMessage;
+    }
+    @GetMapping("/deleteCartGoods")
+    @ResponseBody
+    public ResultMessage<Boolean> deleteCartGoods(String goodsNo) {
+        String account = (String) Session.getSessionAttribute(Request.getRequest(),"account");
+        System.out.println("account =" +account);
+        ResultMessage<Boolean> resultMessage = new ResultMessage<>(ResultMessage.SUCCESS_CODE, "该商品已删除", userServer.deleteCartGoods(account,goodsNo));
         return resultMessage;
     }
     @GetMapping("/getUsers")
@@ -79,7 +112,9 @@ public class UserController {
 
     @GetMapping("/userInfo")
     @ResponseBody
-    public ResultMessage<Map<String, String>> getInfo(String account) {
+    public ResultMessage<Map<String, String>> getInfo() {
+        String account = (String) Session.getSessionAttribute(Request.getRequest(),"account");
+        System.out.println("account =" +account);
         Map<String, String> useInfoMap = userServer.queryUserInfoByAccount(account);
         if (useInfoMap != null) {
             ResultMessage<Map<String, String>> resultMessage = new ResultMessage<>(
@@ -98,10 +133,11 @@ public class UserController {
     @ResponseBody
 
     public ResultMessage<DeliveryAddress> addDeliveryAddress(DeliveryAddress address) {
-//       应该在session中取出来账号，后期记得修改
-//        String account = (String)Session.getSessionAttribute(Request.getRequest(),"account");
-        //System.out.println("account =" +account);
-        //System.out.println(address);
+       //应该在session中取出来账号，后期记得修改
+        String account = (String) Session.getSessionAttribute(Request.getRequest(),"account");
+        System.out.println("account =" +account);
+        System.out.println(address);
+        address.setUserAccount(account);
         DeliveryAddress addr = addressServer.insertDeliveryAddress(address.getUserAccount(),
                 address.getConsigneeName(), address.getConsigneeTel(), address.getAddress());
         ResultMessage<DeliveryAddress> resultMessage = null;
@@ -117,13 +153,14 @@ public class UserController {
 
     /**
      * 获取用户所有的收获地址
-     * @param account 用户账号
      * @return 返回该账号的用户的所有的收货地址
      */
     @GetMapping("/deliveryAddress")
     @ResponseBody
-    public ResultMessage<List<DeliveryAddress>> getAllDeliveryAddress(String account) {
+    public ResultMessage<List<DeliveryAddress>> getAllDeliveryAddress() {
         //       应该在session中取出来账号，后期记得修改
+        String account = (String) Session.getSessionAttribute(Request.getRequest(),"account");
+        System.out.println("account =" +account);
         List<DeliveryAddress> list = addressServer.getDeliveryAddressList(account);
         ResultMessage<List<DeliveryAddress>> resultMessage = new ResultMessage<>(
                 ResultMessage.SUCCESS_CODE, "ok", list);
@@ -132,8 +169,10 @@ public class UserController {
 
     @GetMapping("/deleteDeliveryAddress")
     @ResponseBody
-    public ResultMessage<String> deleteDeliveryAddress(String account, String addressNo) {
+    public ResultMessage<String> deleteDeliveryAddress(String addressNo) {
         //       应该在session中取出来账号，后期记得修改
+        String account = (String) Session.getSessionAttribute(Request.getRequest(),"account");
+        System.out.println("account =" +account);
         System.out.println(account);
         System.out.println(addressNo);
         boolean delete = addressServer.deleteDeliveryAddress(account, addressNo);
@@ -154,6 +193,9 @@ public class UserController {
     public ResultMessage<String> editDeliveryAddress(DeliveryAddress address) {
         //       应该在session中取出来账号，后期记得修改
         //然后将账号给address即address.setUserAccount(account)
+        String account = (String) Session.getSessionAttribute(Request.getRequest(),"account");
+        System.out.println("account =" +account);
+        address.setUserAccount(account);
         System.out.println(address);
         boolean update = addressServer.updateDeliveryAddress(address);
         System.out.println(update);
@@ -170,11 +212,13 @@ public class UserController {
 
     @GetMapping("/setUserName")
     @ResponseBody
-    public ResultMessage<String> setNakeName(String account, String newName) {
+    public ResultMessage<String> setNakeName(String newName) {
         //       应该在session中取出来账号，后期记得修改
+        String account = (String) Session.getSessionAttribute(Request.getRequest(),"account");
+        System.out.println("account =" +account);
         boolean update = userServer.updateUserNameByAccount(account, newName);
         //System.out.println(update);
-        ResultMessage<String> resultMessage = null;
+        ResultMessage<String> resultMessage;
         if (update) {
             resultMessage = new ResultMessage<>(
                     ResultMessage.SUCCESS_CODE, "昵称修改成功", null);
@@ -187,8 +231,10 @@ public class UserController {
     }
     @GetMapping("/userOrder")
     @ResponseBody
-    public ResultMessage<List<UserOrder>> getUserOrderList(String account){
+    public ResultMessage<List<UserOrder>> getUserOrderList(){
         //这里的account实际上不用前端传递，可以直接在session中获得
+        String account = (String) Session.getSessionAttribute(Request.getRequest(),"account");
+        System.out.println("account =" +account);
         List<UserOrder> orderList = orderServer.getOrderListByAccount(account);
         ResultMessage<List<UserOrder>> resultMessage;
         if(orderList != null){
@@ -203,7 +249,7 @@ public class UserController {
     }
     @GetMapping("/deleteUserOrder")
     @ResponseBody
-    public ResultMessage<String> deleteUserOrder(String account,String orderNo){
+    public ResultMessage<String> deleteUserOrder(String orderNo){
         //这里的account实际上不用前端传递，可以直接在session中获得
         boolean delete = orderServer.deleteOrder(orderNo);
         ResultMessage<String> resultMessage;

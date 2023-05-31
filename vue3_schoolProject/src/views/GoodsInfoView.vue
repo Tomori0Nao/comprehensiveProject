@@ -18,12 +18,7 @@ import type { RouterLink } from 'vue-router';
               <Minus />
             </el-icon>
           </el-button>
-          <el-input
-            v-model="orderNumber"
-            @input="inputChanges"
-            placeholder="1"
-            class="numberInput"
-          />
+          <el-input v-model="orderNumber" @input="inputChanges" placeholder="1" class="numberInput" />
           <el-button size="small" type="danger" @click.prevent="handlePlus" circle>
             <el-icon>
               <Plus />
@@ -96,7 +91,7 @@ import { ElNotification } from 'element-plus'
 import { h } from 'vue'
 import axios from 'axios'
 axios.defaults.withCredentials = true
-
+const path = 'http://localhost:8080'
 let url = window.location.href
 let para = url.split('?').at(1)?.split('=').at(1)
 
@@ -155,16 +150,43 @@ const inputChanges = () => {
     orderNumber.value = goodsInfo.value.goodsNumber
   }
 }
+
 const addToCart = () => {
   // 加入购物车
   // axios
+  axios({
+    method: 'get',
+    url: path + '/addCartGoods',
+    params: {
+      goodsNo: goodsInfo.value.goodsNo,
+      goodsNumber: orderNumber.value
+    }
+  }).then((response) => {
+    const respData = response.data;
+    console.log(respData);
+    if (respData.code == 1) {
+      ElNotification({
+        title: '用户你好',
+        message: h('i', { style: 'color: teal' }, '商品已加入购物车')
+      })
+      console.log('added to cart')
+    } else {
+      ElNotification({
+        title: '用户你好',
+        message: h('i', { style: 'color: teal' }, '商品加入购物车失败')
+      })
+      console.log('added to cart')
+    }
+  }).catch((error) => {
+    console.log("error = " + error);
+
   
   ElNotification({
     title: '用户你好',
     message: h('i', { style: 'color: teal' }, '商品已加入购物车')
   })
-  console.log('added to cart')
-}
+  }
+)}
 
 /**
  * 请求商品详细信息
@@ -186,7 +208,7 @@ const addToCart = () => {
  * 
  *
  */
-const path = 'http://localhost:8080'
+
 axios({
   method: 'get',
   url: path + '/goodsInfo',
@@ -206,7 +228,7 @@ axios({
     goodsInfo.value.goodsNumber = goods.goodsNum
     goodsInfo.value.goodsWeight = goods.goodsWeight
     goodsInfo.value.goodsBrand = goods.goodsBrand
-    
+
     goodsInfo.value.goodsImageName = imagesURLPrefix + goods.goodsImageName + '.png'
     console.log(goods)
   })

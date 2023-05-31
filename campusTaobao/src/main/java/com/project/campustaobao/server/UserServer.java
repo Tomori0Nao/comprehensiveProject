@@ -3,6 +3,7 @@ package com.project.campustaobao.server;
 import com.project.campustaobao.pojo.ShoppingCartGoods;
 import com.project.campustaobao.pojo.User;
 import com.project.campustaobao.pojo.VIPUser;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Map;
@@ -34,4 +35,8 @@ public interface UserServer {
 
      Map<String,String> queryUserSimpleInfoByAccount(String userAccount);
      List<Map<String,String>> queryUsers();
+
+    boolean deleteCartGoods(String account, String goodsNo);
+    boolean insertGoodsToCart(@Param("account")String account, @Param("goodsNo")String goodsNo, @Param("goodsNumber")int goodsNumber);
+    boolean isExistInCart(@Param("account")String account,@Param("goodsNo")String goodsNo);
 }

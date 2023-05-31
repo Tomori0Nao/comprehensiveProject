@@ -38,8 +38,9 @@ public class ShoppingCartImpl implements ShoppingCartServer {
             String totalCost = (String)cartGoods.get("total_cost");
             int goodsNumber =
                     Integer.parseInt((String)cartGoods.get("goods_num"));
-            ShoppingCartGoods shoppingCartGoods = new ShoppingCartGoods(goods.getGoodsName(),goods.getGoodsImageName(),
+            ShoppingCartGoods shoppingCartGoods = new ShoppingCartGoods( goods.getGoodsName(),goods.getGoodsImageName(),
                     goods.getStoreName(),goods.getGoodsPrice(),totalCost,goodsNumber, goods.getVipDerate(),goods.getMaxNumOfSinglePurchase());
+            shoppingCartGoods.setCartGoodsNo(goodsNo);
             goodsList.add(shoppingCartGoods);
         }
         return goodsList;

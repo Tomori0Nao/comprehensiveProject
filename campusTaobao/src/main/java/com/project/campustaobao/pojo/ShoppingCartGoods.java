@@ -4,6 +4,7 @@ package com.project.campustaobao.pojo;
  * 购物车里的商品
  */
 public class ShoppingCartGoods {
+    private String cartGoodsNo;
     private String cartGoodsName;
     private String cartGoodsImageName;
     private String cartGoodsStoreName;
@@ -13,6 +14,15 @@ public class ShoppingCartGoods {
     private int maxNumOfSinglePurchase;
     private String vipDerate;
     public ShoppingCartGoods(){}
+
+    public String getCartGoodsNo() {
+        return cartGoodsNo;
+    }
+
+    public void setCartGoodsNo(String cartGoodsNo) {
+        this.cartGoodsNo = cartGoodsNo;
+    }
+
     public String getCartGoodsName() {
         return cartGoodsName;
     }
@@ -78,6 +88,18 @@ public class ShoppingCartGoods {
     }
 
     public ShoppingCartGoods(String cartGoodsName, String cartGoodsImageName, String cartGoodsStoreName, String cartGoodsPrice, String totalCost, int cartGoodsNumber,  String vipDerate,int maxNumOfSinglePurchase) {
+        this.cartGoodsName = cartGoodsName;
+        this.cartGoodsImageName = cartGoodsImageName;
+        this.cartGoodsStoreName = cartGoodsStoreName;
+        this.cartGoodsPrice = cartGoodsPrice;
+        this.totalCost = totalCost;
+        this.cartGoodsNumber = cartGoodsNumber;
+        this.maxNumOfSinglePurchase = maxNumOfSinglePurchase;
+        this.vipDerate = vipDerate;
+    }
+
+    public ShoppingCartGoods(String cartGoodsNo, String cartGoodsName, String cartGoodsImageName, String cartGoodsStoreName, String cartGoodsPrice, String totalCost, int cartGoodsNumber, int maxNumOfSinglePurchase, String vipDerate) {
+        this.cartGoodsNo = cartGoodsNo;
         this.cartGoodsName = cartGoodsName;
         this.cartGoodsImageName = cartGoodsImageName;
         this.cartGoodsStoreName = cartGoodsStoreName;

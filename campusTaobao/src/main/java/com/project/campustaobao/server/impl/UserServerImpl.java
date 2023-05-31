@@ -1,6 +1,7 @@
 package com.project.campustaobao.server.impl;
 
 
+import com.project.campustaobao.mapper.GoodsMapper;
 import com.project.campustaobao.mapper.VIPUserMapper;
 import com.project.campustaobao.pojo.ShoppingCartGoods;
 import com.project.campustaobao.mapper.UserMapper;
@@ -24,6 +25,8 @@ import java.util.Map;
 public class UserServerImpl implements UserServer {
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private GoodsMapper goodsMapper;
     @Autowired
     private VIPUserMapper vipUserMapper;
     @Autowired
@@ -139,5 +142,30 @@ public class UserServerImpl implements UserServer {
     @Override
     public List<Map<String, String>> queryUsers() {
         return userMapper.queryUsers();
+    }
+
+    @Override
+    public boolean deleteCartGoods(String account, String goodsNo) {
+        return userMapper.deleteCartGoods(account, goodsNo);
+    }
+
+    @Override
+    public boolean insertGoodsToCart(String account, String goodsNo, int goodsNumber) {
+        double price = Double.parseDouble(goodsMapper.queryGoodsPriceByGoodsNo(goodsNo));
+        if(isExistInCart(account, goodsNo)){
+            int oldNumber = userMapper.queryCartGoodsNumber(account, goodsNo);
+            String totalCost = price * (oldNumber + goodsNumber) +"";
+            userMapper.updateGoodsNumberInCart(account,goodsNo,goodsNumber,totalCost);
+            return true;
+        }else{
+
+            String totalCost = price * goodsNumber + "";
+            return userMapper.insertGoodsToCart(account, goodsNo, goodsNumber,totalCost);
+        }
+    }
+
+    @Override
+    public boolean isExistInCart(String account, String goodsNo) {
+        return userMapper.isExistInCart(account, goodsNo) != null;
     }
 }

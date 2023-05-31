@@ -64,4 +64,5 @@ public interface GoodsMapper {
     boolean deleteCategoryNameByCategoryNo(@Param("categoryNo")String categoryNo);
 
     int queryGoodsAccount();
+    String queryGoodsPriceByGoodsNo(@Param("goodsNo")String goodsNo);
 }
