@@ -3,38 +3,32 @@
     <template #header>
       <div class="header">
         <el-button type="primary" :icon="Plus" @click="handleAdd">增加</el-button>
+<<<<<<< HEAD
         <!-- <el-popconfirm
           title="确定删除吗？"
           confirmButtonText="确定"
           cancelButtonText="取消"
           @confirm="handleDelete"
         >
+=======
+        <el-popconfirm title="确定删除吗？" confirmButtonText="确定" cancelButtonText="取消" @confirm="handleDelete">
+>>>>>>> 1f03c628ed163801445aa4d89d4701ca27710028
           <template #reference>
             <el-button type="danger" :icon="Delete">批量删除</el-button>
           </template>
         </el-popconfirm> -->
       </div>
     </template>
-    <el-table
-      :load="state.loading"
-      ref="multipleTableRef"
-      :data="tableData"
-      tooltip-effect="dark"
-      style="width: 100%"
-      @selection-change="handleSelectionChange"
-    >
+    <el-table :load="state.loading" ref="multipleTableRef" :data="tableData" tooltip-effect="dark" style="width: 100%"
+      @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"> </el-table-column>
       <el-table-column prop="categoryName" label="类型名称"> </el-table-column>
       <el-table-column prop="addTime" label="添加时间" width="200"> </el-table-column>
       <el-table-column label="操作" width="220">
         <template #default="scope">
           <a style="cursor: pointer; margin-right: 10px" @click="handleEdit(scope.row)">修改</a>
-          <el-popconfirm
-            title="确定删除吗？"
-            confirmButtonText="确定"
-            cancelButtonText="取消"
-            @confirm="handleDeleteOne(scope.row)"
-          >
+          <el-popconfirm title="确定删除吗？" confirmButtonText="确定" cancelButtonText="取消"
+            @confirm="handleDeleteOne(scope.row)">
             <template #reference>
               <a style="cursor: pointer">删除</a>
             </template>
@@ -123,6 +117,7 @@ const handleEdit = (row: CateoryInfo) => {
 const handleSelectionChange = (val: CateoryInfo[]) => {
   multipleSelection.value = val
 }
+<<<<<<< HEAD
 // // 批量删除
 // const handleDelete = () => {
 //   if (!multipleSelection.value.length) {
@@ -132,11 +127,37 @@ const handleSelectionChange = (val: CateoryInfo[]) => {
 //   // multipleSelection.value 为待删除的数组
 //   //   axios
 // }
+=======
+// 批量删除
+const handleDelete = () => {
+  if (!multipleSelection.value.length) {
+    ElMessage.error('请选择项')
+    return
+  }
+  // multipleSelection.value 为待删除的数组
+  //   axios
+}
+const path = 'http://localhost:8080'
+>>>>>>> 1f03c628ed163801445aa4d89d4701ca27710028
 // 单个删除
 const handleDeleteOne = (row: CateoryInfo) => {
   //   axios
+  axios({
+    method: 'get',
+    url: path + '/deleteGoodsType',
+    params: {
+      categoryNo: 'category2874434',
+    }
+  }).then((response) => {
+    const respData = response.data;
+    console.log(respData);
+  }).catch((error) => {
+    console.log("error = " + error);
+
+  })
+
 }
-const handleAddCategory = () => {}
+const handleAddCategory = () => { }
 const handleEditCategory = (categoryId: string, categoryName: string) => {
   console.log('edit submit!!!')
   for (const iterator of tableData.value) {

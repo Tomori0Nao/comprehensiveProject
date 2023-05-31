@@ -11,12 +11,7 @@
       <el-table-column prop="goodsBrand" label="品牌"> </el-table-column>
       <el-table-column label="商品图片" width="130px">
         <template #default="scope">
-          <img
-            style="width: 100px; height: 100px"
-            :key="scope.row.goodsNo"
-            :src="scope.row.goodsImageName"
-            alt="商品主图"
-          />
+          <img style="width: 100px; height: 100px" :key="scope.row.goodsNo" :src="scope.row.goodsImageName" alt="商品主图" />
         </template>
       </el-table-column>
       <el-table-column prop="goodsNumber" label="商品库存"> </el-table-column>
@@ -40,6 +35,7 @@
             >删除</a
           > -->
         </template>
+
       </el-table-column>
     </el-table>
     <!--总数超过一页，再展示分页器-->
@@ -116,6 +112,19 @@ const handleEdit = (id: string) => {
 const handleDelete = (id: string) => {
   // axios
 
+  axios({
+    method: 'get',
+    url: path + '/deleteGoods',
+    params: {
+      goodsNo: '123'
+    }
+  }).then((response) => {
+    const respData = response.data;
+    console.log(respData);
+  }).catch((error) => {
+    console.log("error = " + error);
+
+  })
 }
 const changePage = (val: number) => {
   state.currentPage = val
@@ -156,9 +165,9 @@ axios({
       tem.goodsNumber = iterator.goodsNumber
       tem.goodsPrice = iterator.goodsPrice
       tem.storeName = iterator.storeName
-      tem.goodsImageName = imagesURLPrefix+iterator.goodsImageName+'.png'
+      tem.goodsImageName = imagesURLPrefix + iterator.goodsImageName + '.png'
       tem.goodsType = iterator.goodsType
-      tem.goodsBrand =iterator.goodsBrand
+      tem.goodsBrand = iterator.goodsBrand
       tableData.value.push(tem)
     }
     console.log(respData)

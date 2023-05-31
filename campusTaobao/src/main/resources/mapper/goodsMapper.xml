@@ -133,7 +133,7 @@
         where goods_type = #{goodsOldType}
     </update>
 <!--    删除商品种类-->
-    <delete id="deleteGoodsTypeByGoodsType">
+    <delete id="deleteCategoryNameByCategoryNo">
         delete from category where category_no = #{categoryNo}
     </delete>
 <!--    同时删除此类商品-->

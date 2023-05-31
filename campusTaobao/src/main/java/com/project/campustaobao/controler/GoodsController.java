@@ -60,6 +60,21 @@ public class GoodsController {
         }
         return resultMsg;
     }
+    @GetMapping("/deleteGoods")
+    @ResponseBody
+    public ResultMessage<String> deleteGoods(String goodsNo){
+        System.out.println(goodsNo);
+        ResultMessage<String> resultMsg;
+        boolean add = goodsServer.deleteGoodsByGoodsNo(goodsNo);
+        if(add) {
+            resultMsg = new ResultMessage<>(ResultMessage.SUCCESS_CODE,
+                    "商品删除成功", null);
+        }else{
+            resultMsg = new ResultMessage<>(ResultMessage.ERROR_CODE,
+                    "商品删除失败", null);
+        }
+        return resultMsg;
+    }
     @GetMapping("/updateGoodsInfo")
     @ResponseBody
     public ResultMessage<String> updateGoodsInfo(Goods goods){
@@ -90,6 +105,7 @@ public class GoodsController {
         }
         return resultMsg;
     }
+
     @GetMapping("/updateGoodsType")
     @ResponseBody
     public ResultMessage<String> updateGoodsType(String categoryNo,String categoryName){
