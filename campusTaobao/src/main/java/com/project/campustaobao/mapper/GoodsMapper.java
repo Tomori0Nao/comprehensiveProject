@@ -52,4 +52,6 @@ public interface GoodsMapper {
      */
     List<Map<String,String>> querySimilarGoodsByGoodsType(@Param("goodsType") String goodsType);
     boolean insertGoods(@Param("goods")Goods goods);
+    boolean deleteGoodsByGoodsNo(@Param("goodsNo")String goodsNo);
+    boolean deleteGoodsByGoodsType(@Param("goodType")String goodsType);
 }

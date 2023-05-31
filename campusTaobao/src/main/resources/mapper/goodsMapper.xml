@@ -84,4 +84,12 @@
          #{goods.goodsWeight}, #{goods.goodsSpecialInfo},#{goods.goodsOrigin},#{goods.goodsNumber},
          '0',#{goods.goodsPurchaseDate},#{goods.storeName})
     </insert>
+<!--    通过商品编号删除商品-->
+    <delete id="deleteGoodsByGoodsNo">
+        delete from goods_info where goods_no = #{goodsNo}
+    </delete>
+<!--    通过商品类型删除商品-->
+    <delete id="deleteGoodsByGoodsType">
+        delete from goods_info where goods_type = #{goodsType}
+    </delete>
 </mapper>

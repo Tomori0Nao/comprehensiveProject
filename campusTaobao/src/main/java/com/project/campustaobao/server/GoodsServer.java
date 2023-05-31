@@ -48,4 +48,17 @@ public interface GoodsServer {
      */
     List<Map<String,String>> querySimilarGoodsByGoodsType(String goodsType);
 
+    /**
+     * 通过商品种类删除商品
+     * @param goodsType 商品种类
+     * @return 删除成功返回true
+     */
+    boolean deleteGoodsByGoodsType(String goodsType);
+
+    /**
+     * 通过商品编号删除商品
+     * @param goodsNo 商品编号
+     * @return 删除成功返回true
+     */
+    boolean deleteGoodsByGoodsNo(String goodsNo);
 }

@@ -56,6 +56,28 @@ public class GoodsServerImpl implements GoodsServer {
         return goodsMapper.querySimilarGoodsByGoodsType(goodsType);
     }
 
+    /**
+     * 通过商品种类删除商品
+     *
+     * @param goodsType 商品种类
+     * @return 删除成功返回true
+     */
+    @Override
+    public boolean deleteGoodsByGoodsType(String goodsType) {
+        return goodsMapper.deleteGoodsByGoodsType(goodsType);
+    }
+
+    /**
+     * 通过商品编号删除商品
+     *
+     * @param goodsNo 商品编号
+     * @return 删除成功返回true
+     */
+    @Override
+    public boolean deleteGoodsByGoodsNo(String goodsNo) {
+        return goodsMapper.deleteGoodsByGoodsNo(goodsNo);
+    }
+
     @Override
     public boolean addGoods(Goods goods) {
         return goodsMapper.insertGoods(goods);
