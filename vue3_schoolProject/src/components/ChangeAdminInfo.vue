@@ -19,10 +19,10 @@ interface AdminInfo {
 }
 const adminAccount = props.adminAccount
 const adminInfo: Ref<AdminInfo> = ref({
-  adminAccount: 'admin002',
-  adminNakeName: 'hello',
-  adminPassword: '1008610086',
-  adminType: '商品专员'
+  adminAccount: adminAccount,
+  adminNakeName: '',
+  adminPassword: '',
+  adminType: ''
 })
 const options = [
   {
@@ -39,10 +39,14 @@ axios({
   method: 'get',
   url: path + '/getAdminSimpleInfo',
   params: {
-    adminAccount: 'admin002',    //父组件传递的管理员账号
+    adminAccount: adminAccount,    //父组件传递的管理员账号
   }
 }).then((response) => {
   const respData = response.data;
+  const resAdminInfo =respData.data
+  adminInfo.value.adminNakeName = resAdminInfo.adminNakeName
+  adminInfo.value.adminPassword = resAdminInfo.adminPassword
+  adminInfo.value.adminType = resAdminInfo.adminType
   console.log(respData);
 
 }).catch((error) => {
@@ -83,9 +87,6 @@ const onCancel = () => {
       <el-form-item label="管理员昵称" class="input">
         <el-input v-model="adminInfo.adminNakeName" />
       </el-form-item>
-      <!-- <el-form-item label="管理员账号" class="input">
-        <el-input v-model="adminAccount" />
-      </el-form-item> -->
       <el-form-item label="管理员密码" class="input">
         <el-input v-model="adminInfo.adminPassword" />
       </el-form-item>
