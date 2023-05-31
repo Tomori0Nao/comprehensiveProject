@@ -11,6 +11,7 @@ import { ElTable } from 'element-plus'
 // 收货地址
 // 商品价格
 // 商品名称
+// 商品数量
 // 商品图片
 // 店铺名称
 // 减免

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import axios from 'axios';
+import axios from 'axios'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 
@@ -25,39 +25,34 @@ const address: Ref<Address> = ref({
 const path = 'http://localhost:8080'
 // 应该在onSubmit函数中，提交修改的地址信息，
 const onSubmit = () => {
-  // axios 
+  // axios
   axios({
     method: 'post',
     url: path + '/editDeliveryAddress',
     params: {
       addressNo: address.value.addressNo,
-      userAccount: '333',         //先添加一个账号进行测试
+      userAccount: '333', //先添加一个账号进行测试
       consigneeName: address.value.name,
       consigneeTel: address.value.tel,
-      address: address.value.shippingAddress,
+      address: address.value.shippingAddress
     }
-  }).then((response) => {
-    const respData = response.data;
-    console.log(respData);
-    //这里收货地址修改完毕后应该再反馈到表格中
-    if (respData.code == 1) {
-      console.log("收货地址已经修改");
-
-    } else {
-
-    }
-
-
-  }).catch((error) => {
-
   })
+    .then((response) => {
+      const respData = response.data
+      console.log(respData)
+      //这里收货地址修改完毕后应该再反馈到表格中
+      if (respData.code == 1) {
+        console.log('收货地址已经修改')
+      } else {
+      }
+    })
+    .catch((error) => {})
   console.log('submit!')
   emit('closeDialog')
 }
 const onCancel = () => {
   console.log('cancel!')
   emit('closeDialog')
-
 }
 </script>
 

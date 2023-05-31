@@ -21,10 +21,11 @@
       <el-table-column type="selection" width="55"> </el-table-column>
       <el-table-column prop="orderNo" label="订单号"> </el-table-column>
       <el-table-column prop="totalCost" label="订单总价"> </el-table-column>
+      <el-table-column prop="userAccount" label="用户"> </el-table-column>
       <el-table-column prop="orderDate" label="创建时间"> </el-table-column>
       <el-table-column label="操作">
         <template #default="scope">
-          <router-link class="routerLink" :to="{ path: '/admin/Order/order_detail', query: { id: scope.row.orderId } }"
+          <router-link class="routerLink" :to="{ path: '/admin/OrderDetail', query: { id: scope.row.orderNo } }"
             >订单详情</router-link
           >
         </template>
@@ -50,13 +51,15 @@ interface OrderInfo {
   orderNo: string
   orderDate: string
   totalCost: number
+  userAccount: string
 }
 const multipleSelection = ref<OrderInfo[]>([])
 const tableData = ref<OrderInfo[]>([
   {
     orderNo: '1354235',
     orderDate: '2023-4-4',
-    totalCost: 6999
+    totalCost: 6999,
+    userAccount: '1235432'
   }
 ])
 const state = reactive({

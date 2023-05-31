@@ -96,6 +96,16 @@ const router = createRouter({
           name: 'AddGoods',
           component: () => import('../views/AddGoodsInfoView.vue')
         },
+        {
+          path: 'OrderDetail',
+          name: 'OrderDetail',
+          component: () => import('../views/OrderDetailView.vue')
+        },
+        {
+          path: 'EditGoods',
+          name: 'EditGoods',
+          component: () => import('../views/EditGoodsInfoView.vue')
+        },
       ]
     }
   ]

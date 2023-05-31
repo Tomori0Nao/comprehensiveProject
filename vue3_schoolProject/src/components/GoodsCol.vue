@@ -3,9 +3,9 @@ import axios from 'axios'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 
+const props = defineProps(['type'])
 const goodsPictureAddr =
   '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png'
-// const goodsPictureList: string[] = []
 
 // goodsCardInfo
 // 商品展示卡片信息

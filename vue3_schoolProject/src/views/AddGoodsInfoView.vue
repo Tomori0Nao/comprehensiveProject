@@ -2,7 +2,7 @@
   <div class="add">
     <el-card class="add-container">
       <el-form
-        :model="state.goodForm"
+        :model="goodsInfo"
         :rules="state.rules"
         ref="goodRef"
         label-width="100px"
@@ -20,44 +20,96 @@
         <el-form-item label="商品名称" prop="goodsName">
           <el-input
             style="width: 300px"
-            v-model="state.goodForm.goodsName"
+            v-model="goodsInfo.goodsName"
             placeholder="请输入商品名称"
           ></el-input>
         </el-form-item>
-        <el-form-item label="商品价格" prop="originalPrice">
+        <el-form-item label="商品价格" prop="goodsPrice">
           <el-input
             type="number"
             min="0"
             style="width: 300px"
-            v-model="state.goodForm.originalPrice"
+            v-model="goodsInfo.goodsPrice"
             placeholder="请输入商品价格"
           ></el-input>
         </el-form-item>
-        <el-form-item label="商品售卖价" prop="sellingPrice">
+        <el-form-item label="商品进价" prop="goodsPurchasePrice">
           <el-input
             type="number"
             min="0"
             style="width: 300px"
-            v-model="state.goodForm.sellingPrice"
-            placeholder="请输入商品售价"
+            v-model="goodsInfo.goodsPurchasePrice"
+            placeholder="请输入商品进价"
           ></el-input>
         </el-form-item>
-        <el-form-item label="商品库存" prop="stockNum">
+        <el-form-item label="商品库存" prop="goodsNumber">
           <el-input
             type="number"
             min="0"
             style="width: 300px"
-            v-model="state.goodForm.stockNum"
+            v-model="goodsInfo.goodsNumber"
             placeholder="请输入商品库存"
           ></el-input>
         </el-form-item>
-        <el-form-item label="上架状态" prop="goodsSellStatus">
-          <el-radio-group v-model="state.goodForm.goodsSellStatus">
-            <el-radio label="0">上架</el-radio>
-            <el-radio label="1">下架</el-radio>
-          </el-radio-group>
+        <el-form-item label="品牌" prop="goodsBrand">
+          <el-input
+            min="0"
+            style="width: 300px"
+            v-model="goodsInfo.goodsBrand"
+            placeholder="请输入商品品牌"
+          ></el-input>
         </el-form-item>
-        <el-form-item required label="商品主图" prop="goodsCoverImg">
+        <el-form-item label="商品重量" prop="goodsWeight">
+          <el-input
+            min="0"
+            style="width: 300px"
+            v-model="goodsInfo.goodsWeight"
+            placeholder="请输入商品重量"
+          ></el-input>
+          <span class="weight">(kg)</span>
+        </el-form-item>
+        <el-form-item label="商品产地" prop="goodsProducingArea">
+          <el-input
+            min="0"
+            style="width: 300px"
+            v-model="goodsInfo.goodsProducingArea"
+            placeholder="请输入商品产地"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="店铺编号" prop="storeNo">
+          <el-input
+            type="number"
+            min="0"
+            style="width: 300px"
+            v-model="goodsInfo.storeNo"
+            placeholder="请输入商品编号"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="会员减免" prop="vipDerate">
+          <el-input
+            type="number"
+            min="0"
+            style="width: 300px"
+            v-model="goodsInfo.vipDerate"
+            placeholder="请输入会员减免费用"
+          ></el-input>
+        </el-form-item>
+        <el-form-item label="进货日期" prop="goodsPurchaseDate">
+          <el-date-picker
+            v-model="goodsInfo.goodsPurchaseDate"
+            type="date"
+            placeholder="请选择进货日期"
+          />
+        </el-form-item>
+        <el-form-item label="商品简介" prop="goodsSpecifiedInfo">
+          <el-input
+            style="width: 300px"
+            type="textarea"
+            v-model="goodsInfo.goodsSpecifiedInfo"
+            placeholder="请输入商品简介(100字)"
+          ></el-input>
+        </el-form-item>
+        <el-form-item required label="商品图片" prop="goodsImageName">
           <el-upload
             class="avatar-uploader"
             :action="state"
@@ -91,6 +143,7 @@ import { Delete, Download, Plus, ZoomIn } from '@element-plus/icons-vue'
 
 // ----商品信息
 // 商品名称
+// 商品图片名称
 // 商品价格
 // 店铺名称
 // 商品数量
@@ -98,6 +151,13 @@ import { Delete, Download, Plus, ZoomIn } from '@element-plus/icons-vue'
 // 商品编号
 // 商品重量
 // 商品产地
+// 商品类别
+// 店铺编号
+// 商品进价
+// 会员减免费用
+// 进货日期
+// 商品特有信息
+// 商品状态
 interface GoodsInfo {
   goodsName: string
   goodsImageName: string
@@ -106,9 +166,34 @@ interface GoodsInfo {
   goodsNumber: number
   goodsBrand: string
   goodsNo: string
-  goodsWeight: string
+  goodsWeight: number
   goodsProducingArea: string
+  goodsType: string
+  storeNo: string
+  goodsPurchasePrice: number
+  vipDerate: number
+  goodsPurchaseDate: string
+  goodsSpecifiedInfo: string
+  goodsState: boolean
 }
+const goodsInfo = ref<GoodsInfo>({
+  goodsName: '',
+  goodsImageName: '',
+  goodsPrice: 0,
+  storeName: '',
+  goodsNumber: 0,
+  goodsBrand: '',
+  goodsNo: '',
+  goodsWeight: 0,
+  goodsProducingArea: '',
+  goodsType: '',
+  storeNo: '',
+  goodsPurchasePrice: 0,
+  vipDerate: 0,
+  goodsPurchaseDate: '0',
+  goodsSpecifiedInfo: '',
+  goodsState: true
+})
 const goodRef = ref(null)
 const route = useRoute()
 const router = useRouter()
@@ -131,21 +216,17 @@ const state = reactive({
   category: '手机',
   action: 'http://localhost:8080/uploadTest',
   defaultCate: '',
-  goodForm: {
-    goodsName: '',
-    goodsIntro: '',
-    originalPrice: '',
-    sellingPrice: '',
-    stockNum: '',
-    goodsSellStatus: '0',
-    goodsCoverImg: '',
-    tag: ''
-  },
   rules: {
     goodsName: [{ required: 'true', message: '请填写商品名称', trigger: ['change'] }],
-    originalPrice: [{ required: 'true', message: '请填写商品价格', trigger: ['change'] }],
-    sellingPrice: [{ required: 'true', message: '请填写商品售价', trigger: ['change'] }],
-    stockNum: [{ required: 'true', message: '请填写商品库存', trigger: ['change'] }]
+    goodsPrice: [{ required: 'true', message: '请填写商品价格', trigger: ['change'] }],
+    goodsPurchasePrice: [{ required: 'true', message: '请填写商品进价', trigger: ['change'] }],
+    goodsNumber: [{ required: 'true', message: '请填写商品库存', trigger: ['change'] }],
+    goodsBrand: [{ required: 'true', message: '请填写商品品牌', trigger: ['change'] }],
+    goodsWeight:[{ required: 'true', message: '请填写商品重量', trigger: ['change'] }],
+    goodsProducingArea:[{ required: 'true', message: '请填写商品产地', trigger: ['change'] }],
+    goodsType:[{ required: 'true', message: '请填写商品类型', trigger: ['change'] }],
+    vipDerate:[{ required: 'true', message: '请填写会员减免', trigger: ['change'] }],
+    goodsPurchaseDate:[{ required: 'true', message: '请填写进货日期', trigger: ['change'] }],
   },
   categoryId: ''
 })
@@ -163,7 +244,10 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile: any) => {
   }
   return true
 }
-const onSubmit = () => {}
+const onSubmit = () => {
+  // axios
+  // 上传数据成功后跳转回商品管理页面
+}
 // const
 const handleChangeCate = () => {}
 </script>
@@ -188,5 +272,8 @@ const handleChangeCate = () => {}
   height: 100%;
   border: 1px solid #e9e9e9;
   padding: 32px 17px;
+}
+.weight {
+  padding-left: 20px;
 }
 </style>

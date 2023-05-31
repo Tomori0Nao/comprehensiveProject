@@ -73,8 +73,6 @@ import { Plus, Delete } from '@element-plus/icons-vue'
 // import { getInnerRange } from '@vue/compiler-core';
   import { useRouter } from 'vue-router'
 
-//   const app = getCurrentInstance()
-//   const { goTop } = app.appContext.config.globalProperties
   const router = useRouter()
 
 //----商品信息
@@ -119,12 +117,12 @@ const getGoodList = () => {
   // axios
 }
 const handleAdd = () => {
-    console.log('Add Goods!!!')
+  console.log('Add Goods!!!')
   router.push({ path: '/admin/AddGoods' })
 }
 const handleEdit = (id: string) => {
     console.log('Edit goods!!!')
-  // router.push({ path: '/add', query: { id } })
+  router.push({ path: '/admin/EditGoods', query: { id } })
 }
 const changePage = (val: number) => {
   state.currentPage = val
