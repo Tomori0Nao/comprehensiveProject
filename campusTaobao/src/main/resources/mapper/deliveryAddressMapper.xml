@@ -45,7 +45,7 @@
     <update id="updateDeliveryAddress" parameterType="DeliveryAddress">
         update delivery_address set consignee_name = #{addr.consigneeName},
                 consignee_tel = #{addr.consigneeTel},
-                address_no = #{addr.address}
+                address = #{addr.address}
                 where address_no = #{addr.addressNo}
     </update>
 </mapper>

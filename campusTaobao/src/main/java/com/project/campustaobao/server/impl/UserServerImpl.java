@@ -11,6 +11,9 @@ import com.project.campustaobao.utils.DateUtils;
 import com.project.campustaobao.utils.RegisterUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +46,16 @@ public class UserServerImpl implements UserServer {
      */
     @Override
     public boolean login(String account, String password) {
-        return userMapper.login(account,password) != null;
+        boolean login = userMapper.login(account,password) != null;
+        if(login){
+            DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            LocalDateTime time = LocalDateTime.now();
+            String localDateTime = df.format(time);
+            LocalDateTime ldt = LocalDateTime.parse(localDateTime, df);
+            System.out.println(ldt);
+            userMapper.updateLoginTime(account,ldt.toString());
+        }
+        return login;
     }
 
     /**

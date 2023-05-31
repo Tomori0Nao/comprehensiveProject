@@ -76,7 +76,7 @@ public class UserController {
 //       应该在session中取出来账号，后期记得修改
 //        String account = (String)Session.getSessionAttribute(Request.getRequest(),"account");
         //System.out.println("account =" +account);
-        System.out.println(address);
+        //System.out.println(address);
         DeliveryAddress addr = addressServer.insertDeliveryAddress(address.getUserAccount(),
                 address.getConsigneeName(), address.getConsigneeTel(), address.getAddress());
         ResultMessage<DeliveryAddress> resultMessage = null;

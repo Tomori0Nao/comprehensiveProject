@@ -11,6 +11,7 @@ import java.util.Map;
 @Repository
 public interface UserMapper {
     Map<String,String> login(String account, String password);
+    boolean updateLoginTime(@Param("account") String account,@Param("lastLoginTime") String time);
     boolean register(@Param("account") String account ,@Param("password") String password,@Param("name")String name ,@Param("tel") String tel,@Param("registerDate") String registerDate);
     String queryAccountByAccount(@Param("account") String account);
     Map<String,String> queryUserInfoByAccount(@Param("account") String account);
@@ -22,5 +23,6 @@ public interface UserMapper {
      * @return 成功修改则返回true
      */
     boolean updateUserNameByAccount(@Param("account") String account,@Param("newName")String newName);
+
 }
 

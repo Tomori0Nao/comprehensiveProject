@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import axios from 'axios';
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 
@@ -33,7 +34,20 @@ const options = [
     label: '营销经理'
   }
 ]
+const path = 'http://localhost:8080'
+axios({
+  method: 'get',
+  url: path + '/getAdminInfo',
+  params: {
+    adminInfo: 'admin001',    //父组件传递的管理员账号
+  }
+}).then((response) => {
+  const respData = response.data;
+  console.log(respData);
 
+}).catch((error) => {
+
+})
 // 应该在onSubmit函数中，提交修改的地址信息，
 const onSubmit = () => {
   // axios
@@ -61,12 +75,7 @@ const onCancel = () => {
       </el-form-item>
       <el-form-item label="管理员类型">
         <el-select v-model="adminInfo.adminType" class="m-2" placeholder="Select">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </el-form-item>
 
@@ -83,9 +92,11 @@ const onCancel = () => {
   padding-left: 10%;
   padding-right: 10%;
 }
+
 .input {
   width: 90%;
 }
+
 .addressInput {
   width: 90%;
 }

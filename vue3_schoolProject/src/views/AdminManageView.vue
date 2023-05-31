@@ -2,26 +2,15 @@
   <el-card class="guest-container">
     <template #header>
       <div class="header">
-        <el-input
-          style="width: 200px; margin-right: 10px"
-          placeholder="请输入管理员账号"
-          v-model="state.adminAccount"
-          @change="handleSearch"
-          clearable
-        />
+        <el-input style="width: 200px; margin-right: 10px" placeholder="请输入管理员账号" v-model="state.adminAccount"
+          @change="handleSearch" clearable />
         <el-button type="primary" :icon="Plus" @click="handleSolve">解除禁用</el-button>
         <el-button type="danger" :icon="Delete" @click="handleForbid">禁用账户</el-button>
         <el-button type="primary" :icon="Plus" @click="handleAdd">增加账户</el-button>
       </div>
     </template>
-    <el-table
-      :load="state.loading"
-      ref="multipleTableRef"
-      :data="tableData"
-      tooltip-effect="dark"
-      style="width: 100%"
-      @selection-change="handleSelectionChange"
-    >
+    <el-table :load="state.loading" ref="multipleTableRef" :data="tableData" tooltip-effect="dark" style="width: 100%"
+      @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55"> </el-table-column>
       <el-table-column prop="adminType" label="类型"> </el-table-column>
       <el-table-column prop="adminNakeName" label="昵称"> </el-table-column>
@@ -36,9 +25,7 @@
       <el-table-column prop="rigisterDate" label="注册时间"> </el-table-column>
       <el-table-column label="操作">
         <template #default="scope">
-          <el-button size="small" link type="primary" @click="handleEdit(scope.$index, scope.row)"
-            >Edit</el-button
-          >
+          <el-button size="small" link type="primary" @click="handleEdit(scope.$index, scope.row)">Edit</el-button>
         </template>
       </el-table-column>
       <!-- </template> -->
@@ -51,6 +38,7 @@
     :current-page="state.currentPage"
     @current-change="changePage"
   />
+    <!-- <el-button class="mt-4" style="width: 100%" @click="handleAdd">Add Item</el-button> -->
     <el-dialog v-model="dialogFormVisibleChange" title="管理员信息修改" center width="30%">
       <ChangeAdminInfo @close-dialog="handleCloseDialog" :admin-account=state.editAdminAccount></ChangeAdminInfo>
     </el-dialog>
@@ -87,6 +75,20 @@ const tableData = ref<AdminInfo[]>([
     isBaned: false
   }
 ])
+/**
+ * 渲染前，请求管理员信息
+ */
+const path = "http://localhost:8080"
+axios({
+  method: 'get',
+  url: path + '/getAdmins'
+}).then((response) => {
+  const respData = response.data;
+  console.log(respData.data);
+
+}).catch((error) => {
+
+})
 const dialogFormVisibleChange = ref(false)
 const dialogFormVisibleAdd = ref(false)
 const editAdminAccount = ref('')
@@ -132,26 +134,27 @@ const handleSelectionChange = (val: AdminInfo[]) => {
 }
 const handleEdit = (index: number, row: AdminInfo) => {
   state.editAdminAccount = row.adminAccount
-  dialogFormVisibleChange.value = true 
+  dialogFormVisibleChange.value = true
+  axios({
+
+  })
 }
 const handleCloseDialog = () => {
   dialogFormVisibleChange.value = false
   dialogFormVisibleAdd.value = false
 }
 const handleAdd = () => {
-  
+
   dialogFormVisibleAdd.value = true
 }
 const changePage = (val: number) => {
   state.currentPage = val
   getAdminList()
 }
-const getAdminList = ()=> {
-// axios
-// 根据state.currentPage来获取管理员信息列表
+const getAdminList = () => {
+  // axios
+  // 根据state.currentPage来获取管理员信息列表
 }
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

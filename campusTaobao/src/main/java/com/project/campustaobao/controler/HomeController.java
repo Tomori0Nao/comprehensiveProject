@@ -34,13 +34,6 @@ public class HomeController {
         if(resultMsg.getData().size() == 0){
             begin = 0;
         }
-        HttpSession session = req.getSession();
-        System.out.println("homeGoods中sessionId="+session.getId());
-        String account = (String) session.getAttribute ("account");
-        String password = (String) session.getAttribute("password");
-        System.out.println("在homegoods中");
-        System.out.println(account);
-        System.out.println(password);
         return resultMsg;
     }
 }

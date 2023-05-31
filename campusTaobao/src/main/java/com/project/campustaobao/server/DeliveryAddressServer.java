@@ -3,7 +3,7 @@ package com.project.campustaobao.server;
 import com.project.campustaobao.pojo.DeliveryAddress;
 
 import java.util.List;
-import java.util.Map;
+
 
 public interface DeliveryAddressServer {
     boolean isExist(DeliveryAddress address);

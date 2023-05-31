@@ -2,25 +2,14 @@
   <el-card class="guest-container">
     <template #header>
       <div class="header">
-        <el-input
-          style="width: 200px; margin-right: 10px"
-          placeholder="请输入订单号"
-          v-model="state.userAccount"
-          @change="handleSearch"
-          clearable
-        />
+        <el-input style="width: 200px; margin-right: 10px" placeholder="请输入订单号" v-model="state.userAccount"
+          @change="handleSearch" clearable />
         <el-button type="primary" :icon="Plus" @click="handleSolve">解除禁用</el-button>
         <el-button type="danger" :icon="Delete" @click="handleForbid">禁用账户</el-button>
       </div>
     </template>
-    <el-table
-      :load="state.loading"
-      ref="multipleTableRef"
-      :data="tableData"
-      tooltip-effect="dark"
-      style="width: 100%"
-      @selection-change="handleSelectionChange"
-    >
+    <el-table :load="state.loading" ref="multipleTableRef" :data="tableData" tooltip-effect="dark" style="width: 100%"
+      @selection-change="handleSelectionChange">
       <!-- <template #column> -->
       <el-table-column type="selection" width="55"> </el-table-column>
       <el-table-column prop="userNakeName" label="昵称"> </el-table-column>
@@ -70,6 +59,8 @@ let tableData = ref<UserInfo[]>([
     isBaned: false
   }
 ])
+
+
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<UserInfo[]>([])
 
