@@ -9,9 +9,14 @@
       <el-table-column prop="goodsNo" label="商品编号"> </el-table-column>
       <el-table-column prop="goodsName" label="商品名"> </el-table-column>
       <el-table-column prop="goodsBrand" label="品牌"> </el-table-column>
-      <el-table-column label="商品图片" width="150px">
+      <el-table-column label="商品图片" width="130px">
         <template #default="scope">
-          <img style="width: 100px; height: 100px" :key="scope.row.goodsNo" :src="scope.row.goodsImageName" alt="商品主图" />
+          <img
+            style="width: 100px; height: 100px"
+            :key="scope.row.goodsNo"
+            :src="scope.row.goodsImageName"
+            alt="商品主图"
+          />
         </template>
       </el-table-column>
       <el-table-column prop="goodsNumber" label="商品库存"> </el-table-column>
@@ -25,12 +30,17 @@
             >删除</a
           >
         </template>
-        
       </el-table-column>
     </el-table>
     <!--总数超过一页，再展示分页器-->
-    <el-pagination background layout="prev, pager, next" :total="state.total" :page-size="state.pageSize"
-      :current-page="state.currentPage" @current-change="changePage" />
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :total="state.total"
+      :page-size="state.pageSize"
+      :current-page="state.currentPage"
+      @current-change="changePage"
+    />
   </el-card>
 </template>
 
@@ -61,6 +71,7 @@ interface GoodsInfo {
   goodsNumber: number
   goodsBrand: string
   goodsNo: string
+  goodsType: string
 }
 const tableData = ref<GoodsInfo[]>([
   {
@@ -71,6 +82,7 @@ const tableData = ref<GoodsInfo[]>([
     goodsNumber: 100,
     goodsNo: '318458',
     goodsBrand: '三星',
+    goodsType: '手机'
   }
 ])
 const state = reactive({
@@ -93,7 +105,6 @@ const handleEdit = (id: string) => {
 }
 const handleDelete = (id: string) => {
   // axios
-
 }
 const changePage = (val: number) => {
   state.currentPage = val
@@ -110,18 +121,39 @@ const path = 'http://localhost:8080'
 axios({
   method: 'get',
   url: path + '/getAllGoods',
-  params: {
-
-  }
-}).then((response) => {
-  const respData = response.data;
-  console.log(respData);
-
-}).catch((error) => {
-  console.log("error = " + error);
-
-
+  params: {}
 })
+  .then((response) => {
+    const imagesURLPrefix = 'http://localhost:8080/static/images/'
+    tableData.value = []
+    const respData = response.data
+    const resGoodsList = respData.data
+    for (const iterator of resGoodsList) {
+      let tem: GoodsInfo = {
+        goodsName: '',
+        goodsImageName:
+          '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png',
+        goodsPrice: 0,
+        storeName: '',
+        goodsNumber: 0,
+        goodsNo: '',
+        goodsBrand: '',
+        goodsType: ''
+      }
+      tem.goodsName = iterator.goodsName
+      tem.goodsNo = iterator.goodsNo
+      tem.goodsNumber = iterator.goodsNumber
+      tem.goodsPrice = iterator.goodsPrice
+      tem.storeName = iterator.storeName
+      tem.goodsImageName = imagesURLPrefix+iterator.goodsImageName+'.png'
+      tem.goodsType = iterator.goodsType
+      tableData.value.push(tem)
+    }
+    console.log(respData)
+  })
+  .catch((error) => {
+    console.log('error = ' + error)
+  })
 </script>
 
 <style scoped>

@@ -4,13 +4,11 @@
       <div class="header">
         <el-input
           style="width: 200px; margin-right: 10px"
-          placeholder="请输入订单号"
+          placeholder="请输入用户账号"
           v-model="state.userAccount"
           @change="handleSearch"
           clearable
         />
-        <el-input style="width: 200px; margin-right: 10px" placeholder="请输入用户账号" v-model="state.userAccount"
-          @change="handleSearch" clearable />
         <el-button type="primary" :icon="Plus" @click="handleSolve">解除禁用</el-button>
         <el-button type="danger" :icon="Delete" @click="handleForbid">禁用账户</el-button>
       </div>
@@ -44,6 +42,7 @@ import { ElMessage, ElTable } from 'element-plus'
 import { Plus, Delete } from '@element-plus/icons-vue'
 import axios from 'axios'
 import { reactive } from 'vue'
+import { template } from 'lodash'
 axios.defaults.withCredentials = true
 
 interface UserInfo {
@@ -53,15 +52,7 @@ interface UserInfo {
   rigisterDate: string
   isBaned: boolean
 }
-let tableData = ref<UserInfo[]>([
-  {
-    userNakeName: 'sjgdlkfh',
-    userAccount: '37483285',
-    userAccountState: '正常',
-    rigisterDate: '2023-4-4',
-    isBaned: false
-  }
-])
+let tableData = ref<UserInfo[]>([])
 
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<UserInfo[]>([])
@@ -75,53 +66,57 @@ const handleSolve = () => {
   if (multipleSelection.value.length == 0) {
     ElMessage.error('请选择项')
   } else {
-    var userArray = multipleSelection.value;
+    var userArray = []
+    for (const iterator of multipleSelection.value) {
+      userArray.push(iterator.userAccount)
+    }
     axios({
       method: 'get',
       url: path + '/notForbidUser',
       params: {
-        userAccountList: ['111', '222'],
+        userAccountList: userArray
       }
-    }).then((response) => {
-      const respData = response.data;
-      console.log(respData);
-      if (respData.code == 1) {
-        ElMessage.error('该账号解除禁用')
-      }
-
-    }).catch((error) => {
-      console.log('error = ' + error);
-
     })
-    // axios
-
+      .then((response) => {
+        const respData = response.data
+        console.log(respData)
+        if (respData.code == 1) {
+          ElMessage.error('该账号解除禁用')
+          setTimeout(getUserList, 1000)
+        }
+      })
+      .catch((error) => {
+        console.log('error = ' + error)
+      })
   }
 }
 const handleForbid = () => {
   if (multipleSelection.value.length == 0) {
     ElMessage.error('请选择项')
   } else {
-    var userArray = multipleSelection.value;
+    var userArray = []
+    for (const iterator of multipleSelection.value) {
+      userArray.push(iterator.userAccount)
+    }
+
     axios({
       method: 'get',
       url: path + '/forbidUser',
       params: {
-        userAccountList: ['111', '222'],
+        userAccountList: userArray
       }
-    }).then((response) => {
-      const respData = response.data;
-      console.log(respData);
-      if (respData.code == 1) {
-        ElMessage.error('禁用该账号')
-      }
-
-    }).catch((error) => {
-      console.log('error = ' + error);
-
     })
-
-
-    // axios
+      .then((response) => {
+        const respData = response.data
+        console.log(respData)
+        if (respData.code == 1) {
+          ElMessage.error('禁用该账号')
+          setTimeout(getUserList, 1000)
+        }
+      })
+      .catch((error) => {
+        console.log('error = ' + error)
+      })
   }
 }
 const handleSearch = () => {
@@ -131,16 +126,30 @@ const handleSearch = () => {
     method: 'get',
     url: path + '/searchUser',
     params: {
-      userAccount: state.userAccount,
+      userAccount: state.userAccount
     }
-  }).then((response) => {
-    const respData = response.data;
-    console.log(respData);
-
-  }).catch((error) => {
-    console.log('error = ' + error);
-
   })
+    .then((response) => {
+      const respData = response.data
+      const resUserInfo = respData.data
+      tableData.value = []
+      let tem: UserInfo = {
+        userNakeName: '',
+        userAccount: '',
+        userAccountState: '',
+        rigisterDate: '',
+        isBaned: false
+      }
+      tem.userAccount = resUserInfo
+      tem.userNakeName = resUserInfo
+      tem.rigisterDate = resUserInfo
+      tem.isBaned = resUserInfo
+      tableData.value.push(tem)
+      console.log(respData)
+    })
+    .catch((error) => {
+      console.log('error = ' + error)
+    })
 }
 const handleSelectionChange = (val: UserInfo[]) => {
   multipleSelection.value = val
@@ -148,20 +157,64 @@ const handleSelectionChange = (val: UserInfo[]) => {
 /**
  * 页面加载时请求用户信息
  */
-axios({
-  method: 'get',
-  url: path + '/getUsers',
-  params: {
-
-  }
-}).then((response) => {
-  const respData = response.data;
-  console.log(respData);
-
-}).catch((error) => {
-  console.log('error = ' + error);
-
-})
+const getUserList = () => {
+  axios({
+    method: 'get',
+    url: path + '/getUsers',
+    params: {}
+  })
+    .then((response) => {
+      const respData = response.data
+      const resUserList = respData.data
+      tableData.value = []
+      for (const iterator of resUserList) {
+        let tem: UserInfo = {
+          userNakeName: '',
+          userAccount: '',
+          userAccountState: '',
+          rigisterDate: '',
+          isBaned: false
+        }
+        tem.userNakeName = iterator.userNakeName
+        tem.userAccount = iterator.userAccount
+        tem.rigisterDate = iterator.registerDate
+        tem.isBaned = iterator.isBaned
+        tableData.value.push(tem)
+      }
+      console.log(respData)
+    })
+    .catch((error) => {
+      console.log('error = ' + error)
+    })
+}
+getUserList()
+// axios({
+//   method: 'get',
+//   url: path + '/getUsers',
+//   params: {}
+// })
+//   .then((response) => {
+//     const respData = response.data
+//     const resUserList = respData.data
+//     for (const iterator of resUserList) {
+//       let tem: UserInfo = {
+//         userNakeName: '',
+//         userAccount: '',
+//         userAccountState: '',
+//         rigisterDate: '',
+//         isBaned: false
+//       }
+//       tem.userNakeName = iterator.userNakeName
+//       tem.userAccount = iterator.userAccount
+//       tem.rigisterDate = iterator.registerDate
+//       tem.isBaned = iterator.isBaned
+//       tableData.value.push(tem)
+//     }
+//     console.log(respData)
+//   })
+//   .catch((error) => {
+//     console.log('error = ' + error)
+//   })
 </script>
 
 <style scoped>
