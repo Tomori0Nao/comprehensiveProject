@@ -219,7 +219,19 @@ const onSubmit = () => {
 const handleChangeCate = () => { }
 //   获取商品信息
 //   axios
+axios({
+    method: 'get',
+    url: path + '/',
+    params: {
+      goodsNo: para
+    }
+  }).then((response) => {
+    const respData = response.data;
+    console.log(respData);
+  }).catch((error) => {
+    console.log("error = " + error);
 
+  })
 </script>
 
 <style scoped>

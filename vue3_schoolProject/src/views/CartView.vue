@@ -112,6 +112,7 @@ import { Minus, Plus } from '@element-plus/icons-vue'
 import axios from 'axios'
 axios.defaults.withCredentials = true
 
+const userAccount = window.localStorage.getItem('userAccount')
 const fit: string = 'fill'
 // ---- 商品信息
 // 商品名
@@ -204,7 +205,7 @@ axios({
   method: 'get',
   url: path + '/shoppingCart',
   params: {
-    account: '111'
+    account: userAccount
   }
 })
   .then((response) => {

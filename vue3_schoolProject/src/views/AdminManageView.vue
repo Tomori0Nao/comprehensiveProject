@@ -29,8 +29,8 @@
         </template>
       </el-table-column>
     </el-table>
-    <el-pagination background layout="prev, pager, next" :total="state.total" :page-size="state.pageSize"
-      :current-page="state.currentPage" @current-change="changePage" />
+    <!-- <el-pagination background layout="prev, pager, next" :total="state.total" :page-size="state.pageSize"
+      :current-page="state.currentPage" @current-change="changePage" /> -->
 
     <!-- <el-button class="mt-4" style="width: 100%" @click="handleAdd">Add Item</el-button> -->
     <el-dialog v-model="dialogFormVisibleChange" title="管理员信息修改" center width="30%">
