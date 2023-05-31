@@ -2,7 +2,7 @@
 import axios from 'axios';
 import { ref } from 'vue'
 import type { Ref } from 'vue'
-
+axios.defaults.withCredentials = true
 const emit = defineEmits(['closeDialog'])
 
 // ----普通管理员信息
@@ -13,13 +13,13 @@ const emit = defineEmits(['closeDialog'])
 interface AdminInfo {
   adminAccount: string
   adminNakeName: string
-  adminPasswd: string
+  adminPassword: string
   adminType: string
 }
 const adminInfo: Ref<AdminInfo> = ref({
-  adminAccount: '1000',
+  adminAccount: 'admin002',
   adminNakeName: 'hello',
-  adminPasswd: '1008610086',
+  adminPassword: '1008610086',
   adminType: '商品专员'
 })
 const options = [
@@ -35,21 +35,37 @@ const options = [
 const path = 'http://localhost:8080'
 axios({
   method: 'get',
-  url: path + '/getAdminInfo',
+  url: path + '/getAdminSimpleInfo',
   params: {
-    adminInfo: 'admin001',    //父组件传递的管理员账号
+    adminAccount: 'admin002',    //父组件传递的管理员账号
   }
 }).then((response) => {
   const respData = response.data;
   console.log(respData);
 
 }).catch((error) => {
+  console.log(error);
 
 })
 // 应该在onSubmit函数中，提交修改的地址信息，
 const onSubmit = () => {
   // axios
+  axios({
+    method: 'post',
+    url: path + '/updateAdminInfo',
+    params: {
+      adminAccount: adminInfo.value.adminAccount,
+      adminNakeName: adminInfo.value.adminNakeName,
+      adminPassword: adminInfo.value.adminPassword,
+      adminType: adminInfo.value.adminType,
+    }
+  }).then((response) => {
+    const respData = response.data;
+    console.log(respData);
 
+  }).catch((error) => {
+
+  })
   console.log('submit!')
   emit('closeDialog')
 }
@@ -66,7 +82,7 @@ const onCancel = () => {
         <el-input v-model="adminInfo.adminNakeName" />
       </el-form-item>
       <el-form-item label="管理员密码" class="input">
-        <el-input v-model="adminInfo.adminPasswd" />
+        <el-input v-model="adminInfo.adminPassword" />
       </el-form-item>
       <el-form-item label="管理员类型">
         <el-select v-model="adminInfo.adminType" class="m-2" placeholder="Select">

@@ -99,19 +99,76 @@ const state = reactive({
   level: 1,
   parent_id: 0
 })
+
+/**
+ * 这是解除禁用
+ */
 const handleSolve = () => {
   if (multipleSelection.value.length == 0) {
     ElMessage.error('请选择项')
   } else {
-    // axios
-    ElMessage.error('该账号解除禁用')
+    //先将选中的管理员账号取出
+    var addminAccountList = []
+    for (var i = 0; i < multipleSelection.value.length; ++i) {
+      addminAccountList.push(multipleSelection.value[i].adminAccount);
+    }
+    var array = ['admin003', 'admin002']
+    //向后端发起请求，禁用管理员账号
+    axios({
+      method: 'get',
+      url: path + '/notForbidAdmin',
+      params: {
+        //这里注意修改成选中的编号，我只是写了几个编号测试
+        // adminNoList: addminAccountList
+        adminNoList: array
+      }
+    }).then((response) => {
+      const respData = response.data;
+      console.log(respData.code);
+      if (respData.code == 1) {
+        ElMessage.error(respData.msg)
+      } else {
+        ElMessage.error('解除禁用管理员账号失败')
+      }
+
+    }).catch((error) => {
+
+    })
+    ElMessage.error('禁用该账号')
   }
 }
 const handleForbid = () => {
   if (multipleSelection.value.length == 0) {
     ElMessage.error('请选择项')
   } else {
-    ElMessage.error('禁用该账号')
+    //先将选中的管理员账号取出
+    var addminAccountList = []
+    for (var i = 0; i < multipleSelection.value.length; ++i) {
+      addminAccountList.push(multipleSelection.value[i].adminAccount);
+    }
+    var array = ['admin003', 'admin002']
+    //向后端发起请求，禁用管理员账号
+    axios({
+      method: 'get',
+      url: path + '/forbidAdmin',
+      params: {
+        //这里注意修改成选中的编号，我只是写了几个编号测试
+        // adminNoList: addminAccountList
+        adminNoList: array
+      }
+    }).then((response) => {
+      const respData = response.data;
+      console.log(respData.code);
+      if (respData.code == 1) {
+        ElMessage.error(respData.msg)
+      } else {
+        ElMessage.error('禁用管理员账号失败')
+      }
+
+    }).catch((error) => {
+
+    })
+    // ElMessage.error('禁用该账号')
 
     // axios
   }
@@ -126,9 +183,6 @@ const handleSelectionChange = (val: AdminInfo[]) => {
 }
 const handleEdit = (index: number, row: AdminInfo) => {
   dialogFormVisibleChange.value = true
-  axios({
-
-  })
 }
 const handleCloseDialog = () => {
   dialogFormVisibleChange.value = false
