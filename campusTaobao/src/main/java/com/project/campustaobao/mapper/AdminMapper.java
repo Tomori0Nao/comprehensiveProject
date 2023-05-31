@@ -36,4 +36,19 @@ public interface AdminMapper {
      */
     String queryPasswordAccount(@Param("account")String adminAccount);
     Map<String,String> queryAdminSimpleInfo(@Param("account")String adminAccount);
+    boolean updateAdminSimpleInfo(Map<String,String> simpleInfo);
+
+    /**
+     * 新的管理员注册成功后(插入成功后)需要返回一个账号
+     * @param admin 新管理员
+     * @return 返回新管理员的·账号
+     */
+    boolean insertAdmin(Administrator admin);
+
+    /**
+     * 更新管理员状态：   正常/禁用
+     * @param adminAccount 管理员账号
+     * @return 禁用成功返回true
+     */
+    boolean updateAdminStatus(@Param("account")String adminAccount, @Param("status") boolean status );
 }

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import axios from 'axios';
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 
@@ -16,10 +17,10 @@ interface AdminInfo {
   adminType: string
 }
 const adminInfo = ref<AdminInfo>({
-    adminAccount: '',
+  adminAccount: '',
   adminNakeName: '',
-  adminPasswd:'',
-  adminType:''
+  adminPasswd: '',
+  adminType: ''
 
 })
 const options = [
@@ -32,11 +33,25 @@ const options = [
     label: '营销经理',
   },
 ]
-
+const path = 'http://localhost:8080'
 // 应该在onSubmit函数中，提交修改的地址信息，
 const onSubmit = () => {
   // axios 
-  
+  axios({
+    method: 'post',
+    url: path + '/addAdmin',
+    params: {
+      adminNakeName: adminInfo.value.adminNakeName,
+      adminPassword: adminInfo.value.adminPasswd,
+      adminType: adminInfo.value.adminType,
+    }
+  }).then((response) => {
+    const respData = response.data;
+    console.log(respData);
+
+  }).catch((error) => {
+
+  })
   console.log('submit!')
   emit('closeDialog')
 }
@@ -49,28 +64,23 @@ const onCancel = () => {
 
 <template>
   <div class="container">
-      <el-form :model="adminInfo" label-width="120px">
-        <el-form-item label="管理员昵称" class="input">
-          <el-input v-model="adminInfo.adminNakeName" />
-        </el-form-item>
-        <el-form-item label="管理员密码" class="input">
-          <el-input v-model="adminInfo.adminPasswd" />
-        </el-form-item>
-        <el-form-item label="管理员类型" >
+    <el-form :model="adminInfo" label-width="120px">
+      <el-form-item label="管理员昵称" class="input">
+        <el-input v-model="adminInfo.adminNakeName" />
+      </el-form-item>
+      <el-form-item label="管理员密码" class="input">
+        <el-input v-model="adminInfo.adminPasswd" />
+      </el-form-item>
+      <el-form-item label="管理员类型">
         <el-select v-model="adminInfo.adminType" class="m-2" placeholder="Select">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="onSubmit">提交</el-button>
-          <el-button @click="onCancel()">取消</el-button>
-        </el-form-item>
-      </el-form>
+      <el-form-item>
+        <el-button type="primary" @click="onSubmit">提交</el-button>
+        <el-button @click="onCancel()">取消</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -79,9 +89,11 @@ const onCancel = () => {
   padding-left: 10%;
   padding-right: 10%;
 }
+
 .input {
   width: 90%;
 }
+
 .addressInput {
   width: 90%;
 }

@@ -3,12 +3,16 @@ package com.project.campustaobao.server.impl;
 import com.project.campustaobao.mapper.AdminMapper;
 import com.project.campustaobao.pojo.Administrator;
 import com.project.campustaobao.server.AdminServer;
+import com.project.campustaobao.utils.DateUtils;
+import com.project.campustaobao.utils.RegisterUser;
 import com.project.campustaobao.utils.Request;
 import com.project.campustaobao.utils.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -54,7 +58,37 @@ public class AdminServerImpl implements AdminServer {
     }
 
     @Override
-    public Map<String, String> queryAdminSimpleInfo(String AdminAccount) {
-        return null;
+    public Map<String,String> queryAdminSimpleInfo(String adminAccount) {
+        return adminMapper.queryAdminSimpleInfo(adminAccount);
     }
+
+    @Override
+    public boolean updateAdminSimpleInfo(Map<String, String> adminSimpleInfo) {
+        return adminMapper.updateAdminSimpleInfo(adminSimpleInfo);
+    }
+
+    @Override
+    public Administrator insertAdmin(Administrator admin) {
+        Date date = new Date();
+        String registerDate = DateUtils.formatDate(date);
+        //生成一个账号
+        String adminAccount = RegisterUser.generateAccount(LocalDateTime.now().toString());
+        admin.setAdminAccount(adminAccount);
+        admin.setRegisterDate(registerDate);
+        adminMapper.insertAdmin(admin);
+        return admin;
+    }
+    @Override
+    public boolean forbidAdmin(String account){
+        return updateAdminStatus(account,true);
+    }
+    @Override
+    public boolean notForbidAdmin(String account){
+        return updateAdminStatus(account,false);
+    }
+    @Override
+    public boolean updateAdminStatus(String account, boolean statues) {
+        return adminMapper.updateAdminStatus(account,statues);
+    }
+
 }

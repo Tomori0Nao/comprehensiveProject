@@ -12,4 +12,10 @@ public interface AdminServer {
     List<Administrator> queryAdminList();
     boolean login(String account,String password);
     Map<String,String> queryAdminSimpleInfo(String AdminAccount);
+    boolean updateAdminSimpleInfo(Map<String,String> adminSimpleInfo);
+    Administrator insertAdmin(Administrator admin);
+
+    boolean updateAdminStatus(String account,boolean statues);
+    boolean forbidAdmin(String adminAccount);
+    boolean notForbidAdmin(String adminAccount);
 }

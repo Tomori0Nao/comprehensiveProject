@@ -25,14 +25,33 @@
         select admin_password from admin where admin_account = #{account}
     </select>
 <!--    修改管理员信息前需要获取管理员的昵称，密码，管理员类型-->
-    <select id="queryAdminSimpleInfo" resultMap="adminSimpleInfo">
+    <select id="queryAdminSimpleInfo" resultMap="adminSimpleInfoMap">
         select admin_account, admin_nake_name,admin_password,admin_type from admin
         where admin_account = #{account}
     </select>
-    <resultMap id="adminSimpleInfo" type="java.util.Map">
+    <resultMap id="adminSimpleInfoMap" type="java.util.Map">
         <id property="adminAccount" column="admin_account" />
         <result property="adminPassword" column="admin_password" />
         <result property="adminNakeName" column="admin_nake_name" />
         <result property="adminType" column="admin_type" />
     </resultMap>
+<!--    更新管理员的简单信息 密码，昵称，类别-->
+    <update id="updateAdminSimpleInfo" parameterType="java.util.Map">
+        update admin set admin_password = #{adminPassword},
+                         admin_nake_name = #{adminNakeName},
+                         admin_type = #{adminType}
+        where admin_account = #{adminAccount}
+    </update>
+<!--    新注册一个管理员-->
+    <insert id="insertAdmin" parameterType="Administrator">
+        insert into admin (admin_account, admin_password, admin_nake_name, admin_type, register_date, is_baned)
+        values (#{adminAccount},#{adminPassword},#{adminNakeName},
+                #{adminType},#{registerDate},false)
+    </insert>
+
+<!--    改变管理员的状态-->
+    <update id="updateAdminStatus" >
+        update admin set is_baned = #{status}
+        where admin_account = #{account}
+    </update>
 </mapper>
