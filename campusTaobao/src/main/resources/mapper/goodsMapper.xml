@@ -75,6 +75,10 @@
         <result property="goodsPrice" column="goods_price" />
         <result property="goodsImageName" column="goods_image_name" />
     </resultMap>
+<!--    获取商品数目-->
+    <select id="queryGoodsAccount" resultType="int">
+        select count(goods_no) from goods_info
+    </select>
 <!--    添加一件商品-->
     <insert id="insertGoods" parameterType="Goods">
         insert into goods_info values
@@ -102,12 +106,16 @@
         goods_purchase_date = #{goods.goodsPurchaseDate},store_name = #{goods.storeName}
         where goods_no = #{goods.goodsNo}
     </update>
+<!--    通过种类编号获取商品种类名-->
+    <select id="queryCategoryNameByCategoryNo" resultType="String">
+        select category_name from category where category_no = #{categoryNo}
+    </select>
 <!--获取当前商品种类的数目-->
-    <select id="getCategoryCount">
+    <select id="queryCategoryCount" resultType="int">
         select count(category_no) from category;
     </select>
 <!--    通过名字查找某种类商品是否存在-->
-    <select id="goodsTypeIsExist">
+    <select id="goodsTypeIsExist" resultType="String">
         select category_name from category where category_name = #{categoryName}
     </select>
 <!--    增加一个商品种类-->
@@ -126,7 +134,7 @@
     </update>
 <!--    删除商品种类-->
     <delete id="deleteGoodsTypeByGoodsType">
-        delete from category where category_name = #{categoryName}
+        delete from category where category_no = #{categoryNo}
     </delete>
 <!--    同时删除此类商品-->
 </mapper>

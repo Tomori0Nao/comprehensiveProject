@@ -1,16 +1,6 @@
 <template>
-  <el-dialog
-    :title="props.type == 'add' ? '添加分类' : '修改分类'"
-    v-model="state.visible"
-    width="400px"
-  >
-    <el-form
-      :model="state.ruleForm"
-      :rules="state.rules"
-      ref="formRef"
-      label-width="150px"
-      class="good-form"
-    >
+  <el-dialog :title="props.type == 'add' ? '添加分类' : '修改分类'" v-model="state.visible" width="400px">
+    <el-form :model="state.ruleForm" :rules="state.rules" ref="formRef" label-width="150px" class="good-form">
       <el-form-item label="商品类型名称" prop="name">
         <el-input type="text" v-model="state.ruleForm.name"></el-input>
       </el-form-item>
@@ -58,9 +48,22 @@ const state = reactive({
   },
   id: ''
 })
+const path = "http://localhost:8080"
 // 获取详情
 const getDetail = (id: string) => {
-  // axios
+  axios({
+    method: 'get',
+    url: path + '/getCategoryName',
+    params: {
+      categoryNo: ''
+    }
+  }).then((response) => {
+    const respData = response.data;
+    console.log(respData);
+  }).catch((error) => {
+    console.log("error = " + error);
+
+  })
 }
 // 开启弹窗
 const open = (id?: string, categoryName?: string) => {
@@ -88,13 +91,50 @@ const submitForm = () => {
   formRef.value.validate((valid: boolean) => {
     if (valid) {
       if (props.type == 'add') {
-        // 添加方法
+        // 添加商品种类
         //   axios
+        axios({
+          method: 'get',
+          url: path + '/addGoodsType',
+          params: {
+            categoryName: '武器'
+          }
+        }).then((response) => {
+          const respData = response.data;
+          if (respData.code == 1) {
+            console.log(respData.msg);
+          } else {
+            console.log(respData.msg);
+          }
+          console.log(respData);
+        }).catch((error) => {
+          console.log("error = " + error);
+
+        })
         emit('AddCategory')
         state.visible = false
       } else {
-        // 修改方法
+        // 修改商品种类
         //   axios
+        axios({
+          method: 'get',
+          url: path + '/updateGoodsType',
+          params: {
+            categoryNo: 'category001',
+            categoryName: '手机666'
+          }
+        }).then((response) => {
+          const respData = response.data;
+          if (respData.code == 1) {
+            console.log(respData.msg);
+          } else {
+            console.log(respData.msg);
+          }
+          console.log(respData);
+        }).catch((error) => {
+          console.log("error = " + error);
+
+        })
         emit('EditCategory', state.id, state.ruleForm.name)
         state.visible = false
       }
