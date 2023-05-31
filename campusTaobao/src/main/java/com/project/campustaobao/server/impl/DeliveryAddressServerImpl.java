@@ -13,7 +13,6 @@ public class DeliveryAddressServerImpl implements DeliveryAddressServer {
     @Autowired
     private DeliveryAddressMapper addressMapper;
     private static final String ADDRESS_PREFIX = "addr";
-
     @Override
     public boolean isExist(DeliveryAddress address) {
         return addressMapper.queryAddressNoByAddressInfo(address) != null;

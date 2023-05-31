@@ -75,4 +75,16 @@ public class Administrator {
     public void setBaned(boolean baned) {
         isBaned = baned;
     }
+
+    @Override
+    public String toString() {
+        return "Administrator{" +
+                "adminType='" + adminType + '\'' +
+                ", adminAccount='" + adminAccount + '\'' +
+                ", adminPassword='" + adminPassword + '\'' +
+                ", adminNakeName='" + adminNakeName + '\'' +
+                ", registerDate='" + registerDate + '\'' +
+                ", isBaned=" + isBaned +
+                '}';
+    }
 }
