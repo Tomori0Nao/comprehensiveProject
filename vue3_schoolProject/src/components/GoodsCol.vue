@@ -3,7 +3,7 @@ import axios from 'axios'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 
-const props = defineProps(['type'])
+const props = defineProps(['type','currentPage'])
 axios.defaults.withCredentials = true
 const goodsPictureAddr =
   '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png'
@@ -39,7 +39,8 @@ if (goodCardInfoList.value.length <= 0) {
   if (props.type == 'home') {
     axios({
       method: 'get',
-      url: path + '/homeGoods'
+      url: path + '/homeGoods',
+      params:{pageNo:props.currentPage}
     })
       .then((response) => {
         console.log(response.data)
@@ -50,14 +51,15 @@ if (goodCardInfoList.value.length <= 0) {
           var imageName = imagesURLPrefix + goodsInfo[i].goodsImageName + '.png'
           let tem: GoodsCardInfo = {
             // 临时变量 接受后端数据后，push到goodCardInfoList中
-            goodsNo: '14543',
+            goodsNo: '',
             goodsPictureAddr: goodsPictureAddr,
-            goodsName: '三星 s23',
-            goodsPrice: 6933
+            goodsName: '',
+            goodsPrice: 0
           }
           tem.goodsPictureAddr = imageName
           tem.goodsName = goodsInfo[i].goodsName
           tem.goodsPrice = parseFloat(goodsInfo[i].goodsPrice)
+          tem.goodsNo = goodsInfo[i].goodsNo
           goodCardInfoList.value.push(tem)
         }
       })
@@ -79,14 +81,15 @@ if (goodCardInfoList.value.length <= 0) {
           var imageName = imagesURLPrefix + goodsInfo[i].goodsImageName + '.png'
           let tem: GoodsCardInfo = {
             // 临时变量 接受后端数据后，push到goodCardInfoList中
-            goodsNo: '14543',
+            goodsNo: '',
             goodsPictureAddr: goodsPictureAddr,
-            goodsName: '三星 s23',
-            goodsPrice: 6933
+            goodsName: '',
+            goodsPrice: 0
           }
           tem.goodsPictureAddr = imageName
           tem.goodsName = goodsInfo[i].goodsName
           tem.goodsPrice = parseFloat(goodsInfo[i].goodsPrice)
+          tem.goodsNo = goodsInfo[i].goodsNo
           goodCardInfoList.value.push(tem)
         }
       })
@@ -101,7 +104,7 @@ if (goodCardInfoList.value.length <= 0) {
   <div>
     <el-row :gutter="200">
       <el-col :span="4" v-for="(item, index) in goodCardInfoList">
-        <RouterLink to="/goodsInfo">
+        <RouterLink :to="{path:'/goodsInfo',query:{goodsNo:item.goodsNo}}" >
           <el-card :body-style="{ padding: '5px' }" style="width: 200px">
             <img
               :key="index"

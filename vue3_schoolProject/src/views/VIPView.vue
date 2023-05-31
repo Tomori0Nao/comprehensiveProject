@@ -70,7 +70,6 @@ axios({
 }).then((response) => {
     let respData = response.data.data;
     console.log(respData);
-
     vipInfo.value.vip_user_account = respData.vipAccount;
     vipInfo.value.expiration_time = respData.expirationTime;
     vipInfo.value.integral = parseInt(respData.integral);

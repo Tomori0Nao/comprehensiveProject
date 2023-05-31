@@ -2,8 +2,12 @@
 import axios from 'axios'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
+import {useEditAddressStore} from '../stores/EditAddress'
+
+const editAddress = useEditAddressStore()
 
 const emit = defineEmits(['closeDialog'])
+// const props = defineProps(['addressNo','name','tel','shippingAddress'])
 
 // ----收货地址信息
 // 收货地址编号
@@ -17,10 +21,10 @@ interface Address {
   shippingAddress: string
 }
 const address: Ref<Address> = ref({
-  addressNo: 'addr3330',
-  name: 'hello',
-  tel: '1008610086',
-  shippingAddress: '重庆市巴南区红光大道69号'
+  addressNo: editAddress.addressNo,
+  name: editAddress.consigneeName,
+  tel: editAddress.consigneeTel,
+  shippingAddress: editAddress.address
 })
 const path = 'http://localhost:8080'
 // 应该在onSubmit函数中，提交修改的地址信息，

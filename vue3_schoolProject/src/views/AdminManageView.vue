@@ -135,9 +135,9 @@ const handleSelectionChange = (val: AdminInfo[]) => {
 const handleEdit = (index: number, row: AdminInfo) => {
   state.editAdminAccount = row.adminAccount
   dialogFormVisibleChange.value = true
-  axios({
+  // axios({
 
-  })
+  // })
 }
 const handleCloseDialog = () => {
   dialogFormVisibleChange.value = false

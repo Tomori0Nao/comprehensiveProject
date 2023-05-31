@@ -18,7 +18,12 @@ import type { RouterLink } from 'vue-router';
               <Minus />
             </el-icon>
           </el-button>
-          <el-input v-model="orderNumber" @input="inputChanges" placeholder="1" class="numberInput" />
+          <el-input
+            v-model="orderNumber"
+            @input="inputChanges"
+            placeholder="1"
+            class="numberInput"
+          />
           <el-button size="small" type="danger" @click.prevent="handlePlus" circle>
             <el-icon>
               <Plus />
@@ -87,10 +92,15 @@ import GoodsCol from '@/components/GoodsCol.vue'
 import MallHeader from '../components/MallHeader.vue'
 import { ref } from 'vue'
 import { Minus, Plus } from '@element-plus/icons-vue'
+import { ElNotification } from 'element-plus'
+import { h } from 'vue'
 import axios from 'axios'
+
+
+let url = window.location.href
+let para = url.split('?').at(1)?.split('=').at(1)
+
 const fit: string = 'fill'
-const picture: string =
-  '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png'
 
 // ----商品信息
 // 商品名称
@@ -112,17 +122,17 @@ interface GoodsInfo {
   goodsWeight: string
   goodsProducingArea: string
 }
-const goodsInfo: GoodsInfo = {
-  goodsName: '三星 s233',
-  goodsImageName: picture,
-  goodsPrice: 6999,
-  storeName: 'git商城自营店',
-  goodsNumber: 100,
-  goodsBrand: '三星',
-  goodsNo: '00001111',
-  goodsWeight: '0.89kg',
-  goodsProducingArea: '中国大陆'
-}
+const goodsInfo = ref<GoodsInfo>({
+  goodsName: '',
+  goodsImageName: '',
+  goodsPrice: 0,
+  storeName: '',
+  goodsNumber: 0,
+  goodsBrand: '',
+  goodsNo: para + '',
+  goodsWeight: '',
+  goodsProducingArea: ''
+})
 var orderNumber = ref(1)
 const handleMinus = () => {
   console.log(orderNumber)
@@ -134,18 +144,24 @@ const handleMinus = () => {
 const handlePlus = () => {
   console.log(orderNumber)
 
-  if (orderNumber.value >= goodsInfo.goodsNumber) {
+  if (orderNumber.value >= goodsInfo.value.goodsNumber) {
   } else {
     orderNumber.value += 1
   }
 }
 const inputChanges = () => {
   console.log(orderNumber.value)
-  if (orderNumber.value > goodsInfo.goodsNumber) {
-    orderNumber.value = goodsInfo.goodsNumber
+  if (orderNumber.value > goodsInfo.value.goodsNumber) {
+    orderNumber.value = goodsInfo.value.goodsNumber
   }
 }
 const addToCart = () => {
+  // 加入购物车
+  // axios
+  ElNotification({
+    title: '用户你好',
+    message: h('i', { style: 'color: teal' }, '商品已加入购物车'),
+  })
   console.log('added to cart')
 }
 
@@ -169,32 +185,25 @@ const addToCart = () => {
  * 
  *
  */
-const path = 'http://localhost:8080';
+const path = 'http://localhost:8080'
 axios({
   method: 'get',
   url: path + '/goodsInfo',
   params: {
-    goodsNo: 'sh001',
+    goodsNo: para
   }
-}).then((response) => {
-  const respData = response.data;
-  var goods = respData.data;
-  console.log(goods);
-  //我这样赋值失败了
-  //goodsInfo.goodsName = respData.goodsName,
-  //goodsInfo.goodsPrice = respData.goodsName,
-  // goodsInfo.storeName = respData.goodsName
-  // goodsInfo.goodsNumber: 100,
-  // goodsInfo.goodsBrand: '三星',
-  // goodsInfo.goodsNo: '00001111',
-  // goodsInfo.goodsWeight: '0.89kg',
-  // goodsInfo.goodsProducingArea: '中国大陆'
-
-}).catch((error) => {
-  console.log('error = ' + error);
-
 })
-
+  .then((response) => {
+    const imagesURLPrefix = 'http://localhost:8080/static/images/'
+    const respData = response.data
+    var goods: GoodsInfo = respData.data
+    goodsInfo.value = goods
+    goodsInfo.value.goodsImageName = imagesURLPrefix+goods.goodsImageName+'.png'
+    console.log(goods)
+  })
+  .catch((error) => {
+    console.log('error = ' + error)
+  })
 </script>
 
 <style scoped>

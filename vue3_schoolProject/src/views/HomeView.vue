@@ -7,7 +7,14 @@ import type { RouterLink } from 'vue-router';
     <SlideShow></SlideShow>
     <el-divider content-position="left">精选好物</el-divider>
     <GoodsCol type="home"></GoodsCol>
-    
+    <el-pagination
+    background
+    layout="prev, pager, next"
+    :total="state.total"
+    :page-size="state.pageSize"
+    :current-page="state.currentPage"
+    @current-change="changePage"
+  />
 
   </div>
 </template>
@@ -15,7 +22,23 @@ import type { RouterLink } from 'vue-router';
 <script setup lang="ts">
 import SlideShow from "../components/Slideshow.vue"
 import GoodsCol from "../components/GoodsCol.vue"
-import MallHeader from '../components/MallHeader.vue';
+import MallHeader from '../components/MallHeader.vue'
+import { reactive } from 'vue'
+
+const state = reactive({
+  editAdminAccount:'',
+  adminAccount: '',
+  loading: false,
+  total: 0, // 总条数
+  currentPage: 1, // 当前页
+  pageSize: 10, // 分页大小
+  type: 'add', // 操作类型
+  level: 1,
+  parent_id: 0
+})
+const changePage = (val: number) => {
+  state.currentPage = val
+}
 </script>
 
 <style>
