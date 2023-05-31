@@ -92,4 +92,41 @@
     <delete id="deleteGoodsByGoodsType">
         delete from goods_info where goods_type = #{goodsType}
     </delete>
+<!--    修改商品信息-->
+    <update id="updateGoodsInfo">
+        update goods_info set goods_name = #{goods.goodsName},
+        goods_type = #{goods.goodsType},goods_price = #{goods.goodsPrice},
+        vip_derate = #{goods.vipDerate},goods_purchase_price = #{goods.goodsPurchasePrice},
+        goods_brand = #{goods.goodsBrand},goods_weight = #{goods.goodsWeight},
+        goods_special_info = #{goods.goodsSpecialInfo},goods_origin = #{goods.goodsOrigin},
+        goods_purchase_date = #{goods.goodsPurchaseDate},store_name = #{goods.storeName}
+        where goods_no = #{goods.goodsNo}
+    </update>
+<!--获取当前商品种类的数目-->
+    <select id="getCategoryCount">
+        select count(category_no) from category;
+    </select>
+<!--    通过名字查找某种类商品是否存在-->
+    <select id="goodsTypeIsExist">
+        select category_name from category where category_name = #{categoryName}
+    </select>
+<!--    增加一个商品种类-->
+    <insert id="insertGoodsType">
+        insert into category values(#{categoryNo},#{categoryName})
+    </insert>
+<!--    更新商品种类-->
+    <update id="updateGoodsType">
+        update category set category_name = #{categoryName}
+        where category_no = #{categoryNo}
+    </update>
+<!--    同时更新此类商品的种类-->
+    <update id="updateGoodsTypeByGoodsType">
+        update goods_info set goods_type = #{goodsNewType}
+        where goods_type = #{goodsOldType}
+    </update>
+<!--    删除商品种类-->
+    <delete id="deleteGoodsTypeByGoodsType">
+        delete from category where category_name = #{categoryName}
+    </delete>
+<!--    同时删除此类商品-->
 </mapper>

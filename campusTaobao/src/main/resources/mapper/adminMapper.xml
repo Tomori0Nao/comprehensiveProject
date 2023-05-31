@@ -25,7 +25,7 @@
         select admin_password from admin where admin_account = #{account}
     </select>
 <!--    修改管理员信息前需要获取管理员的昵称，密码，管理员类型-->
-    <select id="queryAdminSimpleInfo" resultMap="adminSimpleInfoMap">
+    <select id="queryAdminSimpleInfoByAdminAccount" resultMap="adminSimpleInfoMap">
         select admin_account, admin_nake_name,admin_password,admin_type from admin
         where admin_account = #{account}
     </select>

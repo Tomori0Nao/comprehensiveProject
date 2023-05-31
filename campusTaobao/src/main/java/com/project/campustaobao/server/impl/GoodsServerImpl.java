@@ -79,6 +79,36 @@ public class GoodsServerImpl implements GoodsServer {
     }
 
     @Override
+    public boolean updateGoodsInfo(Goods goods) {
+        return goodsMapper.updateGoodsInfo(goods);
+    }
+
+    @Override
+    public boolean insertGoodsType(String categoryNo, String goodsType) {
+        return goodsMapper.insertGoodsType(categoryNo, goodsType);
+    }
+
+    @Override
+    public boolean goodsTypeIsExist(String categoryNo, String goodsType) {
+        return goodsMapper.goodsTypeIsExist(categoryNo, goodsType) != null;
+    }
+
+    @Override
+    public boolean updateGoodsType(String categoryNo, String goodsType) {
+        return false;
+    }
+
+    @Override
+    public boolean updateGoodsTypeByGoodsType(String oldType, String newType) {
+        return false;
+    }
+
+    @Override
+    public boolean deleteGoodsType(String goodsType) {
+        return false;
+    }
+
+    @Override
     public boolean addGoods(Goods goods) {
         return goodsMapper.insertGoods(goods);
     }

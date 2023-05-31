@@ -9,12 +9,7 @@
           </div>
         </div>
         <div class="line" />
-        <el-menu
-          background-color="#409EFF"
-          text-color="#fff"
-          active-text-color="#c6e2ff"
-          :router="true"
-        >
+        <el-menu background-color="#409EFF" text-color="#fff" active-text-color="#c6e2ff" :router="true">
           <el-sub-menu index="1">
             <template #title>
               <span>商品管理</span>
@@ -61,18 +56,18 @@ import { useRouter } from 'vue-router'
 axios.defaults.withCredentials = true
 
 
-const router = useRouter()
-router.beforeEach(async (to, from) => {
-  console.log(window.localStorage.getItem('userAccount'))
-    // 如果不是 /login，判断是否有 token
-    if (!window.localStorage.getItem('adminAccount')&&to.name !== 'Login') {
-      // 如果没有，则跳至登录页面
-      return { name: 'Login' }
-    } else {
-      // 否则继续执行
-    }
-  }
-)
+// const router = useRouter()
+// router.beforeEach(async (to, from) => {
+//   console.log(window.localStorage.getItem('userAccount'))
+//     // 如果不是 /login，判断是否有 token
+//     if (!window.localStorage.getItem('adminAccount')&&to.name !== 'Login') {
+//       // 如果没有，则跳至登录页面
+//       return { name: 'Login' }
+//     } else {
+//       // 否则继续执行
+//     }
+//   }
+// )
 </script>
 
 <style scoped>
@@ -80,20 +75,24 @@ router.beforeEach(async (to, from) => {
   min-height: 100vh;
   background-color: #ffffff;
 }
+
 .container {
   height: 100vh;
 }
+
 .aside {
   width: 200px !important;
   background-color: #409eff;
 }
+
 .head {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 50px;
 }
-.head > div {
+
+.head>div {
   display: flex;
   align-items: center;
 }
@@ -103,27 +102,31 @@ router.beforeEach(async (to, from) => {
   height: 50px;
   margin-right: 10px;
 }
+
 .head span {
   font-size: 20px;
   color: #ffffff;
 }
+
 .line {
   border-top: 1px solid hsla(0, 0%, 100%, 0.05);
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
+
 .content {
   display: flex;
   flex-direction: column;
   max-height: 100vh;
   overflow: hidden;
 }
+
 .main {
   height: calc(100vh - 100px);
   overflow: auto;
   padding: 10px;
 }
+
 a {
   color: #409eff;
   text-decoration: none;
-}
-</style>
+}</style>

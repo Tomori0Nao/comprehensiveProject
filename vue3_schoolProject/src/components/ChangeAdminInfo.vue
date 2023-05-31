@@ -52,6 +52,8 @@ axios({
     console.log(respData)
   })
   .catch((error) => {
+    console.log(adminAccount);
+
     console.log(error)
   })
 // 应该在onSubmit函数中，提交修改的地址信息，
@@ -71,7 +73,7 @@ const onSubmit = () => {
       const respData = response.data
       console.log(respData)
     })
-    .catch((error) => {})
+    .catch((error) => { })
   console.log('submit!')
   emit('closeDialog')
 }
@@ -92,12 +94,7 @@ const onCancel = () => {
       </el-form-item>
       <el-form-item label="管理员类型">
         <el-select v-model="adminInfo.adminType" class="m-2" placeholder="Select">
-          <el-option
-            v-for="item in options"
-            :key="item.value"
-            :label="item.label"
-            :value="item.value"
-          />
+          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
         </el-select>
       </el-form-item>
 
