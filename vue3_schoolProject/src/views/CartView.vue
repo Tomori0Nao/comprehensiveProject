@@ -4,12 +4,7 @@ import type { RouterLink } from 'vue-router';
   <div class="container">
     <MallHeader></MallHeader>
     <el-divider content-position="left">共有{{ tableData.length }}件商品</el-divider>
-    <el-table
-      ref="multipleTableRef"
-      :data="tableData"
-      style="width: 100%"
-      @selection-change="handleSelectionChange"
-    >
+    <el-table ref="multipleTableRef" :data="tableData" style="width: 100%" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" />
       <el-table-column label="商品" width="120">
         <template #default="scope">
@@ -30,19 +25,10 @@ import type { RouterLink } from 'vue-router';
               <Minus />
             </el-icon>
           </el-button>
-          <el-input
-            v-model="scope.row.purchaseNumber"
-            placeholder="1"
-            class="numberInput"
-            @input="inputChanges(scope.row)"
-          />
+          <el-input v-model="scope.row.purchaseNumber" placeholder="1" class="numberInput"
+            @input="inputChanges(scope.row)" />
 
-          <el-button
-            size="small"
-            type="danger"
-            @click.prevent="handlePlus(scope.$index, scope.row)"
-            circle
-          >
+          <el-button size="small" type="danger" @click.prevent="handlePlus(scope.$index, scope.row)" circle>
             <el-icon>
               <Plus />
             </el-icon>
@@ -51,15 +37,8 @@ import type { RouterLink } from 'vue-router';
       </el-table-column>
       <el-table-column label="操作" show-overflow-tooltip>
         <template #default="scope">
-          <el-popconfirm
-            width="220"
-            confirm-button-text="是的"
-            cancel-button-text="否"
-            :icon="InfoFilled"
-            icon-color="#626AEF"
-            title="将此商品从购物车中删除吗?"
-            @confirm="deleteGoods(scope.$index, scope.row)"
-          >
+          <el-popconfirm width="220" confirm-button-text="是的" cancel-button-text="否" :icon="InfoFilled"
+            icon-color="#626AEF" title="将此商品从购物车中删除吗?" @confirm="deleteGoods(scope.$index, scope.row)">
             <template #reference>
               <el-button type="danger" plain>删除</el-button>
             </template>
@@ -68,28 +47,14 @@ import type { RouterLink } from 'vue-router';
       </el-table-column>
     </el-table>
     <div style="margin-top: 20px">
-      <el-popconfirm
-        width="220"
-        confirm-button-text="是的"
-        cancel-button-text="否"
-        :icon="InfoFilled"
-        icon-color="#626AEF"
-        title="现在去结算吗?"
-        @confirm="goToPay"
-      >
+      <el-popconfirm width="220" confirm-button-text="是的" cancel-button-text="否" :icon="InfoFilled" icon-color="#626AEF"
+        title="现在去结算吗?" @confirm="goToPay">
         <template #reference>
           <el-button>去结算</el-button>
         </template>
       </el-popconfirm>
-      <el-popconfirm
-        width="220"
-        confirm-button-text="是的"
-        cancel-button-text="否"
-        :icon="InfoFilled"
-        icon-color="#626AEF"
-        title="将所有商品从购物车中删除吗?"
-        @confirm="clearCart"
-      >
+      <el-popconfirm width="220" confirm-button-text="是的" cancel-button-text="否" :icon="InfoFilled" icon-color="#626AEF"
+        title="将所有商品从购物车中删除吗?" @confirm="clearCart">
         <template #reference>
           <el-button>清空购物车</el-button>
         </template>
@@ -123,6 +88,7 @@ const fit: string = 'fill'
 // 购买数量
 // 会员减免
 interface GoodsInfo {
+  goodsNo: string,
   goodsName: string
   goodsPrice: number
   storeName: string
@@ -185,11 +151,37 @@ const inputChanges = (row: GoodsInfo) => {
 }
 const deleteGoods = (index: number, row: GoodsInfo) => {
   console.log(index, row)
+  axios({
+    method: 'get',
+    url: path + '/deleteCartGoods',
+    params: {
+      goodsNo: tableData.value[index].goodsNo,
+    }
+  }).then((response) => {
+    const respData = response.data;
+    console.log(respData);
+  }).catch((error) => {
+    console.log("error = " + error);
+
+  })
   tableData.value.splice(index, 1)
   console.log(tableData.value)
 }
 const goToPay = () => {
   //
+  axios({
+    method: 'get',
+    url: path + '/pay',
+    params: {
+
+    }
+  }).then((response) => {
+    const respData = response.data;
+    console.log(respData);
+  }).catch((error) => {
+    console.log("error = " + error);
+
+  })
   console.log(multipleSelection)
 }
 const clearCart = () => {
@@ -204,7 +196,7 @@ axios({
   method: 'get',
   url: path + '/shoppingCart',
   params: {
-    account: '111'
+    // account: '111'
   }
 })
   .then((response) => {
@@ -213,6 +205,7 @@ axios({
     let cartGoodsList = respData.data
     for (const iterator of cartGoodsList) {
       let tem: GoodsInfo = {
+        goodsNo: '',
         goodsName: '',
         goodsPrice: 0,
         storeName: '',
@@ -222,6 +215,7 @@ axios({
         purchaseNumber: 0,
         vipPrice: 0
       }
+      tem.goodsNo = iterator.cartGoodsNo
       tem.goodsName = iterator.cartGoodsName
       tem.goodsPrice = Number(iterator.cartGoodsPrice)
       tem.storeName = iterator.cartGoodsStoreName

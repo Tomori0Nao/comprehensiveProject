@@ -18,12 +18,7 @@ import type { RouterLink } from 'vue-router';
               <Minus />
             </el-icon>
           </el-button>
-          <el-input
-            v-model="orderNumber"
-            @input="inputChanges"
-            placeholder="1"
-            class="numberInput"
-          />
+          <el-input v-model="orderNumber" @input="inputChanges" placeholder="1" class="numberInput" />
           <el-button size="small" type="danger" @click.prevent="handlePlus" circle>
             <el-icon>
               <Plus />
@@ -158,11 +153,34 @@ const inputChanges = () => {
 const addToCart = () => {
   // 加入购物车
   // axios
-  ElNotification({
-    title: '用户你好',
-    message: h('i', { style: 'color: teal' }, '商品已加入购物车')
+  axios({
+    method: 'get',
+    url: path + '/addCartGoods',
+    params: {
+      goodsNo: goodsInfo.value.goodsNo,
+      goodsNumber: orderNumber.value
+    }
+  }).then((response) => {
+    const respData = response.data;
+    console.log(respData);
+    if (respData.code == 1) {
+      ElNotification({
+        title: '用户你好',
+        message: h('i', { style: 'color: teal' }, '商品已加入购物车')
+      })
+      console.log('added to cart')
+    } else {
+      ElNotification({
+        title: '用户你好',
+        message: h('i', { style: 'color: teal' }, '商品加入购物车失败')
+      })
+      console.log('added to cart')
+    }
+  }).catch((error) => {
+    console.log("error = " + error);
+
   })
-  console.log('added to cart')
+
 }
 
 /**
@@ -205,7 +223,7 @@ axios({
     goodsInfo.value.goodsNumber = goods.goodsNum
     goodsInfo.value.goodsWeight = goods.goodsWeight
     goodsInfo.value.goodsBrand = goods.goodsBrand
-    
+
     goodsInfo.value.goodsImageName = imagesURLPrefix + goods.goodsImageName + '.png'
     console.log(goods)
   })

@@ -130,6 +130,11 @@ public class GoodsServerImpl implements GoodsServer {
     }
 
     @Override
+    public double queryGoodsPriceByGoodsNo(String goodsNo) {
+        return Double.parseDouble(goodsMapper.queryGoodsPriceByGoodsNo(goodsNo));
+    }
+
+    @Override
     public boolean addGoods(Goods goods) {
         int count = goodsMapper.queryGoodsAccount();
         goods.setGoodsNo("goods"+count+goods.getGoodsName().hashCode());

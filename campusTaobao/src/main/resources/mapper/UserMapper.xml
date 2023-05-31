@@ -82,4 +82,28 @@
         update user_info set user_name = #{newName}
         where user_account = #{account}
     </update>
+
+    <delete id="deleteCartGoods">
+        delete from shopping_cart where goods_no = #{goodsNo}
+        and user_account = #{account}
+    </delete>
+
+    <insert id="insertGoodsToCart">
+        insert into shopping_cart (user_account, goods_no,goods_num,total_cost)
+        values(#{account},#{goodsNo},#{goodsNumber},#{totalCost})
+    </insert>
+    <update id="updateGoodsNumberInCart">
+        update shopping_cart set goods_num = goods_num + #{goodsNumber},
+        total_cost = #{totalCost}
+        where goods_no = #{goodsNo} and user_account = #{account}
+    </update>
+    <select id="isExistInCart" resultType="String">
+        select goods_no from shopping_cart where user_account = #{account}
+        and goods_no = #{goodsNo}
+    </select>
+
+    <select id="queryCartGoodsNumber" resultType="int">
+        select goods_num from shopping_cart where goods_no = #{goodsNo}
+        and user_account = #{account}
+    </select>
 </mapper>

@@ -46,9 +46,6 @@ public class GoodsController {
     @ResponseBody
     public ResultMessage<String> addGoods(Goods goods){
         System.out.println(goods);
-        String date = goods.getGoodsPurchaseDate();
-        int t = date.indexOf(' ');
-        goods.setGoodsPurchaseDate(date.substring(0,t));
         ResultMessage<String> resultMsg;
         boolean add = goodsServer.addGoods(goods);
         if(add) {

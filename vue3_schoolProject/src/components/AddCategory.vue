@@ -120,7 +120,7 @@ const submitForm = () => {
           method: 'get',
           url: path + '/updateGoodsType',
           params: {
-            categoryNo: 'category001',
+            categoryNo: 'category002',
             categoryName: '手机666'
           }
         }).then((response) => {

@@ -68,4 +68,5 @@ public interface GoodsServer {
     boolean updateGoodsType(String categoryNo,String goodsType);
     boolean updateGoodsTypeByGoodsType(String oldType,String newType);
     boolean deleteGoodsType(String categoryNo);
+    double queryGoodsPriceByGoodsNo(String goodsNo);
 }

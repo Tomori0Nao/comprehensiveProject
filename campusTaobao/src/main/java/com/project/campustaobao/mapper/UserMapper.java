@@ -45,5 +45,17 @@ public interface UserMapper {
      * @return 所有用户的部分信息
      */
     List<Map<String,String>> queryUsers();
+
+    boolean deleteCartGoods(@Param("account")String account,@Param("goodsNo")String goodsNo);
+
+    boolean insertGoodsToCart(@Param("account")String account,@Param("goodsNo")String goodsNo,@Param("goodsNumber")int goodsNumber,
+                              @Param("totalCost")String totalCost);
+    String isExistInCart(@Param("account")String account,@Param("goodsNo")String goodsNo);
+
+    boolean updateGoodsNumberInCart(@Param("account") String account,
+                                    @Param("goodsNo") String goodsNo,
+                                    @Param("goodsNumber") int goodsNumber,
+                                    @Param("totalCost") String totalCost);
+    int queryCartGoodsNumber(@Param("account")String account,@Param("goodsNo")String goodsNo);
 }
 

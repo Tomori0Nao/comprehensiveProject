@@ -12,6 +12,7 @@
         select * from goods_info where goods_no = #{goodsNo};
     </select>
     <resultMap id="shoppingCartGoodsMap" type="Goods">
+
         <result property="goodsName" column="goods_name"/>
         <result property="goodsImageName" column="goods_image_name"/>
         <result property="storeName" column="store_name"/>
