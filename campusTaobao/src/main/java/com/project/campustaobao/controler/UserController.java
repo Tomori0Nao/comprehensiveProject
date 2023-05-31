@@ -4,9 +4,12 @@ import com.project.campustaobao.pojo.*;
 import com.project.campustaobao.server.DeliveryAddressServer;
 import com.project.campustaobao.server.OrderServer;
 import com.project.campustaobao.server.UserServer;
+import com.project.campustaobao.utils.Request;
 import com.project.campustaobao.vo.ResultMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -35,7 +38,7 @@ public class UserController {
 
     @GetMapping("/getUserStatus")
     @ResponseBody
-    public ResultMessage<Boolean> getUsrStatus(String userAccount){
+    public ResultMessage<Boolean> getUserStatus(String userAccount){
         return new ResultMessage<>(ResultMessage.SUCCESS_CODE,
                 "查找到该用户的状态",userServer.isBaned(userAccount));
     }
@@ -58,6 +61,21 @@ public class UserController {
         );
         return resultMessage;
     }
+    @GetMapping("/getUsers")
+    @ResponseBody
+    public ResultMessage<List<Map<String,String>>> getUsers(){
+        List<Map<String,String>> userList = userServer.queryUsers();
+        ResultMessage<List<Map<String,String>>> resultMessage;
+        if(userList == null){
+            resultMessage = new ResultMessage<>(
+                    ResultMessage.SUCCESS_CODE,"没有一个用户",null);
+        }else{
+            resultMessage = new ResultMessage<>(
+                    ResultMessage.SUCCESS_CODE,"查找到所有用户",userList);
+        }
+        return resultMessage;
+    }
+
 
     @GetMapping("/userInfo")
     @ResponseBody
@@ -199,4 +217,5 @@ public class UserController {
         }
         return resultMessage;
     }
+
 }

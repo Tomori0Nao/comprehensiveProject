@@ -4,6 +4,7 @@ package com.project.campustaobao.server.impl;
 import com.project.campustaobao.mapper.VIPUserMapper;
 import com.project.campustaobao.pojo.ShoppingCartGoods;
 import com.project.campustaobao.mapper.UserMapper;
+import com.project.campustaobao.pojo.User;
 import com.project.campustaobao.pojo.VIPUser;
 import com.project.campustaobao.server.ShoppingCartServer;
 import com.project.campustaobao.server.UserServer;
@@ -37,13 +38,19 @@ public class UserServerImpl implements UserServer {
     public boolean isBaned(String account) {
         return userMapper.isBaned(account);
     }
+
+    @Override
+    public boolean updateUserStatus(String account, boolean status) {
+        return userMapper.updateUserStatus(account,status);
+    }
+
     @Override
     public boolean forbidUser(String account){
-        return userMapper.updateUserStatus(account,true);
+        return updateUserStatus(account,true);
     }
     @Override
     public boolean notForbidUser(String account){
-        return userMapper.updateUserStatus(account,false);
+        return updateUserStatus(account,false);
     }
     /**
      * 判断账号是否被注册过
@@ -122,5 +129,15 @@ public class UserServerImpl implements UserServer {
     @Override
     public boolean updateUserNameByAccount(String account, String newName) {
         return userMapper.updateUserNameByAccount(account,newName);
+    }
+
+    @Override
+    public Map<String,String> queryUserSimpleInfoByAccount(String userAccount) {
+        return userMapper.queryUserSimpleInfoByAccount(userAccount);
+    }
+
+    @Override
+    public List<Map<String, String>> queryUsers() {
+        return userMapper.queryUsers();
     }
 }

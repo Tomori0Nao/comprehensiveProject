@@ -41,7 +41,6 @@ public class LoginRegisterController {
         Session.setSessionAttribute(req,"password",password);
         Session.setSessionAttribute(req,"notLogin",false);
         int login = userServer.login(account,password);
-        System.out.println("login="+login);
         ResultMessage<Integer> resultMessage;
         if(login == 0){
             resultMessage = new ResultMessage<>(ResultMessage.SUCCESS_CODE,

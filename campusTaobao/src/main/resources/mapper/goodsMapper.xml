@@ -34,7 +34,10 @@
         <result property="vipDerate" column="vip_derate" />
 
     </resultMap>
-
+<!--    通过商品编号查找商品名字-->
+    <select id="queryGoodsNameByGoodsNo" resultType="String">
+        select goods_name from goods_info where goods_no = #{goodsNo}
+    </select>
     
     <!--    通过商品编号查找商品的详细信息-->
     <select id="queryGoodsInfoByGoodsNo" resultMap="goodsInfoMap">

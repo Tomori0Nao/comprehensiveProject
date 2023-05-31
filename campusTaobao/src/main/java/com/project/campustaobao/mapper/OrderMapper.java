@@ -11,6 +11,13 @@ import java.util.Map;
 @Mapper
 @Repository
 public interface OrderMapper {
+    /**
+     * 管理员用来查看所有的订单
+     * @return 所有的订单集合
+     */
+    List<Map<String,String>> queryAllOrders();
     List<Map<String,Object>> queryOrderListByAccount(@Param("account") String account);
     boolean deleteOrderByOrderNo(@Param("orderNo") String orderNo);
+    Map<String,String> queryOrderByOrderNo(@Param("orderNo")String orderNo);
+    Map<String,String> queryOrderSimpleInfoByOrderNo(@Param("orderNo")String orderNo);
 }

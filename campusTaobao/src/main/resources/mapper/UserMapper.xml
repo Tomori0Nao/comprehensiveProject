@@ -62,7 +62,21 @@
         <result property="lastLoginTime" column="last_login_time" />
         <result property="avatar" column="user_avatar" />
     </resultMap>
-
+<!--    查找用户部分信息-->
+    <select id="queryUserSimpleInfoByAccount" resultMap="userSimpleInfoMap">
+        select user_account,user_name,register_date,is_baned from user_info
+        where user_account = #{account}
+    </select>
+    <resultMap id="userSimpleInfoMap" type="java.util.Map">
+        <id property="userAccount" column="user_account" />
+        <result property="userNakeName" column="user_name" />
+        <result property="registerDate" column="register_date" />
+        <result property="isBaned" column="is_baned" />
+    </resultMap>
+<!--    管理员查看所有用户信息-->
+    <select id="queryUsers" resultMap="userSimpleInfoMap">
+        select user_account,user_name,register_date,is_baned from user_info;
+    </select>
 <!--    修改用户昵称-->
     <update id="updateUserNameByAccount" parameterType="String">
         update user_info set user_name = #{newName}

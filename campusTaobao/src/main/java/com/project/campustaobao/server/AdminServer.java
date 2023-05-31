@@ -11,7 +11,7 @@ public interface AdminServer {
     Administrator queryAdminByAccount(String adminAccount);
     List<Administrator> queryAdminList();
     boolean login(String account,String password);
-    Map<String,String> queryAdminSimpleInfo(String AdminAccount);
+    Map<String,String> queryAdminSimpleInfoByAdminAccount(String AdminAccount);
     boolean updateAdminSimpleInfo(Map<String,String> adminSimpleInfo);
     Administrator insertAdmin(Administrator admin);
 

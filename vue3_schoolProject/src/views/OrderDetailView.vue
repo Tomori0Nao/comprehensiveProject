@@ -77,32 +77,48 @@ const picture: string =
 // 减免
 // 实付款
 interface OrderInfo {
-    orderNo : string
-    orderDate: string
-    goodsNo: string
-    goodsName: string
-    goodsNumber: number
-    address: string
-    userAccount:string 
-    goodsPicture: string
-    storeName: string
-    vipPrice: number
-    totalCost: number
+  orderNo: string
+  orderDate: string
+  goodsNo: string
+  goodsName: string
+  goodsNumber: number
+  address: string
+  userAccount: string
+  goodsPicture: string
+  storeName: string
+  vipPrice: number
+  totalCost: number
 }
 const orderInfo = ref<OrderInfo>({
-    orderNo : '',
-    orderDate:'',
-    goodsNo:'',
-    goodsName: '',
-    goodsNumber: 0,
-    address: '',
-    userAccount:'',
-    goodsPicture: '',
-    storeName: '',
-    vipPrice: 0,
-    totalCost:0
+  orderNo: '',
+  orderDate: '',
+  goodsNo: '',
+  goodsName: '',
+  goodsNumber: 0,
+  address: '',
+  userAccount: '',
+  goodsPicture: '',
+  storeName: '',
+  vipPrice: 0,
+  totalCost: 0
 })
+let url = window.location.href
+let para = url.split('?').at(1)?.split('=').at(1)
+const path = 'http://localhost:8080'
+axios({
+  method: 'get',
+  url: path + '/getOrderDetailInfo',
+  params: {
+    orderNo: para,
+  }
+}).then((response) => {
+  const respData = response.data;
+  console.log(respData);
 
+}).catch((error) => {
+  console.log('error = ' + error);
+
+})
 
 
 </script>
