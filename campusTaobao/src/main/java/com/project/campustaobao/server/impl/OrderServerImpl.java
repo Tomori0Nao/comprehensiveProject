@@ -67,15 +67,31 @@ public class OrderServerImpl implements OrderServer {
         return orderMapper.deleteOrderByOrderNo(orderNo);
     }
 
+    /**
+     * 获取订单的部分信息
+     * @param orderNo 订单编号
+     * @return 订单的部分信息
+     */
     @Override
     public Map<String, String> querySimpleInfoByOrderNo(String orderNo) {
         return orderMapper.queryOrderSimpleInfoByOrderNo(orderNo);
     }
 
+    /**
+     * 查找订单表里卖弄某订单的信息
+     * @param orderNo 订单编号
+     * @return 返回订单表里面的订单信息(所以不是UserOrder对象，而是一个Map)
+     */
     @Override
     public Map<String,String> queryOrderByOrderNo(String orderNo) {
         return orderMapper.queryOrderByOrderNo(orderNo);
     }
+
+    /**
+     * 查询订单详细信息
+     * @param orderNo 订单编号
+     * @return 订单的详细信息
+     */
     @Override
     public Map<String,String> queryOrderDetailInfo(String orderNo){
         //先通过订单编号查找订单表里的订单信息

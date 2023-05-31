@@ -198,4 +198,14 @@ public class AdminController {
                     "查找该订单的详细信息",orderDetail);
         return resultMessage;
     }
+    @GetMapping("/searchOrder")
+    @ResponseBody
+    public ResultMessage<Map<String,String>> searchOrder(String orderNo){
+        Map<String,String> orderSimpleInfo = orderServer.querySimpleInfoByOrderNo(orderNo);
+        ResultMessage<Map<String,String>> resultMessage;
+        resultMessage = new ResultMessage<>(ResultMessage.SUCCESS_CODE,
+                "查找该订单的详细信息",orderSimpleInfo);
+        return resultMessage;
+    }
+
 }

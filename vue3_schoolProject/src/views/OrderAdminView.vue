@@ -24,7 +24,6 @@
       :current-page="state.currentPage" @current-change="changePage" />
   </el-card>
 </template>
-
 <script setup lang="ts">
 import { onMounted, reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
