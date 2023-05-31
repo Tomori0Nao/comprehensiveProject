@@ -4,11 +4,13 @@ import type { RouterLink } from 'vue-router';
   <div class="container">
     <MallHeader></MallHeader>
     <el-tabs tab-position="left" class="demo-tabs">
-      <el-tab-pane label="我的订单">我的订单
+      <el-tab-pane label="我的订单"
+        >我的订单
         <OrderList></OrderList>
       </el-tab-pane>
 
-      <el-tab-pane label="账号管理">账号管理
+      <el-tab-pane label="账号管理"
+        >账号管理
         <el-tabs type="border-card">
           <el-tab-pane label="基本信息">
             <UserInfo></UserInfo>
@@ -32,6 +34,7 @@ import { ElTable } from 'element-plus'
 import axios from 'axios'
 import OrderList from '@/components/OrderList.vue'
 import AddressAdmin from '@/components/AddressAdmin.vue'
+axios.defaults.withCredentials = true
 
 // ----订单信息
 // 用户账号
@@ -106,7 +109,6 @@ const userAccountInfo: Ref<UserAccountInfo> = ref({
   userMoney: 8888,
   userAvatar: '/src/assets/github3.svg'
 })
-
 </script>
 
 <style scoped>

@@ -67,6 +67,7 @@ import { ElMessage, ElTable } from 'element-plus'
 import { Plus, Delete } from '@element-plus/icons-vue'
 import axios from 'axios'
 import AddCategory from '@/components/AddCategory.vue'
+axios.defaults.withCredentials = true
 
 type AddCateType = InstanceType<typeof AddCategory>
 interface CateoryInfo {
@@ -136,8 +137,8 @@ const handleDeleteOne = (row: CateoryInfo) => {
   //   axios
 }
 const handleAddCategory = () => {}
-const handleEditCategory = (categoryId: string,categoryName:string) => {
-  console.log("edit submit!!!")
+const handleEditCategory = (categoryId: string, categoryName: string) => {
+  console.log('edit submit!!!')
   for (const iterator of tableData.value) {
     if (iterator.categoryId == categoryId) {
       iterator.categoryName = categoryName

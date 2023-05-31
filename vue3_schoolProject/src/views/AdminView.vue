@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { Document, Menu as IconMenu, Location, Setting } from '@element-plus/icons-vue'
-import AdminHeader from '@/components/AdminHeader.vue';
+import AdminHeader from '@/components/AdminHeader.vue'
 const handleOpen = (key: string, keyPath: string[]) => {
   console.log(key, keyPath)
 }
@@ -38,5 +38,4 @@ interface AdminInfo {
   <img src="/src/assets/github3.svg" alt="logo" />
   <span>git 商城 admin</span>
 </div> -->
-<style scoped>
-</style>
+<style scoped></style>

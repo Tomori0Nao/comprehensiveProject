@@ -2,8 +2,9 @@
 import axios from 'axios'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
+axios.defaults.withCredentials = true
 
-const props = defineProps(['type','currentPage'])
+const props = defineProps(['type', 'currentPage'])
 axios.defaults.withCredentials = true
 const goodsPictureAddr =
   '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png'
@@ -40,7 +41,7 @@ if (goodCardInfoList.value.length <= 0) {
     axios({
       method: 'get',
       url: path + '/homeGoods',
-      params:{pageNo:props.currentPage}
+      params: { pageNo: props.currentPage }
     })
       .then((response) => {
         console.log(response.data)
@@ -70,7 +71,7 @@ if (goodCardInfoList.value.length <= 0) {
     axios({
       method: 'get',
       url: path + '/similarGoods',
-      params:{type:props.type}
+      params: { type: props.type }
     })
       .then((response) => {
         console.log(response.data)
@@ -104,7 +105,7 @@ if (goodCardInfoList.value.length <= 0) {
   <div>
     <el-row :gutter="200">
       <el-col :span="4" v-for="(item, index) in goodCardInfoList">
-        <RouterLink :to="{path:'/goodsInfo',query:{goodsNo:item.goodsNo}}" >
+        <RouterLink :to="{ path: '/goodsInfo', query: { goodsNo: item.goodsNo } }">
           <el-card :body-style="{ padding: '5px' }" style="width: 200px">
             <img
               :key="index"

@@ -59,10 +59,11 @@ import type { RouterLink } from 'vue-router';
 import { ref } from 'vue'
 import { Minus, Plus } from '@element-plus/icons-vue'
 import axios from 'axios'
+axios.defaults.withCredentials = true
+
 const fit: string = 'fill'
 const picture: string =
   '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png'
-
 
 //----订单信息
 // 订单编号
@@ -77,34 +78,31 @@ const picture: string =
 // 减免
 // 实付款
 interface OrderInfo {
-    orderNo : string
-    orderDate: string
-    goodsNo: string
-    goodsName: string
-    goodsNumber: number
-    address: string
-    userAccount:string 
-    goodsPicture: string
-    storeName: string
-    vipPrice: number
-    totalCost: number
+  orderNo: string
+  orderDate: string
+  goodsNo: string
+  goodsName: string
+  goodsNumber: number
+  address: string
+  userAccount: string
+  goodsPicture: string
+  storeName: string
+  vipPrice: number
+  totalCost: number
 }
 const orderInfo = ref<OrderInfo>({
-    orderNo : '',
-    orderDate:'',
-    goodsNo:'',
-    goodsName: '',
-    goodsNumber: 0,
-    address: '',
-    userAccount:'',
-    goodsPicture: '',
-    storeName: '',
-    vipPrice: 0,
-    totalCost:0
+  orderNo: '',
+  orderDate: '',
+  goodsNo: '',
+  goodsName: '',
+  goodsNumber: 0,
+  address: '',
+  userAccount: '',
+  goodsPicture: '',
+  storeName: '',
+  vipPrice: 0,
+  totalCost: 0
 })
-
-
-
 </script>
 
 <style scoped>

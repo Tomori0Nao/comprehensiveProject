@@ -7,6 +7,7 @@ import AddAddress from './AddAddress.vue'
 import { reactive } from 'vue'
 import { useEditAddressStore } from '../stores/EditAddress'
 import { InfoFilled } from '@element-plus/icons-vue'
+axios.defaults.withCredentials = true
 
 const editAddress = useEditAddressStore()
 // ----收货地址信息

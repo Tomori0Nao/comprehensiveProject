@@ -110,6 +110,8 @@ import { ElTable } from 'element-plus'
 import { InfoFilled } from '@element-plus/icons-vue'
 import { Minus, Plus } from '@element-plus/icons-vue'
 import axios from 'axios'
+axios.defaults.withCredentials = true
+
 const fit: string = 'fill'
 // ---- 商品信息
 // 商品名
@@ -187,7 +189,7 @@ const deleteGoods = (index: number, row: GoodsInfo) => {
   console.log(tableData.value)
 }
 const goToPay = () => {
-  // 
+  //
   console.log(multipleSelection)
 }
 const clearCart = () => {
@@ -225,7 +227,7 @@ axios({
       tem.storeName = iterator.cartGoodsStoreName
       tem.goodsNumber = Number(iterator.maxNumOfSinglePurchase)
       tem.totalCost = Number(iterator.totalCost)
-      tem.picture = imagesURLPrefix+ iterator.cartGoodsImageName+'.png'
+      tem.picture = imagesURLPrefix + iterator.cartGoodsImageName + '.png'
       tem.purchaseNumber = Number(iterator.cartGoodsNumber)
       tem.vipPrice = Number(iterator.vipDerate)
       tableData.value.push(tem)
@@ -241,7 +243,7 @@ axios({
     //     maxNumOfSinglePurchase	100   该商品单次购买的最大数目
     //     vipDerate	"10.36"   vip减免
     ////////////////////////////////////////////////////////////////////////////
-    console.log(cartGoodsList,'cartList')
+    console.log(cartGoodsList, 'cartList')
   })
   .catch((error) => {
     console.log('error = ' + error)
@@ -263,5 +265,4 @@ axios({
   /* width: 480px; */
   display: inline-block;
 }
-
 </style>

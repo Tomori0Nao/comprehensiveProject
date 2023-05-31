@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import axios from 'axios';
+import axios from 'axios'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
+axios.defaults.withCredentials = true
 
 const emit = defineEmits(['closeDialog'])
 
@@ -21,37 +22,35 @@ const adminInfo = ref<AdminInfo>({
   adminNakeName: '',
   adminPasswd: '',
   adminType: ''
-
 })
 const options = [
   {
     value: '商品专员',
-    label: '商品专员',
+    label: '商品专员'
   },
   {
     value: '营销经理',
-    label: '营销经理',
-  },
+    label: '营销经理'
+  }
 ]
 const path = 'http://localhost:8080'
 // 应该在onSubmit函数中，提交修改的地址信息，
 const onSubmit = () => {
-  // axios 
+  // axios
   axios({
     method: 'post',
     url: path + '/addAdmin',
     params: {
       adminNakeName: adminInfo.value.adminNakeName,
       adminPassword: adminInfo.value.adminPasswd,
-      adminType: adminInfo.value.adminType,
+      adminType: adminInfo.value.adminType
     }
-  }).then((response) => {
-    const respData = response.data;
-    console.log(respData);
-
-  }).catch((error) => {
-
   })
+    .then((response) => {
+      const respData = response.data
+      console.log(respData)
+    })
+    .catch((error) => {})
   console.log('submit!')
   emit('closeDialog')
 }
@@ -59,7 +58,6 @@ const onCancel = () => {
   console.log('cancel!')
   emit('closeDialog')
 }
-
 </script>
 
 <template>
@@ -73,7 +71,12 @@ const onCancel = () => {
       </el-form-item>
       <el-form-item label="管理员类型">
         <el-select v-model="adminInfo.adminType" class="m-2" placeholder="Select">
-          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
         </el-select>
       </el-form-item>
       <el-form-item>

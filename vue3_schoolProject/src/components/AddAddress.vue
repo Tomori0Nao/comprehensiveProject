@@ -2,7 +2,8 @@
 import axios from 'axios'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
-import { useAddAddressStore } from '../stores/EditAdmin'
+import { useAddAddressStore } from '../stores/AddAddress'
+axios.defaults.withCredentials = true
 
 const addAddress = useAddAddressStore()
 

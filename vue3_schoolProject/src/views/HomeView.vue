@@ -1,4 +1,3 @@
-
 import type { RouterLink } from 'vue-router';
 
 <template>
@@ -8,25 +7,26 @@ import type { RouterLink } from 'vue-router';
     <el-divider content-position="left">精选好物</el-divider>
     <GoodsCol type="home"></GoodsCol>
     <el-pagination
-    background
-    layout="prev, pager, next"
-    :total="state.total"
-    :page-size="state.pageSize"
-    :current-page="state.currentPage"
-    @current-change="changePage"
-  />
-
+      background
+      layout="prev, pager, next"
+      :total="state.total"
+      :page-size="state.pageSize"
+      :current-page="state.currentPage"
+      @current-change="changePage"
+    />
   </div>
 </template>
-  
+
 <script setup lang="ts">
-import SlideShow from "../components/Slideshow.vue"
-import GoodsCol from "../components/GoodsCol.vue"
+import SlideShow from '../components/Slideshow.vue'
+import GoodsCol from '../components/GoodsCol.vue'
 import MallHeader from '../components/MallHeader.vue'
 import { reactive } from 'vue'
+import axios from 'axios'
+axios.defaults.withCredentials = true
 
 const state = reactive({
-  editAdminAccount:'',
+  editAdminAccount: '',
   adminAccount: '',
   loading: false,
   total: 0, // 总条数
@@ -73,4 +73,3 @@ a {
   text-align: center;
 }
 </style>
-  

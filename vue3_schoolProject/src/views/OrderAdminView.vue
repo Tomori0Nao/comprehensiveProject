@@ -25,7 +25,9 @@
       <el-table-column prop="orderDate" label="创建时间"> </el-table-column>
       <el-table-column label="操作">
         <template #default="scope">
-          <router-link class="routerLink" :to="{ path: '/admin/OrderDetail', query: { id: scope.row.orderNo } }"
+          <router-link
+            class="routerLink"
+            :to="{ path: '/admin/OrderDetail', query: { id: scope.row.orderNo } }"
             >订单详情</router-link
           >
         </template>
@@ -47,6 +49,8 @@ import { onMounted, reactive, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { HomeFilled, Delete } from '@element-plus/icons-vue'
 import axios from 'axios'
+axios.defaults.withCredentials = true
+
 interface OrderInfo {
   orderNo: string
   orderDate: string
@@ -96,7 +100,7 @@ const changePage = (val: number) => {
 
 <style scoped>
 .routerLink {
-    color: #409EFF;
-    text-decoration: none;
+  color: #409eff;
+  text-decoration: none;
 }
 </style>

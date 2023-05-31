@@ -141,6 +141,8 @@ import { useRoute, useRouter } from 'vue-router'
 import type { UploadProps } from 'element-plus'
 import { Delete, Download, Plus, ZoomIn } from '@element-plus/icons-vue'
 
+axios.defaults.withCredentials = true
+
 // ----商品信息
 // 商品名称
 // 商品图片名称
@@ -222,11 +224,11 @@ const state = reactive({
     goodsPurchasePrice: [{ required: 'true', message: '请填写商品进价', trigger: ['change'] }],
     goodsNumber: [{ required: 'true', message: '请填写商品库存', trigger: ['change'] }],
     goodsBrand: [{ required: 'true', message: '请填写商品品牌', trigger: ['change'] }],
-    goodsWeight:[{ required: 'true', message: '请填写商品重量', trigger: ['change'] }],
-    goodsProducingArea:[{ required: 'true', message: '请填写商品产地', trigger: ['change'] }],
-    goodsType:[{ required: 'true', message: '请填写商品类型', trigger: ['change'] }],
-    vipDerate:[{ required: 'true', message: '请填写会员减免', trigger: ['change'] }],
-    goodsPurchaseDate:[{ required: 'true', message: '请填写进货日期', trigger: ['change'] }],
+    goodsWeight: [{ required: 'true', message: '请填写商品重量', trigger: ['change'] }],
+    goodsProducingArea: [{ required: 'true', message: '请填写商品产地', trigger: ['change'] }],
+    goodsType: [{ required: 'true', message: '请填写商品类型', trigger: ['change'] }],
+    vipDerate: [{ required: 'true', message: '请填写会员减免', trigger: ['change'] }],
+    goodsPurchaseDate: [{ required: 'true', message: '请填写进货日期', trigger: ['change'] }]
   },
   categoryId: ''
 })

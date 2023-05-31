@@ -8,6 +8,8 @@ import { ElNotification } from 'element-plus'
 import { ElMessage } from 'element-plus'
 import { Plus } from '@element-plus/icons-vue'
 import type { UploadProps } from 'element-plus'
+axios.defaults.withCredentials = true
+
 const store = useUserInfoStore()
 const fit = ref('fill')
 // ----用户信息
@@ -29,13 +31,13 @@ interface UserAccountInfo {
   userAvatar: string
 }
 const userAccountInfo: Ref<UserAccountInfo> = ref({
-  userAccount: '1389478935',
-  userNakeName: 'hello',
-  userTel: '100860086000',
-  registerDate: '2023-5-24',
-  lastLoginTime: '2023-5-24',
-  userTotalConsumption: 6999,
-  userMoney: 8888,
+  userAccount: store.userAccount,
+  userNakeName: '',
+  userTel: '',
+  registerDate: '',
+  lastLoginTime: '',
+  userTotalConsumption: 0,
+  userMoney: 0,
   userAvatar: '/src/assets/github3.svg'
 })
 /**
@@ -60,12 +62,19 @@ axios({
   method: 'get',
   url: path + '/userInfo',
   params: {
-    account: '111'
+    account: store.userAccount
   }
 })
   .then((response) => {
     var respData = response.data
-    console.log(respData);
+    let resUserInfo = respData.data
+    userAccountInfo.value.lastLoginTime = resUserInfo.lastLoginTime
+    userAccountInfo.value.registerDate = resUserInfo.registerDate
+    userAccountInfo.value.userTel = resUserInfo.tel
+    userAccountInfo.value.userTotalConsumption = resUserInfo.totalConsumption
+    userAccountInfo.value.userMoney = resUserInfo.balance
+    userAccountInfo.value.userNakeName = resUserInfo.name
+    console.log(resUserInfo, 'userAccountInfo', store.userAccount, 'fsdaj', userAccountInfo)
   })
   .catch((error) => {
     console.log(error)
@@ -97,33 +106,35 @@ const onSubmit = () => {
     })
     console.log('error!!!')
   } else {
-    let tempName = userNakeNameInput.value;
+    let tempName = userNakeNameInput.value
     console.log('submit!', tempName)
-    console.log('原来的名字：' + store.userNakeName);
+    console.log('原来的名字：' + store.userNakeName)
     axios({
       method: 'get',
-      url: path + '/setUserName',   //修改昵称的url
+      url: path + '/setUserName', //修改昵称的url
       params: {
         //account: userAccountInfo.value.userAccount,
-        account: 'sk1112002797',  //此处我先给一个账号做测试
+        account: userAccountInfo.value.userAccount, //此处我先给一个账号做测试
         newName: tempName
       }
-    }).then((response) => {
-      const respData = response.data;
-      console.log(respData.msg);
-      //code是1说明后端已经处理了昵称的修改
-      //就将store.wuerNakeName修改为新的昵称
-      if (respData.code == 1) {
-        console.log(respData.msg);
-        store.userNakeName = tempName;
-      } else {
-        console.log(respData.msg);
-      }
-    }).catch((error) => {
-      console.log('error = ' + error);
-
     })
+      .then((response) => {
+        const respData = response.data
+        console.log(respData.msg)
+        //code是1说明后端已经处理了昵称的修改
+        //就将store.wuerNakeName修改为新的昵称
+        if (respData.code == 1) {
+          console.log(respData.msg)
+          userAccountInfo.value.userNakeName = tempName
+        } else {
+          console.log(respData.msg)
+        }
+      })
+      .catch((error) => {
+        console.log('error = ' + error)
+      })
   }
+  isChangeNakeName.value = false
 }
 const onCancel = () => {
   isChangeNakeName.value = false
@@ -164,60 +175,68 @@ const beforeAvatarUpload: UploadProps['beforeUpload'] = (rawFile: any) => {
         <template #label>
           <div class="cell-item">用户账号</div>
         </template>
-        {{ store.userAccount }}
+        {{ userAccountInfo.userAccount }}
       </el-descriptions-item>
 
       <el-descriptions-item>
         <template #label>
           <div class="cell-item">用户昵称</div>
         </template>
-        {{ store.userNakeName }}
+        {{ userAccountInfo.userNakeName }}
         <el-button type="danger" @click="changeNakeName" plain>修改</el-button>
       </el-descriptions-item>
       <el-descriptions-item>
         <template #label>
           <div class="cell-item">用户电话</div>
         </template>
-        {{ store.userTel }}
+        {{ userAccountInfo.userTel }}
       </el-descriptions-item>
       <el-descriptions-item>
         <template #label>
           <div class="cell-item">用户总消费额</div>
         </template>
-        {{ store.userTotalConsumption }}
+        {{ userAccountInfo.userTotalConsumption }}
       </el-descriptions-item>
       <el-descriptions-item>
         <template #label>
           <div class="cell-item">用户余额</div>
         </template>
-        {{ store.userMoney }}
+        {{ userAccountInfo.userMoney }}
       </el-descriptions-item>
       <el-descriptions-item>
         <template #label>
           <div class="cell-item">上次登录时间</div>
         </template>
-        {{ store.lastLoginTime }}
+        {{ userAccountInfo.lastLoginTime }}
       </el-descriptions-item>
 
       <el-descriptions-item>
         <template #label>
           <div class="cell-item">注册日期</div>
         </template>
-        {{ store.registerDate }}
+        {{ userAccountInfo.registerDate }}
       </el-descriptions-item>
     </el-descriptions>
     <div class="changeNakeNameOrAvatar">
       <el-form :model="userNakeNameInput" label-width="120px" v-show="isChangeNakeName">
-        <el-form-item label="Activity name" class="nakeNameInput">
+        <el-form-item label="修改昵称" class="nakeNameInput">
           <el-input v-model="userNakeNameInput" />
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" @click="onSubmit">Create</el-button>
-          <el-button @click="onCancel">Cancel</el-button>
+          <el-button type="primary" @click="onSubmit">确认</el-button>
+          <el-button @click="onCancel">取消</el-button>
         </el-form-item>
       </el-form>
-      <el-upload class="avatar-uploader" :action="uploadPath" method="post" :headers=headers :show-file-list="false"
-        :on-success="handleAvatarSuccess" :before-upload="beforeAvatarUpload" v-show="isChangeAvatar">
+      <el-upload
+        class="avatar-uploader"
+        :action="uploadPath"
+        method="post"
+        :headers="headers"
+        :show-file-list="false"
+        :on-success="handleAvatarSuccess"
+        :before-upload="beforeAvatarUpload"
+        v-show="isChangeAvatar"
+      >
         <img v-if="imageUrl" :src="imageUrl" class="avatar" />
         <el-icon v-else class="avatar-uploader-icon">
           <Plus />

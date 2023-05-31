@@ -4,7 +4,8 @@ import MallHeader from '../components/MallHeader.vue'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
 import { ElTable } from 'element-plus'
-import axios from 'axios';
+import axios from 'axios'
+axios.defaults.withCredentials = true
 
 // ----订单信息
 // 用户账号
@@ -69,20 +70,20 @@ const deleteGoods = (index: number, row: OrderInfo) => {
     params: {
       //每个用户的每一个订单的编号都是唯一的，因此只需要发送订单编号即可
       //orderNo: orderInfoTableData.value[index].orderNo,
-      orderNo: 'order1'    //先用一个写好的值测试
+      orderNo: 'order1' //先用一个写好的值测试
     }
-  }).then((response) => {
-    const respData = response.data;
-    if (respData.code == 1) {
-      orderInfoTableData.value.splice(index, 1);
-    } else {
-      console.log(respData.msg);
-
-    }
-  }).catch((error) => {
-    console.log('error = ' + error);
-
-  });
+  })
+    .then((response) => {
+      const respData = response.data
+      if (respData.code == 1) {
+        orderInfoTableData.value.splice(index, 1)
+      } else {
+        console.log(respData.msg)
+      }
+    })
+    .catch((error) => {
+      console.log('error = ' + error)
+    })
   console.log(orderInfoTableData.value)
 }
 
@@ -134,26 +135,30 @@ axios({
   //这个参数实际上不用传递，因为后端可以在session中获得
   //但是此处为了测试，暂时加上account属性，
   params: {
-    account: '111',
+    account: '111'
   }
-}).then((response) => {
-  const respData = response.data;
-  console.log(respData);
-  var orderList = respData.data;
-  for (var i = 0; i < orderList.length; ++i) {
-    console.log(orderList[i]);
-  }
-}).catch((error) => {
-  console.log('error = ' + error);
-
-});
-
+})
+  .then((response) => {
+    const respData = response.data
+    console.log(respData)
+    var orderList = respData.data
+    for (var i = 0; i < orderList.length; ++i) {
+      console.log(orderList[i])
+    }
+  })
+  .catch((error) => {
+    console.log('error = ' + error)
+  })
 </script>
 
 <template>
   <div>
-    <el-table ref="multipleTableRef" :data="orderInfoTableData" style="width: 100%"
-      @selection-change="handleSelectionChange">
+    <el-table
+      ref="multipleTableRef"
+      :data="orderInfoTableData"
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column type="selection" width="55" />
       <el-table-column label="商品" width="120">
         <template #default="scope">
@@ -174,7 +179,9 @@ axios({
       </el-table-column>
       <el-table-column label="操作" show-overflow-tooltip>
         <template #default="scope">
-          <el-button type="danger" @click.prevent="deleteGoods(scope.$index, scope.row)" plain>删除</el-button>
+          <el-button type="danger" @click.prevent="deleteGoods(scope.$index, scope.row)" plain
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>

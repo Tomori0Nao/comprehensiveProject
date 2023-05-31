@@ -29,17 +29,21 @@ import { reactive, ref } from 'vue'
 import axios from 'axios'
 import { ElMessage } from 'element-plus'
 import type { FormInstance } from 'element-plus'
+axios.defaults.withCredentials = true
 
 const props = defineProps({
   type: String, // 用于判断是添加还是编辑
-  reload: Function, // 添加或修改完后，刷新列表页
+  reload: Function // 添加或修改完后，刷新列表页
 })
 interface CateoryInfo {
   categoryId: string
   categoryName: string
   addTime: string
 }
-const emit = defineEmits<({(e:'AddCategory'):void,(e:'EditCategory',categoryId: string,categoryName:string):void})>()
+const emit = defineEmits<{
+  (e: 'AddCategory'): void
+  (e: 'EditCategory', categoryId: string, categoryName: string): void
+}>()
 
 const formRef = ref<FormInstance>()
 const state = reactive({
@@ -91,7 +95,7 @@ const submitForm = () => {
       } else {
         // 修改方法
         //   axios
-        emit('EditCategory',state.id,state.ruleForm.name)
+        emit('EditCategory', state.id, state.ruleForm.name)
         state.visible = false
       }
     }

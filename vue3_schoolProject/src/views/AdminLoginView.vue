@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 // 先跳转到管理员登录页面
 // 判断管理员类型后，再跳转到对应管理员页面
 
@@ -13,17 +12,14 @@
 interface adminInfo {
   adminAccount: string
   adminNakeMame: string
-  adminType:string
+  adminType: string
   isBaned: boolean
   lastLoginTime: string
   createTime: string
 }
-
-
 </script>
 
 <template>
-  
   <!-- <div class="userInfo">
     <el-descriptions class="margin-top" title="管理员基本信息" :column="3" border>
       <el-descriptions-item>

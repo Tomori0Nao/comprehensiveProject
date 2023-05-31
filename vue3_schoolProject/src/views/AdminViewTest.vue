@@ -57,6 +57,10 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
+import axios from 'axios'
+
+axios.defaults.withCredentials = true
+
 // import { useRouter } from 'vue-router'
 
 // const noMenu = ['/login']

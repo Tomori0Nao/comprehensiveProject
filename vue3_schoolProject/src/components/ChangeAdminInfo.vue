@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import axios from 'axios';
+import axios from 'axios'
 import { ref } from 'vue'
 import type { Ref } from 'vue'
+
 axios.defaults.withCredentials = true
 const emit = defineEmits(['closeDialog'])
 // 父组件传入的用户账号
@@ -39,20 +40,20 @@ axios({
   method: 'get',
   url: path + '/getAdminSimpleInfo',
   params: {
-    adminAccount: adminAccount,    //父组件传递的管理员账号
+    adminAccount: adminAccount //父组件传递的管理员账号
   }
-}).then((response) => {
-  const respData = response.data;
-  const resAdminInfo =respData.data
-  adminInfo.value.adminNakeName = resAdminInfo.adminNakeName
-  adminInfo.value.adminPassword = resAdminInfo.adminPassword
-  adminInfo.value.adminType = resAdminInfo.adminType
-  console.log(respData);
-
-}).catch((error) => {
-  console.log(error);
-
 })
+  .then((response) => {
+    const respData = response.data
+    const resAdminInfo = respData.data
+    adminInfo.value.adminNakeName = resAdminInfo.adminNakeName
+    adminInfo.value.adminPassword = resAdminInfo.adminPassword
+    adminInfo.value.adminType = resAdminInfo.adminType
+    console.log(respData)
+  })
+  .catch((error) => {
+    console.log(error)
+  })
 // 应该在onSubmit函数中，提交修改的地址信息，
 const onSubmit = () => {
   // axios
@@ -63,15 +64,14 @@ const onSubmit = () => {
       adminAccount: adminInfo.value.adminAccount,
       adminNakeName: adminInfo.value.adminNakeName,
       adminPassword: adminInfo.value.adminPassword,
-      adminType: adminInfo.value.adminType,
+      adminType: adminInfo.value.adminType
     }
-  }).then((response) => {
-    const respData = response.data;
-    console.log(respData);
-
-  }).catch((error) => {
-
   })
+    .then((response) => {
+      const respData = response.data
+      console.log(respData)
+    })
+    .catch((error) => {})
   console.log('submit!')
   emit('closeDialog')
 }
@@ -92,7 +92,12 @@ const onCancel = () => {
       </el-form-item>
       <el-form-item label="管理员类型">
         <el-select v-model="adminInfo.adminType" class="m-2" placeholder="Select">
-          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value" />
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          />
         </el-select>
       </el-form-item>
 
