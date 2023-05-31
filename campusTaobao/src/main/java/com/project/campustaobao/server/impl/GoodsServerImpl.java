@@ -89,7 +89,7 @@ public class GoodsServerImpl implements GoodsServer {
             return false;
         }
         int count = goodsMapper.queryCategoryCount();
-        String categoryNo = "category" + count;
+        String categoryNo = "category" + count + goodsType.hashCode();
         return goodsMapper.insertGoodsType(categoryNo, goodsType);
     }
 
@@ -121,7 +121,7 @@ public class GoodsServerImpl implements GoodsServer {
         //先获取原本的商品种类
         String type = goodsMapper.queryCategoryNameByCategoryNo(categoryNo);
         //将此种类删除
-        if(goodsMapper.deleteGoodsType(categoryNo)){
+        if(goodsMapper.deleteCategoryNameByCategoryNo(categoryNo)){
             //然后将商品表中此类商品删除
             deleteGoodsByGoodsType(type);
             return true;
@@ -132,7 +132,7 @@ public class GoodsServerImpl implements GoodsServer {
     @Override
     public boolean addGoods(Goods goods) {
         int count = goodsMapper.queryGoodsAccount();
-        goods.setGoodsNo("goods"+count);
+        goods.setGoodsNo("goods"+count+goods.getGoodsName().hashCode());
         return goodsMapper.insertGoods(goods);
     }
 
