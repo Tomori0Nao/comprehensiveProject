@@ -18,15 +18,35 @@
       <el-table-column prop="goodsPrice" label="商品售价"> </el-table-column>
       <el-table-column label="操作" width="100">
         <template #default="scope">
-          <a style="cursor: pointer; margin-right: 10px" @click="handleEdit(scope.row.goodsId)">修改</a>
-          <a style="cursor: pointer; margin-right: 10px" @click="handleDelete(scope.row.goodsId)">删除</a>
+          <a style="cursor: pointer; margin-right: 10px" @click="handleEdit(scope.row.goodsId)"
+            >修改</a
+          >
+          <el-popconfirm
+            title="确定删除吗？"
+            confirmButtonText="确定"
+            cancelButtonText="取消"
+            @confirm="handleDelete(scope.row.goodsId)"
+          >
+            <template #reference>
+              <a style="cursor: pointer">删除</a>
+            </template>
+          </el-popconfirm>
+          <!-- <a style="cursor: pointer; margin-right: 10px" @click="handleDelete(scope.row.goodsId)"
+            >删除</a
+          > -->
         </template>
 
       </el-table-column>
     </el-table>
     <!--总数超过一页，再展示分页器-->
-    <el-pagination background layout="prev, pager, next" :total="state.total" :page-size="state.pageSize"
-      :current-page="state.currentPage" @current-change="changePage" />
+    <!-- <el-pagination
+      background
+      layout="prev, pager, next"
+      :total="state.total"
+      :page-size="state.pageSize"
+      :current-page="state.currentPage"
+      @current-change="changePage"
+    /> -->
   </el-card>
 </template>
 
@@ -91,6 +111,7 @@ const handleEdit = (id: string) => {
 }
 const handleDelete = (id: string) => {
   // axios
+
   axios({
     method: 'get',
     url: path + '/deleteGoods',

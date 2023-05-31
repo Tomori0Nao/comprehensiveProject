@@ -3,11 +3,20 @@
     <template #header>
       <div class="header">
         <el-button type="primary" :icon="Plus" @click="handleAdd">增加</el-button>
+<<<<<<< HEAD
+        <!-- <el-popconfirm
+          title="确定删除吗？"
+          confirmButtonText="确定"
+          cancelButtonText="取消"
+          @confirm="handleDelete"
+        >
+=======
         <el-popconfirm title="确定删除吗？" confirmButtonText="确定" cancelButtonText="取消" @confirm="handleDelete">
+>>>>>>> 1f03c628ed163801445aa4d89d4701ca27710028
           <template #reference>
             <el-button type="danger" :icon="Delete">批量删除</el-button>
           </template>
-        </el-popconfirm>
+        </el-popconfirm> -->
       </div>
     </template>
     <el-table :load="state.loading" ref="multipleTableRef" :data="tableData" tooltip-effect="dark" style="width: 100%"
@@ -27,11 +36,22 @@
         </template>
       </el-table-column>
     </el-table>
-    <!--总数超过一页，再展示分页器-->
-    <el-pagination background layout="prev, pager, next" :total="state.total" :page-size="state.pageSize"
-      :current-page="state.currentPage" @current-change="changePage" />
-    <AddCategory ref="addCate" :reload="getCategory" :type="state.type" @add-category="handleAddCategory"
-      @edit-category="handleEditCategory"></AddCategory>
+    <!-- 总数超过一页，再展示分页器
+    <el-pagination
+      background
+      layout="prev, pager, next"
+      :total="state.total"
+      :page-size="state.pageSize"
+      :current-page="state.currentPage"
+      @current-change="changePage"
+    /> -->
+    <AddCategory
+      ref="addCate"
+      :reload="getCategory"
+      :type="state.type"
+      @add-category="handleAddCategory"
+      @edit-category="handleEditCategory"
+    ></AddCategory>
   </el-card>
 </template>
 
@@ -97,16 +117,9 @@ const handleEdit = (row: CateoryInfo) => {
 const handleSelectionChange = (val: CateoryInfo[]) => {
   multipleSelection.value = val
 }
-// 批量删除
-const handleDelete = () => {
-  if (!multipleSelection.value.length) {
-    ElMessage.error('请选择项')
-    return
-  }
-  // multipleSelection.value 为待删除的数组
-  //   axios
-}
+
 const path = 'http://localhost:8080'
+
 // 单个删除
 const handleDeleteOne = (row: CateoryInfo) => {
   //   axios

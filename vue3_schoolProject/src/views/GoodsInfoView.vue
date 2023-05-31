@@ -12,7 +12,7 @@ import type { RouterLink } from 'vue-router';
           </p>
           <p>价格: {{ goodsInfo.goodsPrice }}</p>
           <p>店铺名: {{ goodsInfo.storeName }}</p>
-          <p>剩余商品数量: {{ goodsInfo.goodsNumber }}</p>
+          <p>商品数量: {{ goodsInfo.goodsNumber }}</p>
           <el-button size="small" @click.prevent="handleMinus" circle>
             <el-icon>
               <Minus />
@@ -91,7 +91,7 @@ import { ElNotification } from 'element-plus'
 import { h } from 'vue'
 import axios from 'axios'
 axios.defaults.withCredentials = true
-
+const path = 'http://localhost:8080'
 let url = window.location.href
 let para = url.split('?').at(1)?.split('=').at(1)
 
@@ -150,6 +150,7 @@ const inputChanges = () => {
     orderNumber.value = goodsInfo.value.goodsNumber
   }
 }
+
 const addToCart = () => {
   // 加入购物车
   // axios
@@ -179,9 +180,13 @@ const addToCart = () => {
   }).catch((error) => {
     console.log("error = " + error);
 
+  
+  ElNotification({
+    title: '用户你好',
+    message: h('i', { style: 'color: teal' }, '商品已加入购物车')
   })
-
-}
+  }
+)}
 
 /**
  * 请求商品详细信息
@@ -203,7 +208,7 @@ const addToCart = () => {
  * 
  *
  */
-const path = 'http://localhost:8080'
+
 axios({
   method: 'get',
   url: path + '/goodsInfo',

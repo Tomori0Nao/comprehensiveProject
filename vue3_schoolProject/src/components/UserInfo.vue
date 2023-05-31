@@ -68,7 +68,7 @@ axios({
   .then((response) => {
     var respData = response.data
     let resUserInfo = respData.data
-    userAccountInfo.value.lastLoginTime = resUserInfo.lastLoginTime
+    // userAccountInfo.value.lastLoginTime = resUserInfo.lastLoginTime
     userAccountInfo.value.registerDate = resUserInfo.registerDate
     userAccountInfo.value.userTel = resUserInfo.tel
     userAccountInfo.value.userTotalConsumption = resUserInfo.totalConsumption
