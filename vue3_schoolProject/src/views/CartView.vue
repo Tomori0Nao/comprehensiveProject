@@ -82,7 +82,7 @@ import type { RouterLink } from 'vue-router';
         </template>
       </el-popconfirm>
       <el-dialog v-model="dialogFormVisible" title="收货地址选择" center width="40%">
-        <el-select v-model="addres" class="m-2 select" placeholder="Select" >
+        <el-select v-model="addres" class="m-2 select" placeholder="Select">
           <el-option
             v-for="item in addressList"
             :key="item.addressNo"
@@ -91,7 +91,7 @@ import type { RouterLink } from 'vue-router';
           />
         </el-select>
         <el-button type="primary" @click="onSubmit">提交</el-button>
-          <el-button @click="onCancel">取消</el-button>
+        <el-button @click="onCancel">取消</el-button>
       </el-dialog>
       <!-- <el-popconfirm
         width="220"
@@ -157,15 +157,15 @@ interface Address {
 }
 interface OrderSet {
   goodsNo: string
-  goodsNumber:number
+  goodsNumber: number
 }
 const orderList = ref<OrderSet[]>([])
 const addressList: Ref<Address[]> = ref([])
-const getOrderSet = ()=>{
+const getOrderSet = () => {
   for (const iterator of multipleSelection.value) {
     let tem: OrderSet = {
-      goodsNo:'',
-      goodsNumber:0,
+      goodsNo: '',
+      goodsNumber: 0
     }
     tem.goodsNo = iterator.goodsNo
     tem.goodsNumber = iterator.goodsNumber
@@ -188,14 +188,13 @@ const handleSelectionChange = (val: GoodsInfo[]) => {
   }
 }
 
-const onSubmit = ()=>{
-// 
-// 商品编号 商品数量 收货地址编号 
-  dialogFormVisible.value= false
+const onSubmit = () => {
+  //
+  // 商品编号 商品数量 收货地址编号
+  dialogFormVisible.value = false
 }
-const onCancel = ()=>{
-  dialogFormVisible.value= false
-  
+const onCancel = () => {
+  dialogFormVisible.value = false
 }
 
 const handleMinus = (index: number, row: GoodsInfo) => {
@@ -244,7 +243,7 @@ const goToPay = () => {
   getOrderSet()
   getAddressList()
   // orderList 数组
-  // goodsNo: string 
+  // goodsNo: string
   // goodsNumber:number
 
   // address 地址
@@ -273,6 +272,7 @@ axios({
     let cartGoodsList = respData.data
     for (const iterator of cartGoodsList) {
       let tem: GoodsInfo = {
+        goodsNo: '',
         goodsName: '',
         goodsPrice: 0,
         storeName: '',

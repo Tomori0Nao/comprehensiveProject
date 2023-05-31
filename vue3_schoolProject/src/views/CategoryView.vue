@@ -3,20 +3,7 @@
     <template #header>
       <div class="header">
         <el-button type="primary" :icon="Plus" @click="handleAdd">增加</el-button>
-<<<<<<< HEAD
-        <!-- <el-popconfirm
-          title="确定删除吗？"
-          confirmButtonText="确定"
-          cancelButtonText="取消"
-          @confirm="handleDelete"
-        >
-=======
-        <el-popconfirm title="确定删除吗？" confirmButtonText="确定" cancelButtonText="取消" @confirm="handleDelete">
->>>>>>> 1f03c628ed163801445aa4d89d4701ca27710028
-          <template #reference>
-            <el-button type="danger" :icon="Delete">批量删除</el-button>
-          </template>
-        </el-popconfirm> -->
+        
       </div>
     </template>
     <el-table :load="state.loading" ref="multipleTableRef" :data="tableData" tooltip-effect="dark" style="width: 100%"
@@ -36,15 +23,7 @@
         </template>
       </el-table-column>
     </el-table>
-    <!-- 总数超过一页，再展示分页器
-    <el-pagination
-      background
-      layout="prev, pager, next"
-      :total="state.total"
-      :page-size="state.pageSize"
-      :current-page="state.currentPage"
-      @current-change="changePage"
-    /> -->
+    
     <AddCategory
       ref="addCate"
       :reload="getCategory"
@@ -127,7 +106,7 @@ const handleDeleteOne = (row: CateoryInfo) => {
     method: 'get',
     url: path + '/deleteGoodsType',
     params: {
-      categoryNo: 'category2874434',
+      categoryNo: row.categoryId,
     }
   }).then((response) => {
     const respData = response.data;
@@ -136,6 +115,7 @@ const handleDeleteOne = (row: CateoryInfo) => {
     console.log("error = " + error);
 
   })
+  getCategory()
 
 }
 const handleAddCategory = () => { }
@@ -144,10 +124,8 @@ const handleEditCategory = (categoryId: string, categoryName: string) => {
   for (const iterator of tableData.value) {
     if (iterator.categoryId == categoryId) {
       iterator.categoryName = categoryName
-      // console.log(iterator,'find it !!!')
     }
   }
-  // tableData.value[index].categoryName = categoryName
 }
 </script>
 
