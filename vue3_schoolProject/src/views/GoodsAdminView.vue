@@ -74,16 +74,16 @@ interface GoodsInfo {
   goodsType: string
 }
 const tableData = ref<GoodsInfo[]>([
-  {
-    goodsName: '三星s23',
-    goodsImageName: '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png',
-    goodsPrice: 6999,
-    storeName: 'git商城自营店',
-    goodsNumber: 100,
-    goodsNo: '318458',
-    goodsBrand: '三星',
-    goodsType: '手机'
-  }
+  // {
+  //   goodsName: '三星s23',
+  //   goodsImageName: '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png',
+  //   goodsPrice: 6999,
+  //   storeName: 'git商城自营店',
+  //   goodsNumber: 100,
+  //   goodsNo: '318458',
+  //   goodsBrand: '三星',
+  //   goodsType: '手机'
+  // }
 ])
 const state = reactive({
   loading: false,
@@ -105,6 +105,7 @@ const handleEdit = (id: string) => {
 }
 const handleDelete = (id: string) => {
   // axios
+  
 }
 const changePage = (val: number) => {
   state.currentPage = val
@@ -147,6 +148,7 @@ axios({
       tem.storeName = iterator.storeName
       tem.goodsImageName = imagesURLPrefix+iterator.goodsImageName+'.png'
       tem.goodsType = iterator.goodsType
+      tem.goodsBrand =iterator.goodsBrand
       tableData.value.push(tem)
     }
     console.log(respData)

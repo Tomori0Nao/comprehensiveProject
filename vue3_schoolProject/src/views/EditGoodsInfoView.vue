@@ -32,15 +32,11 @@
         </el-form-item>
         <el-form-item label="商品重量" prop="goodsWeight">
           <el-input min="0" style="width: 300px" v-model="goodsInfo.goodsWeight" placeholder="请输入商品重量"></el-input>
-          <span class="weight">(kg)</span>
+          <span class="weight">(g)</span>
         </el-form-item>
         <el-form-item label="商品产地" prop="goodsProducingArea">
           <el-input min="0" style="width: 300px" v-model="goodsInfo.goodsOrigin" placeholder="请输入商品产地"></el-input>
         </el-form-item>
-        <!-- <el-form-item label="店铺编号" prop="storeNo">
-          <el-input type="number" min="0" style="width: 300px" v-model="goodsInfo.storeNo"
-            placeholder="请输入商品编号"></el-input>
-        </el-form-item> -->
         <el-form-item label="会员减免" prop="vipDerate">
           <el-input type="number" min="0" style="width: 300px" v-model="goodsInfo.vipDerate"
             placeholder="请输入会员减免费用"></el-input>
@@ -119,24 +115,27 @@ interface GoodsInfo {
 const goodsInfo = ref<GoodsInfo>({
   goodsName: '',
   goodsImageName: '',
-  goodsPrice: '12.36',
+  goodsPrice: '',
   storeName: '',
   goodsNumber: 0,
   goodsBrand: '',
   goodsNo: '',
-  goodsWeight: '123',
+  goodsWeight: '',
   goodsOrigin: '',
   goodsType: '',
   storeNo: '',
-  goodsPurchasePrice: '12.3',
-  vipDerate: '0.3',
-  goodsPurchaseDate: '0',
+  goodsPurchasePrice: '',
+  vipDerate: '',
+  goodsPurchaseDate: '1',
   goodsSpecifiedInfo: '',
   // goodsState: true
 })
+
+let url = window.location.href
+let para = url.split('?').at(1)?.split('=').at(1)
 const goodRef = ref(null)
 const route = useRoute()
-const router = useRouter()
+// const router = useRouter()
 const { id } = route.query
 const imageUrl = ref('')
 interface CateoryInfo {
@@ -192,21 +191,21 @@ const onSubmit = () => {
     method: 'get',
     url: path + '/updateGoodsInfo',
     params: {
-      goodsName: '牛逼手机',
-      // goodsImageName: '',
-      goodsPrice: '3999.69',
-      storeName: '手机专卖点',
-      goodsNumber: 10,
-      goodsBrand: '很牛逼的手机',
-      goodsNo: 'sh001',              //跳转界面时传入进来
-      goodsWeight: '123.6g',
-      goodsOrigin: '主营村',
-      goodsType: '手机',
-      // storeNo: '',
-      goodsPurchasePrice: '2699.36',
-      vipDerate: '100.3',
-      goodsPurchaseDate: '2023-12-9',
-      goodsSpecialInfo: '很好用的手机',
+      goodsName: goodsInfo.value.goodsName,
+      goodsImageName: goodsInfo.value.goodsImageName,
+      goodsPrice: goodsInfo.value.goodsPrice,
+      storeName: goodsInfo.value.storeName,
+      goodsNumber: goodsInfo.value.goodsNumber,
+      goodsBrand: goodsInfo.value.goodsBrand,
+      goodsNo: para,
+      goodsWeight: goodsInfo.value.goodsWeight,
+      goodsOrigin: goodsInfo.value.goodsOrigin,
+      goodsType: goodsInfo.value.goodsType,
+      //storeNo: '',
+      goodsPurchasePrice: goodsInfo.value.goodsPurchasePrice,
+      vipDerate: goodsInfo.value.vipDerate,
+      goodsPurchaseDate: goodsInfo.value.goodsPurchaseDate,
+      goodsSpecialInfo: goodsInfo.value.goodsSpecifiedInfo
     }
   }).then((response) => {
     const respData = response.data;
@@ -220,6 +219,7 @@ const onSubmit = () => {
 const handleChangeCate = () => { }
 //   获取商品信息
 //   axios
+
 </script>
 
 <style scoped>
