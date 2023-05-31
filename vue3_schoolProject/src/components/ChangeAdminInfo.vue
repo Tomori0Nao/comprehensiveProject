@@ -3,7 +3,8 @@ import { ref } from 'vue'
 import type { Ref } from 'vue'
 
 const emit = defineEmits(['closeDialog'])
-
+// 父组件传入的用户账号
+const props = defineProps(['adminAccount'])
 // ----普通管理员信息
 // 管理员账号
 // 管理员昵称
@@ -15,6 +16,7 @@ interface AdminInfo {
   adminPasswd: string
   adminType: string
 }
+const adminAccount = props.adminAccount
 const adminInfo: Ref<AdminInfo> = ref({
   adminAccount: '1000',
   adminNakeName: 'hello',
@@ -51,6 +53,9 @@ const onCancel = () => {
       <el-form-item label="管理员昵称" class="input">
         <el-input v-model="adminInfo.adminNakeName" />
       </el-form-item>
+      <!-- <el-form-item label="管理员账号" class="input">
+        <el-input v-model="adminAccount" />
+      </el-form-item> -->
       <el-form-item label="管理员密码" class="input">
         <el-input v-model="adminInfo.adminPasswd" />
       </el-form-item>

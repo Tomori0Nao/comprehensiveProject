@@ -137,6 +137,7 @@ const handleDeleteOne = (row: CateoryInfo) => {
 }
 const handleAddCategory = () => {}
 const handleEditCategory = (categoryId: string,categoryName:string) => {
+  console.log("edit submit!!!")
   for (const iterator of tableData.value) {
     if (iterator.categoryId == categoryId) {
       iterator.categoryName = categoryName

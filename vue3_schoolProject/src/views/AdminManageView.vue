@@ -51,9 +51,8 @@
     :current-page="state.currentPage"
     @current-change="changePage"
   />
-    <!-- <el-button class="mt-4" style="width: 100%" @click="handleAdd">Add Item</el-button> -->
     <el-dialog v-model="dialogFormVisibleChange" title="管理员信息修改" center width="30%">
-      <ChangeAdminInfo @close-dialog="handleCloseDialog"></ChangeAdminInfo>
+      <ChangeAdminInfo @close-dialog="handleCloseDialog" :admin-account=state.editAdminAccount></ChangeAdminInfo>
     </el-dialog>
     <el-dialog v-model="dialogFormVisibleAdd" title="添加管理员" center width="30%">
       <AddAdminInfo @close-dialog="handleCloseDialog"></AddAdminInfo>
@@ -90,11 +89,13 @@ const tableData = ref<AdminInfo[]>([
 ])
 const dialogFormVisibleChange = ref(false)
 const dialogFormVisibleAdd = ref(false)
+const editAdminAccount = ref('')
 
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<AdminInfo[]>([])
 
 const state = reactive({
+  editAdminAccount:'',
   adminAccount: '',
   loading: false,
   total: 0, // 总条数
@@ -130,7 +131,8 @@ const handleSelectionChange = (val: AdminInfo[]) => {
   multipleSelection.value = val
 }
 const handleEdit = (index: number, row: AdminInfo) => {
-  dialogFormVisibleChange.value = true
+  state.editAdminAccount = row.adminAccount
+  dialogFormVisibleChange.value = true 
 }
 const handleCloseDialog = () => {
   dialogFormVisibleChange.value = false
