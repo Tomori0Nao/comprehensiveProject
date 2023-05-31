@@ -53,9 +53,8 @@ import type { RouterLink } from 'vue-router';
           <el-button>去结算</el-button>
         </template>
       </el-popconfirm>
-      <<<<<<< HEAD <el-popconfirm width="220" confirm-button-text="是的" cancel-button-text="否" :icon="InfoFilled"
-        icon-color="#626AEF" title="将所有商品从购物车中删除吗?" @confirm="clearCart">
-        =======
+      <el-popconfirm width="220" confirm-button-text="是的" cancel-button-text="否" :icon="InfoFilled" icon-color="#626AEF"
+        title="将所有商品从购物车中删除吗?" @confirm="clearCart">
         <el-dialog v-model="dialogFormVisible" title="收货地址选择" center width="40%">
           <el-select v-model="addres" class="m-2 select" placeholder="Select">
             <el-option v-for="item in addressList" :key="item.addressNo" :label="item.address" :value="item.addressNo" />
@@ -75,8 +74,8 @@ import type { RouterLink } from 'vue-router';
 >>>>>>> 4065a7ee36f5478b93ed7349f999f4a16b3d6c8e
         <template #reference>
           <el-button>清空购物车</el-button>
-          </template>
-        </el-popconfirm> -->
+                </template>
+              </el-popconfirm> -->
         <div class="sum">
           <img src="../assets/金额.svg" alt="" />
           {{ cartSum }}
@@ -110,11 +109,7 @@ const fit: string = 'fill'
 // 购买数量
 // 会员减免
 interface GoodsInfo {
-<<<<<<< HEAD
   goodsNo: string,
-=======
-  goodsNo: string
->>>>>>> 4065a7ee36f5478b93ed7349f999f4a16b3d6c8e
   goodsName: string
   goodsPrice: number
   storeName: string
