@@ -81,7 +81,19 @@ import type { RouterLink } from 'vue-router';
           <el-button>去结算</el-button>
         </template>
       </el-popconfirm>
-      <el-popconfirm
+      <el-dialog v-model="dialogFormVisible" title="收货地址选择" center width="40%">
+        <el-select v-model="addres" class="m-2 select" placeholder="Select" >
+          <el-option
+            v-for="item in addressList"
+            :key="item.addressNo"
+            :label="item.address"
+            :value="item.addressNo"
+          />
+        </el-select>
+        <el-button type="primary" @click="onSubmit">提交</el-button>
+          <el-button @click="onCancel">取消</el-button>
+      </el-dialog>
+      <!-- <el-popconfirm
         width="220"
         confirm-button-text="是的"
         cancel-button-text="否"
@@ -93,7 +105,7 @@ import type { RouterLink } from 'vue-router';
         <template #reference>
           <el-button>清空购物车</el-button>
         </template>
-      </el-popconfirm>
+      </el-popconfirm> -->
       <div class="sum">
         <img src="../assets/金额.svg" alt="" />
         {{ cartSum }}
@@ -110,7 +122,10 @@ import { ElTable } from 'element-plus'
 import { InfoFilled } from '@element-plus/icons-vue'
 import { Minus, Plus } from '@element-plus/icons-vue'
 import axios from 'axios'
+import { fa } from 'element-plus/es/locale/index.js'
 axios.defaults.withCredentials = true
+
+const dialogFormVisible = ref(false)
 
 const userAccount = window.localStorage.getItem('userAccount')
 const fit: string = 'fill'
@@ -124,6 +139,7 @@ const fit: string = 'fill'
 // 购买数量
 // 会员减免
 interface GoodsInfo {
+  goodsNo: string
   goodsName: string
   goodsPrice: number
   storeName: string
@@ -133,6 +149,30 @@ interface GoodsInfo {
   purchaseNumber: number
   vipPrice: number
 }
+interface Address {
+  addressNo: string
+  consigneeName: string
+  consigneeTel: string
+  address: string
+}
+interface OrderSet {
+  goodsNo: string
+  goodsNumber:number
+}
+const orderList = ref<OrderSet[]>([])
+const addressList: Ref<Address[]> = ref([])
+const getOrderSet = ()=>{
+  for (const iterator of multipleSelection.value) {
+    let tem: OrderSet = {
+      goodsNo:'',
+      goodsNumber:0,
+    }
+    tem.goodsNo = iterator.goodsNo
+    tem.goodsNumber = iterator.goodsNumber
+    orderList.value.push(tem)
+  }
+}
+const addres = ref('')
 
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
 const multipleSelection = ref<GoodsInfo[]>([])
@@ -146,6 +186,16 @@ const handleSelectionChange = (val: GoodsInfo[]) => {
     console.log('money is ', iterator.totalCost)
     cartSum.value += iterator.totalCost
   }
+}
+
+const onSubmit = ()=>{
+// 
+// 商品编号 商品数量 收货地址编号 
+  dialogFormVisible.value= false
+}
+const onCancel = ()=>{
+  dialogFormVisible.value= false
+  
 }
 
 const handleMinus = (index: number, row: GoodsInfo) => {
@@ -191,16 +241,25 @@ const deleteGoods = (index: number, row: GoodsInfo) => {
 }
 const goToPay = () => {
   //
+  getOrderSet()
+  getAddressList()
+  // orderList 数组
+  // goodsNo: string 
+  // goodsNumber:number
+
+  // address 地址
+  // axios
+
+  dialogFormVisible.value = true
   console.log(multipleSelection)
 }
-const clearCart = () => {
-  tableData.value = []
-}
+// const clearCart = () => {
+//   tableData.value = []
+// }
 const tableData: Ref<GoodsInfo[]> = ref([])
 
 ////////////////////////////////////////////////
 const path = 'http://localhost:8080'
-
 axios({
   method: 'get',
   url: path + '/shoppingCart',
@@ -249,6 +308,38 @@ axios({
   .catch((error) => {
     console.log('error = ' + error)
   })
+const getAddressList = () => {
+  axios({
+    method: 'get',
+    url: path + '/deliveryAddress',
+    params: {
+      account: '111'
+    }
+  })
+    .then((response) => {
+      const respData = response.data
+      const addresResList = respData.data
+      addressList.value = []
+      for (const iterator of addresResList) {
+        let tem: Address = {
+          addressNo: '',
+          consigneeName: '',
+          consigneeTel: '',
+          address: ''
+        }
+        tem.addressNo = iterator.addressNo
+        tem.consigneeName = iterator.consigneeName
+        tem.consigneeTel = iterator.consigneeTel
+        tem.address = iterator.address
+        addressList.value.push(tem)
+        console.log('tem is ', tem)
+      }
+      console.log(addressList, 'addlist')
+    })
+    .catch((error) => {
+      console.log('error111=' + error)
+    })
+}
 </script>
 
 <style scoped>
@@ -265,5 +356,8 @@ axios({
 .sum {
   /* width: 480px; */
   display: inline-block;
+}
+.select {
+  width: 300px;
 }
 </style>

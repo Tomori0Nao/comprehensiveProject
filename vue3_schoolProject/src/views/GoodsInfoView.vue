@@ -12,7 +12,7 @@ import type { RouterLink } from 'vue-router';
           </p>
           <p>价格: {{ goodsInfo.goodsPrice }}</p>
           <p>店铺名: {{ goodsInfo.storeName }}</p>
-          <p>剩余商品数量: {{ goodsInfo.goodsNumber }}</p>
+          <p>商品数量: {{ goodsInfo.goodsNumber }}</p>
           <el-button size="small" @click.prevent="handleMinus" circle>
             <el-icon>
               <Minus />
@@ -158,6 +158,7 @@ const inputChanges = () => {
 const addToCart = () => {
   // 加入购物车
   // axios
+  
   ElNotification({
     title: '用户你好',
     message: h('i', { style: 'color: teal' }, '商品已加入购物车')

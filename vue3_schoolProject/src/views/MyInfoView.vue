@@ -15,7 +15,6 @@ import type { RouterLink } from 'vue-router';
           <el-tab-pane label="基本信息">
             <UserInfo></UserInfo>
           </el-tab-pane>
-          <el-tab-pane label="登录历史">登录历史</el-tab-pane>
         </el-tabs>
       </el-tab-pane>
       <el-tab-pane label="地址管理">

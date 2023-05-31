@@ -70,11 +70,12 @@ const deleteGoods = (index: number, row: OrderInfo) => {
     params: {
       //每个用户的每一个订单的编号都是唯一的，因此只需要发送订单编号即可
       //orderNo: orderInfoTableData.value[index].orderNo,
-      orderNo: 'order1' //先用一个写好的值测试
+      orderNo: row.orderNo //先用一个写好的值测试
     }
   })
     .then((response) => {
       const respData = response.data
+
       if (respData.code == 1) {
         orderInfoTableData.value.splice(index, 1)
       } else {
@@ -88,19 +89,19 @@ const deleteGoods = (index: number, row: OrderInfo) => {
 }
 
 const orderInfoTableData: Ref<OrderInfo[]> = ref([
-  {
-    userAccount: '1389478935',
-    orderNo: '147567814',
-    orderDate: '2023-5-24',
-    orderAddr: '重庆市巴南区红光大道',
-    goodsPrice: 6999,
-    goodsName: '三星s23',
-    goodsNum: 2,
-    goodsPicture: '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png',
-    storeName: 'git商城',
-    vipPrice: 10,
-    totalCost: 2887
-  }
+  // {
+  //   userAccount: '1389478935',
+  //   orderNo: '147567814',
+  //   orderDate: '2023-5-24',
+  //   orderAddr: '重庆市巴南区红光大道',
+  //   goodsPrice: 6999,
+  //   goodsName: '三星s23',
+  //   goodsNum: 2,
+  //   goodsPicture: '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png',
+  //   storeName: 'git商城',
+  //   vipPrice: 10,
+  //   totalCost: 2887
+  // }
 ])
 const userAccountInfo: Ref<UserAccountInfo> = ref({
   userAccount: '1389478935',
@@ -142,8 +143,31 @@ axios({
     const respData = response.data
     console.log(respData)
     var orderList = respData.data
-    for (var i = 0; i < orderList.length; ++i) {
-      console.log(orderList[i])
+    orderInfoTableData.value = []
+    for (const iterator of orderList) {
+      let tem: OrderInfo = {
+        userAccount: '',
+        orderNo: '',
+        orderDate: '',
+        orderAddr: '',
+        goodsPrice: 0,
+        goodsName: '',
+        goodsNum: 0,
+        goodsPicture: '/src/assets/galaxy-s23-ultra-highlights-colors-green-back-s (for goods).png',
+        storeName: '',
+        vipPrice: 0,
+        totalCost: 0
+      }
+      tem.orderNo = iterator.orderNo
+      tem.orderDate = iterator.orderTime
+      tem.orderAddr = iterator.deliveryAddress
+      tem.goodsPrice = iterator.orderPrice
+      tem.goodsName = iterator.goodsName
+      tem.goodsNum = iterator.goodsNumber
+      tem.storeName = iterator.storeName
+      tem.vipPrice = iterator.orderDerate
+      tem.totalCost = iterator.actualPayment
+      orderInfoTableData.value.push(tem)
     }
   })
   .catch((error) => {

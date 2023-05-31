@@ -117,28 +117,9 @@ const handleEdit = (row: CateoryInfo) => {
 const handleSelectionChange = (val: CateoryInfo[]) => {
   multipleSelection.value = val
 }
-<<<<<<< HEAD
-// // 批量删除
-// const handleDelete = () => {
-//   if (!multipleSelection.value.length) {
-//     ElMessage.error('请选择项')
-//     return
-//   }
-//   // multipleSelection.value 为待删除的数组
-//   //   axios
-// }
-=======
-// 批量删除
-const handleDelete = () => {
-  if (!multipleSelection.value.length) {
-    ElMessage.error('请选择项')
-    return
-  }
-  // multipleSelection.value 为待删除的数组
-  //   axios
-}
+
 const path = 'http://localhost:8080'
->>>>>>> 1f03c628ed163801445aa4d89d4701ca27710028
+
 // 单个删除
 const handleDeleteOne = (row: CateoryInfo) => {
   //   axios
