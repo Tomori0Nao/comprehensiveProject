@@ -104,6 +104,7 @@ import { InfoFilled } from '@element-plus/icons-vue'
 import { Minus, Plus } from '@element-plus/icons-vue'
 import axios from 'axios'
 import { fa } from 'element-plus/es/locale/index.js'
+import { ro } from 'element-plus/es/locale/index.js'
 axios.defaults.withCredentials = true
 
 const dialogFormVisible = ref(false)
@@ -273,6 +274,7 @@ const goToPay = (row: GoodsInfo) => {
   // row.goodsNumber
   // row.goodsPrice
   // address 收货地址编号
+<<<<<<< HEAD
   // axios({
   //   method: 'get',
   //   url: path + '/pay',
@@ -291,6 +293,21 @@ const goToPay = (row: GoodsInfo) => {
 
   //     console.log('error = ' + error)
   //   })
+=======
+  console.log(row,'row')
+  axios({
+    method: 'get',
+    url: path + '/pay',
+    params: {}
+  })
+    .then((response) => {
+      const respData = response.data
+      console.log(respData)
+    })
+    .catch((error) => {
+      console.log('error = ' + error)
+    })
+>>>>>>> f41458851a7d00d991e77f95449e4d48e313d94b
   // getOrderSet()
   getAddressList()
   // orderList 数组

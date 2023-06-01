@@ -3,19 +3,27 @@
     <template #header>
       <div class="header">
         <el-button type="primary" :icon="Plus" @click="handleAdd">增加</el-button>
-        
       </div>
     </template>
-    <el-table :load="state.loading" ref="multipleTableRef" :data="tableData" tooltip-effect="dark" style="width: 100%"
-      @selection-change="handleSelectionChange">
+    <el-table
+      :load="state.loading"
+      ref="multipleTableRef"
+      :data="tableData"
+      tooltip-effect="dark"
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
       <el-table-column type="selection" width="55"> </el-table-column>
       <el-table-column prop="categoryName" label="类型名称"> </el-table-column>
-      <el-table-column prop="addTime" label="添加时间" width="200"> </el-table-column>
       <el-table-column label="操作" width="220">
         <template #default="scope">
           <a style="cursor: pointer; margin-right: 10px" @click="handleEdit(scope.row)">修改</a>
-          <el-popconfirm title="确定删除吗？" confirmButtonText="确定" cancelButtonText="取消"
-            @confirm="handleDeleteOne(scope.row)">
+          <el-popconfirm
+            title="确定删除吗？"
+            confirmButtonText="确定"
+            cancelButtonText="取消"
+            @confirm="handleDeleteOne(scope.row)"
+          >
             <template #reference>
               <a style="cursor: pointer">删除</a>
             </template>
@@ -23,7 +31,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <AddCategory
       ref="addCate"
       :reload="getCategory"
@@ -46,14 +54,12 @@ type AddCateType = InstanceType<typeof AddCategory>
 interface CateoryInfo {
   categoryId: string
   categoryName: string
-  addTime: string
 }
 const tableData = ref<CateoryInfo[]>([
-  {
-    categoryId: '14353245',
-    categoryName: '手机',
-    addTime: '2033-4-23'
-  }
+  // {
+  //   categoryId: '14353245',
+  //   categoryName: '手机',
+  // }
 ])
 const multipleSelection = ref<CateoryInfo[]>([])
 const multipleTableRef = ref<InstanceType<typeof ElTable>>()
@@ -76,6 +82,29 @@ onMounted(() => {
 const getCategory = () => {
   state.loading = true
   // axios
+  axios({
+    method: 'get',
+    url: path + '/getAllGoodsType',
+    params: {}
+  })
+    .then((response) => {
+      const respData = response.data
+      const resTypeList = respData.data
+      tableData.value = []
+      for (const iterator of resTypeList) {
+        let tem: CateoryInfo = {
+          categoryId: '',
+          categoryName: ''
+        }
+        tem.categoryId = iterator.categoryNo
+        tem.categoryName = iterator.categoryName
+        tableData.value.push(tem)
+      }
+      console.log(respData)
+    })
+    .catch((error) => {
+      console.log('error = ' + error)
+    })
 }
 const changePage = (val: number) => {
   state.currentPage = val
@@ -86,11 +115,15 @@ const changePage = (val: number) => {
 const handleAdd = () => {
   state.type = 'add'
   addCate.value?.open()
+  // setTimeout(getCategory,3000)
+  // getCategory()
 }
 // 修改分类
 const handleEdit = (row: CateoryInfo) => {
   state.type = 'edit'
   addCate.value?.open(row.categoryId, row.categoryName)
+  // setTimeout(getCategory,3000)
+  // getCategory()
 }
 // 选择项
 const handleSelectionChange = (val: CateoryInfo[]) => {
@@ -106,27 +139,33 @@ const handleDeleteOne = (row: CateoryInfo) => {
     method: 'get',
     url: path + '/deleteGoodsType',
     params: {
-      categoryNo: row.categoryId,
+      categoryNo: row.categoryId
     }
-  }).then((response) => {
-    const respData = response.data;
-    console.log(respData);
-  }).catch((error) => {
-    console.log("error = " + error);
-
   })
-  getCategory()
-
+    .then((response) => {
+      const respData = response.data
+      console.log(respData)
+      setTimeout(getCategory, 1000)
+    })
+    .catch((error) => {
+      console.log('error = ' + error)
+    })
 }
-const handleAddCategory = () => { }
+const handleAddCategory = () => {
+  setTimeout(getCategory, 1000)
+  // getCategory()
+}
 const handleEditCategory = (categoryId: string, categoryName: string) => {
   console.log('edit submit!!!')
-  for (const iterator of tableData.value) {
-    if (iterator.categoryId == categoryId) {
-      iterator.categoryName = categoryName
-    }
-  }
+  // for (const iterator of tableData.value) {
+  //   if (iterator.categoryId == categoryId) {
+  //     iterator.categoryName = categoryName
+  //   }
+  // }
+  setTimeout(getCategory, 1000)
+  // getCategory()
 }
+getCategory()
 </script>
 
 <style></style>
