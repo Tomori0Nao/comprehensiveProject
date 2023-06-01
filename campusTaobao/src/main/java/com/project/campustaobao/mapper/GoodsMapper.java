@@ -65,4 +65,6 @@ public interface GoodsMapper {
 
     int queryGoodsAccount();
     String queryGoodsPriceByGoodsNo(@Param("goodsNo")String goodsNo);
+
+    List<String> queryAllGoodsType();
 }

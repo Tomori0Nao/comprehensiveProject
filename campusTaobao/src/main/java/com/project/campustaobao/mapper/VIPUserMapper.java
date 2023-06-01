@@ -12,7 +12,7 @@ public interface VIPUserMapper {
      * @param account
      * @return 是vip用户则返回true
      */
-    boolean isVIPUser(String account);
+    String isVIPUser(String account);
 
     VIPUser queryVIPUserByAccount(String vipAccount);
 }

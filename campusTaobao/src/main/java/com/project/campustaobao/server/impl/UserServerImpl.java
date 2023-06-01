@@ -96,7 +96,7 @@ public class UserServerImpl implements UserServer {
      */
     @Override
     public boolean isVIPUser(String account) {
-        return vipUserMapper.isVIPUser(account);
+        return vipUserMapper.isVIPUser(account) != null;
     }
 
     @Override

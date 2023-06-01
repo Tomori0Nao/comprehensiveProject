@@ -37,4 +37,12 @@
     <delete id="deleteOrderByOrderNo" parameterType="String">
         delete from user_order where order_no = #{orderNo}
     </delete>
+
+
+    <insert id="insertOrderByAccount" parameterType="map">
+        insert into user_order value (#{orderNo},#{userAccount},
+                                     #{orderTime},#{deliveryNo},
+                                     #{goodsNo},#{orderPrice},#{orderDerate},
+                                     #{actualPayment},#{goodsNumber})
+    </insert>
 </mapper>

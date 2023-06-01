@@ -250,6 +250,8 @@ public class UserController {
     @GetMapping("/deleteUserOrder")
     @ResponseBody
     public ResultMessage<String> deleteUserOrder(String orderNo){
+        String account = (String) Session.getSessionAttribute(Request.getRequest(),"account");
+        System.out.println("account =" +account);
         //这里的account实际上不用前端传递，可以直接在session中获得
         boolean delete = orderServer.deleteOrder(orderNo);
         ResultMessage<String> resultMessage;
@@ -260,6 +262,26 @@ public class UserController {
         else{
             resultMessage = new ResultMessage<>(ResultMessage.ERROR_CODE,
                     "删除订单失败",null);
+        }
+        return resultMessage;
+    }
+    @GetMapping("/pay")
+    @ResponseBody
+    public ResultMessage<String> pay(String goodsNo,Integer goodsNumber,String deliveryAddressNo){
+        String account = (String) Session.getSessionAttribute(Request.getRequest(),"account");
+        System.out.println("account =" +account);
+        System.out.println("gggggggggggggggggggggggg"+goodsNumber);
+        System.out.println(deliveryAddressNo);
+        //这里的account实际上不用前端传递，可以直接在session中获得
+        boolean pay = orderServer.pay(account,goodsNo,goodsNumber,deliveryAddressNo);
+        ResultMessage<String> resultMessage;
+        if(pay){
+            resultMessage = new ResultMessage<>(ResultMessage.SUCCESS_CODE,
+                    "成功加入此订单",null);
+        }
+        else{
+            resultMessage = new ResultMessage<>(ResultMessage.ERROR_CODE,
+                    "加入订单失败",null);
         }
         return resultMessage;
     }

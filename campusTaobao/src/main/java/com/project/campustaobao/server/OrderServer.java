@@ -18,4 +18,6 @@ public interface OrderServer {
     Map<String,String> queryOrderByOrderNo(String orderNo);
 
     Map<String, String> queryOrderDetailInfo(String orderNo);
+
+    boolean pay(String account, String orderNo, Integer goodsNumber, String deliveryAddressNo);
 }

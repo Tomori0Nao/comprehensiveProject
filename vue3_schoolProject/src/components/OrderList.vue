@@ -129,7 +129,7 @@ const userAccountInfo: Ref<UserAccountInfo> = ref({
             "storeName": "上酒乐乐公司"              商品所属的店铺名
         },
  */
-
+const imagesURLPrefix = 'http://localhost:8080/static/images/'
 axios({
   method: 'get',
   url: path + '/userOrder',
@@ -167,6 +167,7 @@ axios({
       tem.storeName = iterator.storeName
       tem.vipPrice = iterator.orderDerate
       tem.totalCost = iterator.actualPayment
+      tem.goodsPicture = imagesURLPrefix + iterator.goodsImageName + '.png'
       orderInfoTableData.value.push(tem)
     }
   })
@@ -177,12 +178,8 @@ axios({
 
 <template>
   <div>
-    <el-table
-      ref="multipleTableRef"
-      :data="orderInfoTableData"
-      style="width: 100%"
-      @selection-change="handleSelectionChange"
-    >
+    <el-table ref="multipleTableRef" :data="orderInfoTableData" style="width: 100%"
+      @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" />
       <el-table-column label="商品" width="120">
         <template #default="scope">
@@ -203,9 +200,7 @@ axios({
       </el-table-column>
       <el-table-column label="操作" show-overflow-tooltip>
         <template #default="scope">
-          <el-button type="danger" @click.prevent="deleteGoods(scope.$index, scope.row)" plain
-            >删除</el-button
-          >
+          <el-button type="danger" @click.prevent="deleteGoods(scope.$index, scope.row)" plain>删除</el-button>
         </template>
       </el-table-column>
     </el-table>

@@ -3,9 +3,11 @@ package com.project.campustaobao.server.impl;
 import com.project.campustaobao.mapper.DeliveryAddressMapper;
 import com.project.campustaobao.mapper.GoodsMapper;
 import com.project.campustaobao.mapper.OrderMapper;
+import com.project.campustaobao.mapper.UserMapper;
 import com.project.campustaobao.pojo.Goods;
 import com.project.campustaobao.pojo.UserOrder;
 import com.project.campustaobao.server.OrderServer;
+import com.project.campustaobao.server.UserServer;
 import com.project.campustaobao.utils.DateUtils;
 import com.project.campustaobao.utils.Request;
 import com.project.campustaobao.utils.Session;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +27,8 @@ public class OrderServerImpl implements OrderServer {
     private OrderMapper orderMapper;
     @Autowired
     private GoodsMapper goodsMapper;
+    @Autowired
+    private UserServer userServer;
     @Autowired
     private DeliveryAddressMapper addressMapper;
 
@@ -103,5 +108,40 @@ public class OrderServerImpl implements OrderServer {
                 orderInfo.get("deliveryNo")));
         orderInfo.remove("deliveryNo");
         return orderInfo;
+    }
+
+    @Override
+    public boolean pay(String account, String goodsNo, Integer goodsNumber, String deliveryAddressNo) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("orderNo","order"+(goodsNo+goodsNumber).hashCode()+"");
+        map.put("userAccount",account);
+        //下单时间
+        DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime time = LocalDateTime.now();
+        String localDateTime = df.format(time);
+        LocalDateTime ldt = LocalDateTime.parse(localDateTime, df);
+        System.out.println(ldt);
+        map.put("orderTime",ldt);
+        map.put("deliveryNo",deliveryAddressNo);
+        map.put("goodsNo",goodsNo);
+        Goods goods = goodsMapper.queryGoodsByGoodsNo(goodsNo);
+        String price = goods.getGoodsPrice();
+        String derate = goods.getVipDerate();
+        String actualPayment = Double.parseDouble(price) * goodsNumber +"";
+        //计算实际价格
+        if(userServer.isVIPUser(account)){
+            double p = Double.parseDouble(price) - Double.parseDouble(derate);
+            actualPayment = p * goodsNumber +"";
+            price = p +"";
+        }
+        map.put("orderPrice",price);
+        map.put("orderDerate",derate);
+        map.put("actualPayment",actualPayment);
+        map.put("goodsNumber",goodsNumber);
+        if(orderMapper.insertOrderByAccount(map)){
+            userServer.deleteCartGoods(account,goodsNo);
+            return true;
+        }
+        return false;
     }
 }
