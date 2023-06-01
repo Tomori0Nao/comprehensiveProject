@@ -141,4 +141,11 @@
 <select id="queryGoodsPriceByGoodsNo" resultType="String">
     select goods_price from goods_info where goods_no = #{goodsNo}
 </select>
+    <select id="queryAllGoodsType" resultMap="categoryMap">
+    select * from category;
+    </select>
+    <resultMap id="categoryMap" type="java.util.Map">
+        <id property="categoryNo" column="category_no" />
+        <id property="categoryName" column="category_name" />
+    </resultMap>
 </mapper>

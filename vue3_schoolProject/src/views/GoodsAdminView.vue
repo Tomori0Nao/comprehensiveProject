@@ -25,7 +25,7 @@
             title="确定删除吗？"
             confirmButtonText="确定"
             cancelButtonText="取消"
-            @confirm="handleDelete(scope.row.goodsId)"
+            @confirm="handleDelete(scope.row.goodsNo)"
           >
             <template #reference>
               <a style="cursor: pointer">删除</a>
@@ -109,14 +109,14 @@ const handleAdd = () => {
 const handleEdit = (id: string) => {
   router.push({ path: '/admin/EditGoods', query: { id } })
 }
-const handleDelete = (id: string) => {
+const handleDelete = (goodsNo:string) => {
   // axios
-
+  console.log(goodsNo,'igoodsNod ')
   axios({
     method: 'get',
     url: path + '/deleteGoods',
     params: {
-      goodsNo: '123'
+      goodsNo: goodsNo
     }
   }).then((response) => {
     const respData = response.data;

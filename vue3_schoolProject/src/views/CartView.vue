@@ -137,6 +137,7 @@ import { InfoFilled } from '@element-plus/icons-vue'
 import { Minus, Plus } from '@element-plus/icons-vue'
 import axios from 'axios'
 import { fa } from 'element-plus/es/locale/index.js'
+import { ro } from 'element-plus/es/locale/index.js'
 axios.defaults.withCredentials = true
 
 const dialogFormVisible = ref(false)
@@ -274,6 +275,7 @@ const goToPay = (row:GoodsInfo) => {
   // row.goodsNumber
   // row.goodsPrice
   // address 收货地址编号
+  console.log(row,'row')
   axios({
     method: 'get',
     url: path + '/pay',

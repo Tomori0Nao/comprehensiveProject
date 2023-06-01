@@ -225,5 +225,18 @@ public class AdminController {
         }
         return resultMessage;
     }
-
+    @GetMapping("/getAllGoodsType")
+    @ResponseBody
+    public ResultMessage<List<String>> getAllGoodsType(){
+        ResultMessage<List<String>> resultMessage;
+        List<String> goodsList = goodsMapper.queryAllGoodsType();
+        if(goodsList == null){
+            resultMessage = new ResultMessage<>(ResultMessage.SUCCESS_CODE,
+                    "没有商品种类",null);
+        }else{
+            resultMessage = new ResultMessage<>(ResultMessage.SUCCESS_CODE,
+                    "查找到所有商品种类",goodsList);
+        }
+        return resultMessage;
+    }
 }

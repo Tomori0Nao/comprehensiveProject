@@ -6,14 +6,14 @@ import type { RouterLink } from 'vue-router';
     <SlideShow></SlideShow>
     <el-divider content-position="left">精选好物</el-divider>
     <GoodsCol type="home"></GoodsCol>
-    <el-pagination
+    <!-- <el-pagination
       background
       layout="prev, pager, next"
       :total="state.total"
       :page-size="state.pageSize"
       :current-page="state.currentPage"
       @current-change="changePage"
-    />
+    /> -->
   </div>
 </template>
 

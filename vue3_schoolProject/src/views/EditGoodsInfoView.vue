@@ -221,7 +221,7 @@ const handleChangeCate = () => { }
 //   axios
 axios({
     method: 'get',
-    url: path + '/',
+    url: path + '/goodsInfo',
     params: {
       goodsNo: para
     }

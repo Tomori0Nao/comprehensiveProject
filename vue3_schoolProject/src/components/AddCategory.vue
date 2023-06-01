@@ -134,7 +134,6 @@ const submitForm = () => {
           console.log(respData);
         }).catch((error) => {
           console.log("error = " + error);
-
         })
         emit('EditCategory', state.id, state.ruleForm.name)
         state.visible = false
